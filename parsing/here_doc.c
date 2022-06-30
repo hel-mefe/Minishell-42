@@ -22,23 +22,23 @@ t_heredoc   *get_last_heredoc(t_heredoc *head)
 
 void    push_heredoc_back(t_heredoc **head, t_heredoc *new)
 {
-    t_heredoc   *last;
+	t_heredoc   *last;
 
-    if (!(*head))
-        *head = new;
-    else
-    {
-        last = get_last_heredoc(*head);
-        last->next = new;
-    }
-    new->next = NULL;
+	if (!(*head))
+		*head = new;
+	else
+	{
+		last = get_last_heredoc(*head);
+		last->next = new;
+	}
+	new->next = NULL;
 }
 
-size_t  get_queue_size(t_queue *head)
+size_t	get_queue_size(t_queue *head)
 {
-    if (!head)
-        return (0);
-    return (get_queue_size(head->next) + 1);
+	if (!head)
+		return (0);
+	return (get_queue_size(head->next) + 1);
 }
 
 t_queue *new_queue_node(char *s)

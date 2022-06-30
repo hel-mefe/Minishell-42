@@ -175,22 +175,3 @@ t_data  *parse_line(char *s, char **env)
     prepare_data(data);
     return (data);
 } 
-
-int main(int ac, char **av, char **env)
-{
-    char    *s;
-    t_cmd   *cmd;
-    t_data *data;
-
-    cmd = NULL;
-    while (1)
-    {
-        s = readline("Write a line> ");
-        data = parse_line(s, env);
-        run_heredoc(data, data->heredoc, data->commands);
-        print_commands(data->commands);
-        print_heredoc(data->heredoc);
-        free_queue(data->heredoc);
-		free(data);
-    }
-}
