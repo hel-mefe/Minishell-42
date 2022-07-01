@@ -102,6 +102,7 @@ typedef struct s_data
 
 /*** END DIAL MAIN STRUCTURE ***/
 
+void    ft_putstr(char *s);
 char    *ft_strjoin(char *s1, char *s2);
 char    *ft_strdup(const char *s);
 char    *slice(char *s, size_t a, size_t b);
@@ -163,6 +164,7 @@ void    free_double_int_arr(int **arr);
 void    free_queue(t_queue *head);
 
 char	*ft_itoa(int n);
+char    *get_next_line(int fd);
 void    get_err(char *err, int is_exit);
 
 # endif

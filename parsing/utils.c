@@ -16,6 +16,15 @@ void    mark_builtins(t_cmd *head)
     }
 }
 
+void    ft_putstr(char *s)
+{
+    size_t  i;
+
+    i = -1;
+    while (s[++i])
+        write(1, &s[i], 1);
+}
+
 size_t  ft_strlen(const char *s)
 {
     size_t  i;
