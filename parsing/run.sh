@@ -1,1 +1,1 @@
-gcc *.c get_next_line/*.c -lreadline
+gcc *.c -lreadline

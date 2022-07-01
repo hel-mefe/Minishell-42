@@ -86,14 +86,14 @@ void    parse_expression(char *s, t_data *data, t_cmd *cmd)
     i = 0;
     while (s[i])
     {
-        if (!cmd->cmd_name)
-            printf("YEEES\n");
         if (s[i] == '<' && s[i + 1] == '<')
             i += get_heredoc(s + i + 2, data, cmd) + 1;
-        else if (s[i] == '>' && s[i + 1] == '>' && cmd->error == -1)
+        else if (s[i] == '>' && s[i + 1] == '>')
         {
             cmd->outfile_mode = O_APPEND;
-            i += get_string(s + i + 2, OUTFILE, data, cmd) + 1;
+            i += get_string(s + i + 2, OUTFILE, data, cmd) + 2;
+            if (i > ft_strlen(s))
+                break ;
         }
         else if (s[i] == '<')
             i += get_string(s + i + 1, INFILE, data, cmd) + 1;
