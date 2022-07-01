@@ -9,6 +9,7 @@
 # include <errno.h>
 
 # define SYNTAX_ERR "SYNTAX ERROR!";
+# define MAX_HERE_DOC_EXCEEDED_ERR "MAX HEREDOC LIMITERS HAVE BEEN EXCEEDED!"
 
 # define NONE 0
 # define INFILE 1
@@ -18,7 +19,10 @@
 # define ARGUMENT 5
 # define EXPANDED_HERE_DOC 6
 
+# define HERE_DOC_MAX 16 // absolument kber mn HERE_DOC_MAX then invoke the err function
 
+# define BREAKING_POINT -1
+# define HERE_DOC_NAME "Minishell-42-heredoc"
 /***
  * Had Queue howa fin kaytstoraw limiters dial heredoc
  *  START OF THE QUEUE
@@ -70,6 +74,8 @@ typedef struct cmd
     int         status;
     int         is_builtin;
     int         has_heredoc;
+    int         heredoc_file; // if command has heredoc then read from this file descriptor
+    int         heredoc_pipe[2];
     int         write_end;
     int         read_end;
     t_queue     *args;
@@ -115,10 +121,10 @@ int is_token(char c);
 int is_space(char c);
 char    **get_args(t_cmd *cmd);
 
-int in_string(char *s, char c);
+int     in_string(char *s, char c);
 char    *remove_chars(char *s, char *r);
 char    *remove_char(char *s, char c);
-
+char	*remove_quotes(char *s);
 
 t_queue *new_queue_node(char *s);
 t_queue *get_last(t_queue *head);
@@ -155,4 +161,8 @@ void    free_dollars(t_dollar *head);
 void    free_double_char_arr(char **arr);
 void    free_double_int_arr(int **arr);
 void    free_queue(t_queue *head);
+
+char	*ft_itoa(int n);
+void    get_err(char *err, int is_exit);
+
 # endif

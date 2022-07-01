@@ -132,8 +132,6 @@ char    *expand_string(t_dollar *dollars, char **env, int *place, char *s)
     }
     if (i != j)
         res = ft_strjoin(res, slice(s, j, i));
-    if (res[0] == '\"')
-        return (slice(res, 1, ft_strlen(res) - 1));
     if (!res[0])
         *place = NONE;
     return (res);

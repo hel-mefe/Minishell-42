@@ -6,9 +6,26 @@ char	*expand_result(t_data *data, char *res)
 	char		*expanded;
 	int			place;
 
+	if (!res)
+		return (NULL);
 	vars = get_all_dollars(res, data->env);
 	expanded = expand_string(vars, data->env, &place, res);
 	return (expanded);
+}
+
+void	read_file(int fd)
+{
+	char	c;
+	int i;
+
+	i = 0;
+	c = 0;
+	while (read(fd, &c, 1) > 0)
+	{
+		i++;
+		write(1, &c, 1);
+	}
+	printf("GOT HERE %d\n", i);
 }
 
 void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
@@ -30,9 +47,9 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 		    {
 				if (limiters->ex)
 					res = expand_result(data, res);
-				printf("HEREDOC RES ==> ");
-				write(1, res, ft_strlen(res));
-				printf("\n");
+				write(cmd->heredoc_pipe[1], res, ft_strlen(res));
+				close(cmd->heredoc_pipe[1]);
+				read_file(cmd->heredoc_pipe[0]);
 			}
 			res = NULL;
 		    limiters = limiters->next;

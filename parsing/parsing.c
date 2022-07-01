@@ -84,8 +84,10 @@ void    parse_expression(char *s, t_data *data, t_cmd *cmd)
     char    *res;
 
     i = 0;
-    while (s[i] && !cmd->syntax && cmd->error == -1 && data->is_syntax_valid)
+    while (s[i])
     {
+        if (!cmd->cmd_name)
+            printf("YEEES\n");
         if (s[i] == '<' && s[i + 1] == '<')
             i += get_heredoc(s + i + 2, data, cmd) + 1;
         else if (s[i] == '>' && s[i + 1] == '>' && cmd->error == -1)
@@ -93,12 +95,12 @@ void    parse_expression(char *s, t_data *data, t_cmd *cmd)
             cmd->outfile_mode = O_APPEND;
             i += get_string(s + i + 2, OUTFILE, data, cmd) + 1;
         }
-        else if (s[i] == '<' && cmd->error == -1)
-            i += get_string(s + i + 1, INFILE, data, cmd);
-        else if (s[i] == '>' && cmd->error == -1)
+        else if (s[i] == '<')
+            i += get_string(s + i + 1, INFILE, data, cmd) + 1;
+        else if (s[i] == '>')
         {
             cmd->outfile_mode = O_CREAT;
-            i += get_string(s + i + 1, OUTFILE, data, cmd);
+            i += get_string(s + i + 1, OUTFILE, data, cmd) + 1;
         }
         else if (!is_space(s[i]) && !cmd->cmd_name)
             i += get_string(s + i, COMMAND, data, cmd);
@@ -109,9 +111,13 @@ void    parse_expression(char *s, t_data *data, t_cmd *cmd)
             cmd->error = 0;
             data->is_syntax_valid = 0;
         }
-		if (!is_token(s[i]))
+        // if (i >= ft_strlen(s))
+        //     break ;
+		if (s[i] && is_space(s[i]))
 			i++;
+        printf("%zu - %s\n", i, s + i);
     }
+    printf("%zu\n", i);
     cmd->main_args = get_args(cmd);
     free_queue(cmd->args);
 }
@@ -129,30 +135,54 @@ void    parse_commands(t_data *data)
     }
 }
 
+/**
+ * When there is an infile or heredoc, cmd->read_end != -1
+ * If there is no infile the read_end == -1
+ * If there is a heredoc the command reads from ITS OWN PIPE!
+ * If there is no heredoc then the command reads for (cmd - 1 PIPE (read_end) )!
+ */
+char    *get_heredoc_name(int cmd_id)
+{
+    char    *name;
+
+    name = ft_strjoin(HERE_DOC_NAME, ft_itoa(cmd_id * 1337));
+    name = ft_strjoin("/tmp/", name);
+    printf("NAME: %s\n", name);
+    return (name);
+}
+
 void    prepare_data(t_data *data)
 {
     int     i;
     t_cmd   *cmd;
 
-    data->pipes = (int **) malloc (data->n_cmds * sizeof(int *));
+
+    data->pipes = (int **) malloc ((data->n_cmds - 1) * sizeof(int *));
     cmd = data->commands;
     i = 0;
     while (i < data->n_cmds)
     {
-        if (cmd->syntax)
-            data->is_syntax_valid = 1;
-        data->pipes[i] = (int *) malloc (2 * sizeof(int));
-        pipe(data->pipes[i]);
-        if (i == 0 && cmd->read_end == -1)
-            cmd->read_end = 0;
-        else if (cmd->has_heredoc)
-            cmd->read_end = data->pipes[i][0];
-        else if (cmd->read_end == -1)
-            cmd->read_end = data->pipes[i - 1][0];
-        if (i == data->n_cmds - 1 && cmd->write_end == -1)
-            cmd->write_end = 1;
-        else if (cmd->write_end == -1)
-            cmd->write_end = data->pipes[i][1];
+        if (i < data->n_cmds - 1)
+            data->pipes[i] = (int *) malloc(2 * sizeof(int));
+        if (cmd->write_end == -1) // if there is no infile
+        {
+            if (i == data->n_cmds - 1)
+                cmd->write_end = 1;
+            else
+                cmd->write_end = data->pipes[i][1];
+        }                
+        if (cmd->read_end == -1) // if there is no outfile
+        {
+            if (i == 0 && !cmd->has_heredoc)
+                cmd->read_end = 0;
+            else if (cmd->has_heredoc)
+            {
+                cmd->read_end = cmd->heredoc_pipe[0];
+                pipe(cmd->heredoc_pipe);
+            }
+            else
+                cmd->read_end = data->pipes[i - 1][0];
+        }
         cmd = cmd->next;
         i++;
     }
@@ -174,4 +204,21 @@ t_data  *parse_line(char *s, char **env)
     data->n_cmds = get_commands_size(data->commands);
     prepare_data(data);
     return (data);
-} 
+}
+
+// int main(int ac, char **av, char **env)
+// {
+//     char    *s;
+//     t_data  *data;
+
+//     while (1)
+//     {
+//         s = readline("minishell> ");
+//         data = parse_line(s, env);
+//         if (get_queue_size(data->heredoc) > HERE_DOC_MAX)
+//             get_err(MAX_HERE_DOC_EXCEEDED_ERR, 1);
+//         print_commands(data->commands);
+//         print_heredoc(data->heredoc);
+//         run_heredoc(data, data->heredoc, data->commands);
+//     }
+// }

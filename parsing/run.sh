@@ -1,1 +1,1 @@
-gcc *.c ../exec/*.c -lreadline
+gcc *.c -lreadline

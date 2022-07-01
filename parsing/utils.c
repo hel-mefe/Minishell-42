@@ -54,6 +54,8 @@ char    *slice(char *s, size_t a, size_t b)
     size_t  i;
 
     len = b - a;
+    if (len < 0)
+        return (NULL);
     res = (char *) malloc ((len + 1) * sizeof(char));
     if (!res)
         return (NULL);
@@ -72,11 +74,13 @@ char    *expand_expression(char *res)
 char    *get_normal_string(char *s, t_cmd *cmd)
 {
     size_t  i;
+    char    *res;
 
     i = 0;
     while (s[i] && !is_space(s[i]) && !is_token(s[i]))
         i++;
-    return (slice(s, 0, i));
+    res = slice(s, 0, i);
+    return (res);
 }
 
 void    assign_string(char *s, int place, t_data *data, t_cmd *cmd)
@@ -139,13 +143,16 @@ char    *get_singly_string(char *s, t_cmd *cmd)
     {
         if (s[i] == '\'')
             valid = !valid;
-        if ((s[i] == '\'' && (is_space(s[i + 1]) || !s[i + 1])) || (valid && is_space(s[i + 1])))
+        if (s[i] == '\'' && (!s[i + 1] || is_space(s[i + 1])))
             break ;
         i++;
     }
     if (!valid)
         printf("INVALID SINGLY\n");
-    res = slice(s, 0, i + 1);
+    if (!s[i])
+        res = slice(s, 0, i);
+    else
+        res = slice(s, 0, i + 1);
     return (res);
 }
 char    *get_doubly_string(char *s, t_cmd *cmd)
@@ -162,13 +169,16 @@ char    *get_doubly_string(char *s, t_cmd *cmd)
     {
         if (s[i] == '\"')
             valid = !valid;
-        if ((s[i] == '\"' && (is_space(s[i + 1]) || !s[i + 1])) || (valid && is_space(s[i + 1])))
+        if ((s[i] == '\"' && (is_space(s[i + 1]) || !s[i + 1])))
             break ;
         i++;
     }
     if (!valid)
         printf("INVALID DOUBLY\n");
-    res = slice(s, 0, i + 1);
+    if (!s[i])
+        res = slice(s, 0, i);
+    else
+        res = slice(s, 0, i + 1);
     return (res);
 }
 
@@ -196,8 +206,8 @@ size_t  get_string(char *s, int place, t_data *data, t_cmd *cmd)
     }
     else
         expanded_res = res;
-    expanded_res = remove_chars(expanded_res, "\'\"");
-    if (ft_strlen(expanded_res) != ft_strlen(res) && place == HERE_DOC)
+    expanded_res = remove_quotes(ft_strdup(expanded_res));
+    if (ft_strlen(expanded_res) == ft_strlen(res) && place == HERE_DOC)
         place = EXPANDED_HERE_DOC;
     assign_string(expanded_res, place, data, cmd);
     return (i);
