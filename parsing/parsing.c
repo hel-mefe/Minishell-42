@@ -163,7 +163,10 @@ void    prepare_data(t_data *data)
     while (i < data->n_cmds)
     {
         if (i < data->n_cmds - 1)
+        {
             data->pipes[i] = (int *) malloc(2 * sizeof(int));
+            pipe(data->pipes[i]);
+        }
         if (cmd->write_end == -1) // if there is no infile
         {
             if (i == data->n_cmds - 1)
