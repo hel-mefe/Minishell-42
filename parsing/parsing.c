@@ -87,7 +87,7 @@ void    parse_expression(char *s, t_data *data, t_cmd *cmd)
     while (s[i])
     {
         if (s[i] == '<' && s[i + 1] == '<')
-            i += get_heredoc(s + i + 2, data, cmd) + 1;
+            i += get_heredoc(s + i + 2, data, cmd) + 2;
         else if (s[i] == '>' && s[i + 1] == '>')
         {
             cmd->outfile_mode = O_APPEND;
@@ -119,6 +119,7 @@ void    parse_expression(char *s, t_data *data, t_cmd *cmd)
     }
     printf("%zu\n", i);
     cmd->main_args = get_args(cmd);
+    print_args(cmd->args, 0);
     free_queue(cmd->args);
 }
 
