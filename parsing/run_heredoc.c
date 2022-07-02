@@ -51,7 +51,6 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 					res = expand_result(data, res);
 				write(cmd->heredoc_pipe[1], res, ft_strlen(res));
 				close(cmd->heredoc_pipe[1]);
-				read_file(cmd->heredoc_pipe[0]);
 			}
 			res = NULL;
 		    limiters = limiters->next;

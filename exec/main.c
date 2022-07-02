@@ -11,25 +11,21 @@
 /* ************************************************************************** */
 
 #include "mini.h"
-// static void	hand_sigint(int sig)
-// {
-// 	(void)sig;
-// 	write(1, "\n", 1);
-// 	rl_on_new_line();
-// 	rl_redisplay();
-// }
-// static void	hand_sigint(int sig)
-// {
-// 	(void)sig;
-// 	rl_redisplay();	
-// }
 
-// void	signals()
-// {
-// 	signal(SIGINT, hand_sigint);
-// 	signal(SIGQUIT, hand_sigint);
+void	handel_sigint(int sig)
+{
+	(void)sig;
+	write(1,"\n", 2);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
 
-// }
+void	handle_signals()
+{
+	signal(SIGINT, handel_sigint);
+	signal(SIGQUIT, SIG_IGN);
+}
 void    run_builtin(t_env **env_v, char **av)
 {
     if ((ft_strcmp(av[0], "echo")) == 0)
@@ -46,7 +42,13 @@ void    run_builtin(t_env **env_v, char **av)
         ft_unset(env_v, av[1]);
 }
 
-
+int	check_infile(t_cmd *cmd)
+{
+	if (cmd->has_heredoc)
+		return (cmd->heredoc_pipe[0]);
+	else
+		return(cmd->read_end);
+}
 void	close_pipe(int **pipes, int a, int b, int n)
 {
 	int	i;
@@ -54,7 +56,7 @@ void	close_pipe(int **pipes, int a, int b, int n)
 	i = 0;
 	dup2(a, 0);
 	dup2(b, 1);
-	while (i < n)
+	while (i < n - 1)
 	{
 		close(pipes[i][0]);
 		close(pipes[i][1]);
@@ -89,6 +91,7 @@ char	**change_env(t_env **env_v)
 
 void	ever(char **cmd, t_env **env_v, char **env)
 {
+	cmd[1] = 0;
 	if (execve(get_command(env_v, *cmd), cmd, env) == -1)
 	{
 		if (strstr(cmd[0], "/"))
@@ -101,32 +104,41 @@ void	ever(char **cmd, t_env **env_v, char **env)
 void    run_cmd(t_env **env, t_data *data, t_cmd *cmd)
 {	
 	int 	i;
+	t_cmd	*tmp;
 	char	**str;
 	pid_t	pid;
 
-	
 	str = change_env(env);
 	i = 0;
+
     while(cmd)
     {
+		signal(SIGINT, SIG_IGN);
 		pid = fork();
+		if (pid < 0)
+		{
+			printf("pipe Error\n");
+			cmd->status= 127;
+		}
 		if (pid == 0)
 		{
-			// signals();
-        	close_pipe(data->pipes, cmd->read_end, cmd->write_end, data->n_cmds);
+			signal(SIGQUIT, SIG_DFL);
+			signal(SIGINT, SIG_DFL);
+        	close_pipe(data->pipes, check_infile(cmd), cmd->write_end, data->n_cmds);
 			ever(cmd->main_args, env,str);
 		}
 		cmd = cmd->next;
 		i++;
     }
 	i = 0;
-	while (i < data->n_cmds)
+	while (i < data->n_cmds - 1)
 	{
 		close(data->pipes[i][0]);
 		close(data->pipes[i][1]);
 		i++;
 	}
 	while (wait(NULL) != -1);
+	handle_signals();
 }
 
 
@@ -139,22 +151,24 @@ int main(int ac, char **av, char **env)
     t_data  *data;
 
     init_env(&env_v, env);
+	handle_signals();
     while (1)
     {
-        // add_history(s);
-		// signals();
+        add_history(s);
         s = readline("minishell> ");
+		if (s == NULL)
+		{
+			printf("exit\n");
+			exit(0);
+		}
         data = parse_line(s, env);
-		add_history(s);
-		// if (data->commands->is_builtin)
-		// {
-		// 		run_builtin(&env_v, data->commands->main_args);
-		// }
-			run_heredoc(data, data->heredoc, data->commands);
-       		run_cmd(&env_v, data, data->commands);
+		if (data->commands->is_builtin)
+		 	run_builtin(&env_v, data->commands->main_args);
+		run_heredoc(data, data->heredoc, data->commands);
+       	run_cmd(&env_v, data, data->commands);
          //print_commands(data->commands);
         // print_heredoc(data->heredoc);
-        // free_queue(data->heredoc);
-		// free(data);
+        free_queue(data->heredoc);
+		free(data);
     }
 }

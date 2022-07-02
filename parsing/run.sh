@@ -1,1 +1,1 @@
-gcc *.c -lreadline
+gcc *.c ../exec/*.c -lreadline  -L /Users/ytijani/.brew/opt/readline/lib -I /Users/ytijani/.brew/opt/readline/include

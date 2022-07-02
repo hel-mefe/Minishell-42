@@ -21,24 +21,23 @@ void    ft_echo(char **av)
     i = 1;
     echo_e = 0;
     j = 0;
-
     while(av[i][0] == '-'  &&  av[i][1] == 'n')
+    {
+        j = 1;
+        while (av[i][j] == 'n')
         {
-            j = 1;
-            while (av[i][j] == 'n')
-            {
-                echo_e = 1;
-                j++;
-            }
-            i++;
+            echo_e = 1;
+            j++;
         }
-        while (av[i])
-        {
-            printf("%s", av[i]);
-            if (av[i] && av[i + 1])
+        i++;
+    }
+    while (av[i])
+    {
+        printf("%s", av[i]);
+        if (av[i] && av[i + 1])
                 printf(" ");
-            i++;
-        }
+        i++;
+    }
     if (echo_e == 0)
         printf("\n");
 }

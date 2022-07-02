@@ -73,6 +73,8 @@ void	ft_export(t_env **env_v, char **av)
 				spl = ft_split(av[i], '=');
 				if (spl[1] != NULL)
 					new = ft_lstnew(spl[0], spl[1]);
+				else if (spl[1] == NULL)
+					new = ft_lstnew(spl[0], "");
 				ft_lstadd_back(env_v, new);
 			}
 			i++;

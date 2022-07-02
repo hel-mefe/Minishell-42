@@ -209,19 +209,19 @@ t_data  *parse_line(char *s, char **env)
     return (data);
 }
 
-int main(int ac, char **av, char **env)
-{
-    char    *s;
-    t_data  *data;
+// int main(int ac, char **av, char **env)
+// {
+//     char    *s;
+//     t_data  *data;
 
-    while (1)
-    {
-        s = readline("minishell> ");
-        data = parse_line(s, env);
-        if (get_queue_size(data->heredoc) > HERE_DOC_MAX)
-            get_err(MAX_HERE_DOC_EXCEEDED_ERR, 1);
-        print_commands(data->commands);
-        print_heredoc(data->heredoc);
-        run_heredoc(data, data->heredoc, data->commands);
-    }
-}
+//     while (1)
+//     {
+//         s = readline("minishell> ");
+//         data = parse_line(s, env);
+//         if (get_queue_size(data->heredoc) > HERE_DOC_MAX)
+//             get_err(MAX_HERE_DOC_EXCEEDED_ERR, 1);
+//         print_commands(data->commands);
+//         print_heredoc(data->heredoc);
+//         run_heredoc(data, data->heredoc, data->commands);
+//     }
+// }

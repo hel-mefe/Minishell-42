@@ -65,4 +65,6 @@ int	    ft_lstsize(t_env *lst);
 void	close_pipe(int **pipes, int a, int b, int n);
 void	my_heredoc(t_data	*data, t_env **env);
 void    print_heredoc(t_queue *head);
+void	ft_putstr_fd(char *s, int fd);
+
 #endif

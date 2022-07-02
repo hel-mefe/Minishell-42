@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 10:59:25 by ytijani           #+#    #+#             */
-/*   Updated: 2022/06/29 20:43:08 by marvin           ###   ########.fr       */
+/*   Updated: 2022/07/01 21:38:22 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i])
+	{
+		write (fd, &s[i], 1);
+		i++;
+	}
+}
 
 int	check_path(char *cmd)
 {

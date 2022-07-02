@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 15:23:33 by ytijani           #+#    #+#             */
-/*   Updated: 2022/06/29 16:46:04 by marvin           ###   ########.fr       */
+/*   Updated: 2022/07/01 21:33:12 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
- #include "mini.h"
+#include "mini.h"
 
 int	ft_strchr(const char *s, int c)
 {
