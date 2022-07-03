@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 10:59:25 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/01 21:38:22 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/03 19:03:59 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	ft_putstr_fd(char *s, int fd)
 		write (fd, &s[i], 1);
 		i++;
 	}
+
 }
 
 int	check_path(char *cmd)
@@ -42,16 +43,10 @@ void	ft_error1(int code, char *str)
 	if (code < 0)
 	{
 		ft_putstr_fd(str, 2);
-		exit(1);
+		exit(127);
 	}
 }
 
-char	*get_path(char **path)
-{
-	while (ft_strncmp("PATH=", *path, 5))
-		path++;
-	return (*path + 5);
-}
 
 char	*get_command(t_env **path, char *cmd)
 {
@@ -62,8 +57,8 @@ char	*get_command(t_env **path, char *cmd)
 	t_env   *new;
 
 	i = 0;
-	if (!*cmd)
-		ft_error1(-1, "command not found\n");
+	if (!cmd)
+		return (NULL);
 	new = search_element(path, "PATH");
 	tmp = ft_split(new->data, ':');
 	while (tmp[i])

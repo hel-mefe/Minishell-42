@@ -40,4 +40,5 @@ void    ft_echo(char **av)
     }
     if (echo_e == 0)
         printf("\n");
+	get_nb_status = 0;
 }

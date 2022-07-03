@@ -168,24 +168,27 @@ void    prepare_data(t_data *data)
             data->pipes[i] = (int *) malloc(2 * sizeof(int));
             pipe(data->pipes[i]);
         }
-        if (cmd->write_end == -1) // if there is no infile
+        if (cmd->error < 0)
         {
-            if (i == data->n_cmds - 1)
-                cmd->write_end = 1;
-            else
-                cmd->write_end = data->pipes[i][1];
-        }                
-        if (cmd->read_end == -1) // if there is no outfile
-        {
-            if (i == 0 && !cmd->has_heredoc)
-                cmd->read_end = 0;
-            else if (cmd->has_heredoc)
+            if (cmd->write_end == -1) // if there is no infile
             {
-                cmd->read_end = cmd->heredoc_pipe[0];
-                pipe(cmd->heredoc_pipe);
+                if (i == data->n_cmds - 1)
+                    cmd->write_end = 1;
+                else
+                    cmd->write_end = data->pipes[i][1];
+            }                
+            if (cmd->read_end == -1) // if there is no outfile
+            {
+                if (i == 0 && !cmd->has_heredoc)
+                    cmd->read_end = 0;
+                else if (cmd->has_heredoc)
+                {
+                    pipe(cmd->heredoc_pipe);
+                    cmd->read_end = cmd->heredoc_pipe[0];
+                }
+                else
+                    cmd->read_end = data->pipes[i - 1][0];
             }
-            else
-                cmd->read_end = data->pipes[i - 1][0];
         }
         cmd = cmd->next;
         i++;
@@ -201,6 +204,7 @@ t_data  *parse_line(char *s, char **env)
         return (NULL);
     data->commands = get_commands(s);
     data->heredoc = NULL;
+    data->commands->is_builtin = 0;
     data->env = env;
     data->is_syntax_valid = 1;
     parse_commands(data);

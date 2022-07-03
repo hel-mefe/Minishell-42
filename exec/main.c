@@ -26,6 +26,7 @@ void	handle_signals()
 	signal(SIGINT, handel_sigint);
 	signal(SIGQUIT, SIG_IGN);
 }
+
 void    run_builtin(t_env **env_v, char **av)
 {
     if ((ft_strcmp(av[0], "echo")) == 0)
@@ -80,8 +81,9 @@ char	**change_env(t_env **env_v)
 		return (NULL);
 	while(new)
 	{
-		buffer = ft_strjoin(new->name, "=");
-		res[i] = ft_strjoin(buffer, new->data);
+		res[i] = new->name;
+		// buffer = ft_strjoin(new->name, "=");
+		// res[i] = ft_strjoin(buffer, new->data);
 		new = new->next;
 		i++;
 	}
@@ -91,7 +93,11 @@ char	**change_env(t_env **env_v)
 
 void	ever(char **cmd, t_env **env_v, char **env)
 {
-	cmd[1] = 0;
+	char	*path;
+
+	path = get_command(env_v, *cmd);
+	if (!path)
+		exit(127);
 	if (execve(get_command(env_v, *cmd), cmd, env) == -1)
 	{
 		if (strstr(cmd[0], "/"))
@@ -109,8 +115,12 @@ void    run_cmd(t_env **env, t_data *data, t_cmd *cmd)
 	pid_t	pid;
 
 	str = change_env(env);
-	i = 0;
-
+	tmp = cmd;
+	if (cmd->is_builtin && cmd->next == NULL)
+	{
+		run_builtin(env, cmd->main_args);
+		return ;
+	}
     while(cmd)
     {
 		signal(SIGINT, SIG_IGN);
@@ -118,17 +128,22 @@ void    run_cmd(t_env **env, t_data *data, t_cmd *cmd)
 		if (pid < 0)
 		{
 			printf("pipe Error\n");
-			cmd->status= 127;
+			get_nb_status = 127;
 		}
 		if (pid == 0)
 		{
 			signal(SIGQUIT, SIG_DFL);
 			signal(SIGINT, SIG_DFL);
-        	close_pipe(data->pipes, check_infile(cmd), cmd->write_end, data->n_cmds);
+        	close_pipe(data->pipes, cmd->read_end, cmd->write_end, data->n_cmds);
+			printf("HAS_HEREDOC IN CMD ==> %d\n", cmd->has_heredoc);
+			if (cmd->error > 0)
+				ft_error1(-1, strerror(cmd->error));
+			if (cmd->is_builtin && cmd->next != NULL)
+				run_builtin(env, cmd->main_args);
+			
 			ever(cmd->main_args, env,str);
 		}
 		cmd = cmd->next;
-		i++;
     }
 	i = 0;
 	while (i < data->n_cmds - 1)
@@ -137,7 +152,14 @@ void    run_cmd(t_env **env, t_data *data, t_cmd *cmd)
 		close(data->pipes[i][1]);
 		i++;
 	}
-	while (wait(NULL) != -1);
+	while (tmp)
+	{
+		if ((waitpid(-1, &tmp->status, WUNTRACED)) < 0)
+			perror("waitpid");
+		if (WEXITSTATUS(tmp->status))
+			get_nb_status = WEXITSTATUS(tmp->status);
+		tmp = tmp->next;
+	}
 	handle_signals();
 }
 
@@ -162,8 +184,6 @@ int main(int ac, char **av, char **env)
 			exit(0);
 		}
         data = parse_line(s, env);
-		if (data->commands->is_builtin)
-		 	run_builtin(&env_v, data->commands->main_args);
 		run_heredoc(data, data->heredoc, data->commands);
        	run_cmd(&env_v, data, data->commands);
          //print_commands(data->commands);

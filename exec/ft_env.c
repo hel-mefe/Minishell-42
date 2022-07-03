@@ -30,7 +30,7 @@ void    init_env(t_env **env_v, char **env)
 		else
 			new->name = env[i];
 		if (env_v != NULL && new != NULL)
-        ft_lstadd_back(env_v, new);
+        	ft_lstadd_back(env_v, new);
         i++;
     }
 }

@@ -124,7 +124,7 @@ char    *expand_string(t_dollar *dollars, char **env, int *place, char *s)
                 part = slice(s, j, i);
                 res = ft_strjoin(res, part);
             }
-            res = ft_strjoin(res, ft_strdup("*STATUS*"));
+            res = ft_strjoin(res, ft_itoa(get_nb_status));
             i += 1;
             j = i + 1;
         }

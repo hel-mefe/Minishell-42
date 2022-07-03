@@ -12,6 +12,24 @@
 
 #include "mini.h"
 
+int	get_myid(t_env **env_v, char *name)
+{
+	t_env	*tmp;
+	t_env	*current;
+	int 	i;
+
+	tmp = *env_v;
+	i = 0;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->name, name) == 0)
+			return(i);
+		tmp = tmp->next;
+		i++;
+	}
+	return (0);
+}
+
 t_env	*search_element(t_env **env_v, char *name)
 {
 	t_env *tmp;

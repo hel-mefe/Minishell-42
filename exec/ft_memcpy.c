@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/12 15:23:33 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/02 16:58:00 by ytijani          ###   ########.fr       */
+/*   Created: 2021/11/12 14:26:26 by ytijani           #+#    #+#             */
+/*   Updated: 2022/07/03 18:13:42 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-int	ft_strchr(char *s, int c)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	size_t	i;
+	size_t				i;
+	unsigned char		*c_dest;
+	unsigned const char	*c_src;
 
 	i = 0;
-	while ((s[i] != '\0') && (s[i] != (char)c))
+	c_dest = (unsigned char *)dst;
+	c_src = (unsigned const char *)src;
+	if (!dst && !src)
+		return (NULL);
+	while (i < n)
 	{
+		c_dest[i] = c_src[i];
 		i++;
 	}
-	if (s[i] == (char)c)
-		return (1);
-	return (0);
+	return (dst);
 }

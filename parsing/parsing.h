@@ -28,6 +28,7 @@
  *  START OF THE QUEUE
  * ***/
 
+int get_nb_status;
 typedef struct queue
 {
     char            *s;

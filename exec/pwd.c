@@ -17,7 +17,6 @@ void    ft_pwd(void)
     char buffer[4096];
 
     if (getcwd(buffer, 4096))
-    {
         printf("%s\n",buffer);
-    }
+    get_nb_status = 0;
 }
