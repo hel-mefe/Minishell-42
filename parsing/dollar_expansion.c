@@ -81,7 +81,7 @@ char    *get_dollar(char *s)
     return (slice(s, 0, i));
 }
 
-t_dollar *get_all_dollars(char *s, char **env)
+t_dollar *get_all_dollars(char *s, char **env, t_env *main_env)
 {
     size_t      i;
     t_dollar    *new;
@@ -96,7 +96,7 @@ t_dollar *get_all_dollars(char *s, char **env)
         {
             dollar = get_dollar(s + i + 1);
             i += ft_strlen(dollar);
-            new = new_dollar(dollar, get_dollar_val(dollar, env));
+            new = new_dollar(dollar, get_dollar_val(dollar, env, main_env));
             push_back_dollar(&head, new);
         }
         else
@@ -105,18 +105,18 @@ t_dollar *get_all_dollars(char *s, char **env)
     return (head);
 }
 
-char    *get_dollar_val(char *var, char **env)
+char    *get_dollar_val(char *var, char **env, t_env *main_env)
 {
     size_t  i;
     size_t  len;
 
     len = ft_strlen(var);
     i = 0;
-    while (env[i])
+    while (main_env)
     {
-        if (!ft_strncmp(var, env[i], len) && env[i][len] == '=')
-            return (slice(env[i], len + 1, ft_strlen(env[i])));
-        i++;
+        if (!ft_strcmp(var, main_env->name))
+            return (ft_strdup(main_env->data));
+        main_env = main_env->next;
     }
     return (slice(var, 0, 0));
 }

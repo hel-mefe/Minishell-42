@@ -24,13 +24,13 @@
 
 #include "../parsing/parsing.h"
 
-typedef struct s_env
-{
-    char *name;
-    char *data;
-    char *value;
-    struct s_env *next;
-}   t_env;
+// typedef struct s_env
+// {
+//     char *name;
+//     char *data;
+//     char *value;
+//     struct s_env *next;
+// }   t_env;
 
 /*************builtins*******************/
 void    ft_echo(char **av);

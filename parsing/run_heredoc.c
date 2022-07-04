@@ -8,7 +8,7 @@ char	*expand_result(t_data *data, char *res)
 
 	if (!res)
 		return (NULL);
-	vars = get_all_dollars(res, data->env);
+	vars = get_all_dollars(res, data->env, data->main_env);
 	expanded = expand_string(vars, data->env, &place, res);
 	return (expanded);
 }

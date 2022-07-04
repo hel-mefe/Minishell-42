@@ -1,1 +1,1 @@
-gcc *.c -lreadline #../exec/*.c -lreadline -fsanitize=address -L /Users/ytijani/.brew/opt/readline/lib -I /Users/ytijani/.brew/opt/readline/include
+gcc *.c ../exec/*.c -lreadline  #../exec/*.c -lreadline -fsanitize=address -L /Users/ytijani/.brew/opt/readline/lib -I /Users/ytijani/.brew/opt/readline/include

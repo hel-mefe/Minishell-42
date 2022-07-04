@@ -195,7 +195,7 @@ void    prepare_data(t_data *data)
     }
 }
 
-t_data  *parse_line(char *s, char **env)
+t_data  *parse_line(char *s, char **env, t_env *main_env)
 {
     t_data  *data;
 
@@ -207,6 +207,7 @@ t_data  *parse_line(char *s, char **env)
     data->env = env;
     data->is_syntax_valid = 1;
     data->pipes = NULL;
+    data->main_env = main_env;
     parse_commands(data);
     mark_builtins(data->commands);
     data->n_cmds = get_commands_size(data->commands);
@@ -219,21 +220,29 @@ t_data  *parse_line(char *s, char **env)
  * void destroy_data(t_data **data); (double pointer as an argument)
  */
 
-// int main(int ac, char **av, char **env)
-// {
-//     char    *s;
-//     t_data  *data;
+int main(int ac, char **av, char **env)
+{
+    char    *s;
+    t_data  *data;
+    t_env   *main_env;
 
-//     while (1)
-//     {
-//         s = readline("minishell> ");
-//         data = parse_line(s, env);
-//         if (get_queue_size(data->heredoc) > HERE_DOC_MAX)
-//             get_err(MAX_HERE_DOC_EXCEEDED_ERR, 1);
-//         print_commands(data->commands);
-//         print_heredoc(data->heredoc);
-//         run_heredoc(data, data->heredoc, data->commands);
-//         free(s);
-//         destory_data(&data);
-//     }
-// }
+    init_env(&main_env, env);
+    // t_env *k = main_env;
+    // while (k)
+    // {
+    //     printf("%s => %s\n", k->name, k->data);
+    //     k = k->next;
+    // }
+    while (1)
+    {
+        s = readline("minishell> ");
+        data = parse_line(s, env, main_env);
+        if (get_queue_size(data->heredoc) > HERE_DOC_MAX)
+            get_err(MAX_HERE_DOC_EXCEEDED_ERR, 1);
+        print_commands(data->commands);
+        print_heredoc(data->heredoc);
+        run_heredoc(data, data->heredoc, data->commands);
+        free(s);
+        destory_data(&data);
+    }
+}

@@ -31,6 +31,14 @@
 
 int get_nb_status;
 
+typedef struct s_env
+{
+    char *name;
+    char *data;
+    char *value;
+    struct s_env *next;
+}   t_env;
+
 typedef struct queue
 {
     char            *s;
@@ -101,6 +109,7 @@ typedef struct s_data
     int     is_syntax_valid; // if syntax not valid then runni l heredoc w khrj fi7alatek ==> SYNTAX_ERROR
     char    *err;
     char    **env;
+    t_env   *main_env;
 }   t_data;
 
 /*** END DIAL MAIN STRUCTURE ***/
@@ -141,11 +150,11 @@ t_cmd   *get_command_by_id(t_cmd *head, int id);
 t_dollar    *new_dollar(char *var, char *val);
 t_dollar    *get_last_dollar(t_dollar *head);
 void    push_back_dollar(t_dollar **head, t_dollar *new);
-char    *get_dollar_val(char *var, char **env);
+char    *get_dollar_val(char *var, char **env, t_env *main_env);
 
 int is_dollar_char_valid(char c);
 char    *get_dollar(char *s);
-t_dollar *get_all_dollars(char *s, char **env);
+t_dollar *get_all_dollars(char *s, char **env, t_env *main_env);
 int is_dollar_valid(char *s);
 char    *expand_string(t_dollar *dollars, char **env, int *place, char *s);
 void    mark_builtins(t_cmd *head);
@@ -159,6 +168,7 @@ t_cmd   *new_command(t_cmd *head);
 t_cmd   *get_last_command(t_cmd *head);
 
 void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds);
+void    init_env(t_env **env_v, char **env);;
 
 void    destory_data(t_data **data);
 void    free_commands(t_cmd *cmd);

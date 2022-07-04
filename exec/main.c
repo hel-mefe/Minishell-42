@@ -164,31 +164,31 @@ void    run_cmd(t_env **env, t_data *data, t_cmd *cmd)
 }
 
 
-int main(int ac, char **av, char **env)
-{
-    (void)ac;
-    (void)av;
-    char    *s;
-    t_env   *env_v;
-    t_data  *data;
+// int main(int ac, char **av, char **env)
+// {
+//     (void)ac;
+//     (void)av;
+//     char    *s;
+//     t_env   *env_v;
+//     t_data  *data;
 
-    init_env(&env_v, env);
-	handle_signals();
-    while (1)
-    {
-        add_history(s);
-        s = readline("minishell> ");
-		if (s == NULL)
-		{
-			printf("exit\n");
-			exit(0);
-		}
-        data = parse_line(s, env);
-		run_heredoc(data, data->heredoc, data->commands);
-       	run_cmd(&env_v, data, data->commands);
-         //print_commands(data->commands);
-        // print_heredoc(data->heredoc);
-        free_queue(data->heredoc);
-		free(data);
-    }
-}
+//     init_env(&env_v, env);
+// 	handle_signals();
+//     while (1)
+//     {
+//         add_history(s);
+//         s = readline("minishell> ");
+// 		if (s == NULL)
+// 		{
+// 			printf("exit\n");
+// 			exit(0);
+// 		}
+//         data = parse_line(s, env);
+// 		run_heredoc(data, data->heredoc, data->commands);
+//        	run_cmd(&env_v, data, data->commands);
+//          //print_commands(data->commands);
+//         // print_heredoc(data->heredoc);
+//         free_queue(data->heredoc);
+// 		free(data);
+//     }
+// }

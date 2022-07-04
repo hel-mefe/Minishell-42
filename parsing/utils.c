@@ -215,7 +215,7 @@ size_t  get_string(char *s, int place, t_data *data, t_cmd *cmd)
         res = get_normal_string(s + i, cmd);
     if (s[i] != '\'' && place != HERE_DOC)
     {
-        dollars = get_all_dollars(s, data->env);
+        dollars = get_all_dollars(s, data->env, data->main_env);
         expanded_res = expand_string(dollars, data->env, &place, res);
     }
     else
