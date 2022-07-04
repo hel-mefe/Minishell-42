@@ -106,7 +106,6 @@ void    assign_string(char *s, int place, t_data *data, t_cmd *cmd)
         cmd->read_end = open(cmd->infile, O_RDONLY);
         if (cmd->read_end < 0)
             cmd->error = errno;
-        printf("ERRNO => %d\n", cmd->error);
         cmd->has_heredoc = 0;
     }
     else if (place == COMMAND)
@@ -121,10 +120,7 @@ void    assign_string(char *s, int place, t_data *data, t_cmd *cmd)
         else
             cmd->write_end = open(cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
         if (cmd->write_end < 0)
-        {
             cmd->error = errno;
-            printf("ERRNO => %d\n", cmd->error);
-        }
     }
     else if (place == HERE_DOC || place == EXPANDED_HERE_DOC)
     {
@@ -203,6 +199,7 @@ char    *get_doubly_string(char *s, t_cmd *cmd)
 size_t  get_string(char *s, int place, t_data *data, t_cmd *cmd)
 {
     size_t  i;
+    char    *k_res;
     char    *res;
     char    *expanded_res;
     t_dollar    *dollars;
@@ -222,11 +219,14 @@ size_t  get_string(char *s, int place, t_data *data, t_cmd *cmd)
         expanded_res = expand_string(dollars, data->env, &place, res);
     }
     else
-        expanded_res = res;
+        expanded_res = ft_strdup(res);
     i += ft_strlen(res);
+    k_res = expanded_res;
     expanded_res = remove_quotes(ft_strdup(expanded_res));
+    free(k_res);
     if (ft_strlen(expanded_res) == ft_strlen(res) && place == HERE_DOC)
         place = EXPANDED_HERE_DOC;
+    free(res);
     assign_string(expanded_res, place, data, cmd);
     return (i);
 }

@@ -111,8 +111,6 @@ void    parse_expression(char *s, t_data *data, t_cmd *cmd)
             cmd->error = 0;
             data->is_syntax_valid = 0;
         }
-        // if (i >= ft_strlen(s))
-        //     break ;
 		if (s[i] && is_space(s[i]))
 			i++;
         printf("%zu - %s\n", i, s + i);
@@ -120,7 +118,7 @@ void    parse_expression(char *s, t_data *data, t_cmd *cmd)
     printf("%zu\n", i);
     cmd->main_args = get_args(cmd);
     print_args(cmd->args, 0);
-    free_queue(cmd->args);
+    // free_queue(cmd->args);
 }
 
 void    parse_commands(t_data *data)
@@ -131,6 +129,7 @@ void    parse_commands(t_data *data)
     while (command)
     {
         command->has_heredoc = 0;
+        command->is_builtin = 0;
         parse_expression(command->line, data, command);
         command = command->next;
     }
@@ -158,7 +157,8 @@ void    prepare_data(t_data *data)
     t_cmd   *cmd;
 
 
-    data->pipes = (int **) malloc ((data->n_cmds - 1) * sizeof(int *));
+    data->pipes = (int **) malloc (data->n_cmds * sizeof(int *));
+    data->pipes[data->n_cmds - 1] = NULL;
     cmd = data->commands;
     i = 0;
     while (i < data->n_cmds)
@@ -204,15 +204,20 @@ t_data  *parse_line(char *s, char **env)
         return (NULL);
     data->commands = get_commands(s);
     data->heredoc = NULL;
-    data->commands->is_builtin = 0;
     data->env = env;
     data->is_syntax_valid = 1;
+    data->pipes = NULL;
     parse_commands(data);
     mark_builtins(data->commands);
     data->n_cmds = get_commands_size(data->commands);
     prepare_data(data);
     return (data);
 }
+
+/**
+ * QUICK NOTE -> USE destroy_data to free all the parsing data
+ * void destroy_data(t_data **data); (double pointer as an argument)
+ */
 
 // int main(int ac, char **av, char **env)
 // {
@@ -228,5 +233,7 @@ t_data  *parse_line(char *s, char **env)
 //         print_commands(data->commands);
 //         print_heredoc(data->heredoc);
 //         run_heredoc(data, data->heredoc, data->commands);
+//         free(s);
+//         destory_data(&data);
 //     }
 // }

@@ -41,23 +41,29 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 		ft_putstr("heredoc> ");
 		// s = readline("heredoc> ");
 		s = get_next_line(0);
-        keep_res = res;
+       // keep_res = res;
 		if (!ft_strcmp(s, limiters->s))
 		{
 			cmd = get_command_by_id(cmds, limiters->cmd_id);
 		    if (cmd && cmd->has_heredoc && (!limiters->next || limiters->next->cmd_id != cmd->cmd_id)) // last limiter that has been written in the pipe
 		    {
 				if (limiters->ex)
+				{
+					keep_res = res;
 					res = expand_result(data, res);
+					free(keep_res);
+				}
 				write(cmd->heredoc_pipe[1], res, ft_strlen(res));
 				close(cmd->heredoc_pipe[1]);
 			}
+			if (res)
+				free(res);
 			res = NULL;
 		    limiters = limiters->next;
 		}
 		else
-			res = ft_strjoin(res, s);
-		if (keep_res)
-			free(keep_res);
+			res = ft_strjoin_free(res, s);
+		// if (keep_res)
+		// 	free(keep_res);
 	}
 }

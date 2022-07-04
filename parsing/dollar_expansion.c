@@ -31,6 +31,41 @@ char    *ft_strjoin(char *s1, char *s2)
     return (res);
 }
 
+char    *ft_strjoin_free(char *s1, char *s2)
+{
+    char    *res;
+    size_t  len;
+    size_t  len1;
+    size_t  len2;
+    size_t  i;
+    size_t  j;
+
+    if (!s1 && s2)
+        return (s2);
+    else if (!s2 && s1)
+        return (s1);
+    else if (!s1 && !s2)
+        return (NULL);
+    len1 = ft_strlen(s1);
+    len2 = ft_strlen(s2);
+    len = len1 + len2;
+    res = (char *) malloc ((len + 1) * sizeof(char));
+    if (!res)
+        return (NULL);
+    i = -1;
+    while (++i < len1 && s1[i])
+        res[i] = s1[i];
+    j = 0;
+    while (i < len && s2[j])
+        res[i++] = s2[j++];
+    res[i] = 0;
+    if (s1)
+        free(s1);
+    if (s2)
+        free(s2);
+    return (res);
+}
+
 int is_dollar_char_valid(char c)
 {
     return (!is_space(c) && (ft_isalnum(c) || c == '_'));
@@ -92,6 +127,7 @@ char    *expand_string(t_dollar *dollars, char **env, int *place, char *s)
     size_t  j;
     char    *res;
     char    *part;
+    char    *k_res;
 
     res = NULL;
     i = 0;
@@ -100,8 +136,11 @@ char    *expand_string(t_dollar *dollars, char **env, int *place, char *s)
     {
         if (s[i] == '$' && ft_isdigit(s[i + 1]))
         {
+            k_res = res;
             part = slice(s, j, i);
-            res = ft_strjoin(res, part);
+            res = ft_strjoin_free(res, part);
+            // if (k_res)
+            //     free(k_res);
             i += 1;
             j = i + 1;
         }
@@ -109,29 +148,50 @@ char    *expand_string(t_dollar *dollars, char **env, int *place, char *s)
         {
             if (j != i)
             {
+                k_res = part;
                 part = slice(s, j, i);
-                res = ft_strjoin(res, part);
+                res = ft_strjoin_free(res, part);
+                // free(part);
+                // if (k_res)
+                //     free(k_res);
             }
+            k_res = res;
             res = ft_strjoin(res, dollars->val);
             i += ft_strlen(dollars->var);
             j = i + 1;
             dollars = dollars->next;
+            if (k_res)
+                free(k_res);
         }
         else if (s[i] == '$' && s[i + 1] == '?')
         {
             if (j != i)
             {
+                k_res = res;
                 part = slice(s, j, i);
-                res = ft_strjoin(res, part);
+                res = ft_strjoin_free(res, part);
+                // if (k_res)
+                //     free(k_res);
+                // free(part);
             }
-            res = ft_strjoin(res, ft_itoa(get_nb_status));
+            // k_res = res;
+            part = ft_itoa(get_nb_status);
+            res = ft_strjoin_free(res, part);
+            // if (k_res)
+            //     free(k_res);
             i += 1;
             j = i + 1;
         }
         i++;
     }
     if (i != j)
-        res = ft_strjoin(res, slice(s, j, i));
+    {
+        // k_res = res;
+        part = slice(s, j, i);
+        res = ft_strjoin_free(res, part);
+        // if (k_res)
+        //     free(k_res);
+    }
     if (!res[0])
         *place = NONE;
     return (res);

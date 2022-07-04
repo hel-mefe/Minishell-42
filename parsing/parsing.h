@@ -10,6 +10,7 @@
 
 # define SYNTAX_ERR "SYNTAX ERROR!";
 # define MAX_HERE_DOC_EXCEEDED_ERR "MAX HEREDOC LIMITERS HAVE BEEN EXCEEDED!"
+# define REDIRECTION_ERR "Unambiguous redirection error!"
 
 # define NONE 0
 # define INFILE 1
@@ -29,6 +30,7 @@
  * ***/
 
 int get_nb_status;
+
 typedef struct queue
 {
     char            *s;
@@ -105,6 +107,7 @@ typedef struct s_data
 
 void    ft_putstr(char *s);
 char    *ft_strjoin(char *s1, char *s2);
+char    *ft_strjoin_free(char *s1, char *s2);
 char    *ft_strdup(const char *s);
 char    *slice(char *s, size_t a, size_t b);
 char    *get_normal_string(char *s, t_cmd *cmd);
@@ -161,7 +164,7 @@ void    destory_data(t_data **data);
 void    free_commands(t_cmd *cmd);
 void    free_dollars(t_dollar *head);
 void    free_double_char_arr(char **arr);
-void    free_double_int_arr(int **arr);
+void    free_double_int_arr(int **arr, int size);
 void    free_queue(t_queue *head);
 
 char	*ft_itoa(int n);
