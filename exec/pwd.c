@@ -12,11 +12,20 @@
 
 #include "mini.h"
 
-void    ft_pwd(void)
+void    ft_pwd(t_env **env_v)
 {
-    char buffer[4096];
+    char buffer[1024];
+    t_env *new;
 
-    if (getcwd(buffer, 4096))
+    new = search_element(env_v, "PWD");
+    if (getcwd(buffer, 1024))
+    {
         printf("%s\n",buffer);
-    get_nb_status = 0;
+        get_nb_status = 0;
+    }
+    else if (getcwd(buffer, 1024) == NULL)
+    {
+        printf("%s\n", new->data);
+        get_nb_status = 1;
+    }
 }

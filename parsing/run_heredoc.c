@@ -41,6 +41,7 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 		ft_putstr("heredoc> ");
 		// s = readline("heredoc> ");
 		s = get_next_line(0);
+		
        // keep_res = res;
 		if (!ft_strcmp(s, limiters->s))
 		{

@@ -1,0 +1,22 @@
+total 408
+-rwxr-xr-x  1 ytijani  2019  118280 Jul 18 19:52 a.out
+-rwxr-xr-x  1 ytijani  2019    2546 Jul 18 18:49 cmd.c
+-rw-r--r--  1 ytijani  2019    1695 Jul 18 17:06 destroy.c
+-rwxr-xr-x  1 ytijani  2019    4882 Jul 18 17:06 dollar_expansion.c
+-rw-r--r--  1 ytijani  2019     189 Jul 18 19:12 errors.c
+-rw-r--r--  1 ytijani  2019      22 Jul 18 17:06 execution.c
+-rw-r--r--  1 ytijani  2019    2575 Jul 18 17:06 get_next_line.c
+-rw-r--r--  1 ytijani  2019    1489 Jul 18 17:06 get_next_line.h
+-rw-r--r--  1 ytijani  2019    1535 Jul 18 17:06 get_next_line_utils.c
+-rwxr-xr-x  1 ytijani  2019    1661 Jul 18 17:06 here_doc.c
+-rwxr-xr-x  1 ytijani  2019    6236 Jul 18 17:07 parsing.c
+-rwxr-xr-x  1 ytijani  2019    5337 Jul 18 19:47 parsing.h
+-rwxr-xr-x  1 ytijani  2019     135 Jul 18 17:21 run.sh
+-rw-r--r--  1 ytijani  2019    1314 Jul 18 19:50 run_heredoc.c
+-rw-r--r--  1 ytijani  2019      22 Jul 18 19:01 test
+-rw-r--r--  1 ytijani  2019       0 Jul 18 17:06 test.c
+-rw-r--r--  1 ytijani  2019       0 Jul 18 19:54 testFile
+-rwxr-xr-x  1 ytijani  2019    5083 Jul 18 17:06 utils.c
+-rwxr-xr-x  1 ytijani  2019    2399 Jul 18 18:51 utils2.c
+-rw-r--r--  1 ytijani  2019    2784 Jul 18 17:06 utils3.c
+-rw-r--r--  1 ytijani  2019     733 Jul 18 17:06 utils4.c

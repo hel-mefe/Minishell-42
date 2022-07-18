@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 14:04:04 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/02 16:34:45 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/04 22:14:00 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_lstsize(t_env *lst)
 {
 	unsigned int	count;
-
+	
 	count = 0;
 	if (lst == NULL)
 		return (0);

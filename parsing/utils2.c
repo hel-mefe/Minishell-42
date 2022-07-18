@@ -81,7 +81,7 @@ char    **get_args(t_cmd *cmd)
     t_queue *head;
 
     args_size = get_queue_size(cmd->args) + 1;
-    printf("ARGS_SIZE => %zu\n", args_size);
+    // printf("ARGS_SIZE => %zu\n", args_size);
     res = malloc ((args_size + 1) * sizeof(char *));
     if (!res)
         return (NULL);

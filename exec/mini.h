@@ -36,14 +36,14 @@
 void    ft_echo(char **av);
 void    ft_cd(t_env **env_v, char **av);
 void	ft_export(t_env **env_v, char **av);
-void    ft_pwd(void);
+void    ft_pwd(t_env **env_v);
 void	ft_env(t_env **env_v, char **av);
 /**************Help->builtins*******************/
 void    init_env(t_env **env_v, char **env);
 void    ft_sort(t_env **env_v);
 void    run_builtin(t_env **env_v, char **av);
 void	print_export(t_env **env_v);
-void    ft_unset(t_env **env_v, char *name);
+void    ft_unset(t_env **env_v, char **name);
 /*************help_linked_list*******************/
 void	ft_lstadd_back(t_env **lst, t_env *new);
 t_env	*ft_lstnew(char *name, char *data);
@@ -53,11 +53,14 @@ char	**ft_split(char const *s, char c);
 int     ft_strchr(char *s, int c);
 char	*ft_strjoin(char *s1, char *s2);
 void	ft_putstr_fd(char *s, int fd);
+/***************handle_signals****************/
+void	handle_signals();
+void	handel_sigint(int sig);
 /***************Check_Error****************/
 void	ft_error1(int code, char *str);
 char	*get_command(t_env	**path, char *cmd);
 t_data  *get_data(t_env   **env);
-t_data  *parse_line(char *s, char **env);
+t_data  *parse_line(char *s, char **env, t_env *main_env);
 void    free_queue(t_queue *head);
 void    print_commands(t_cmd *head);
 t_env	*search_element(t_env **env_v, char *name);
@@ -71,4 +74,6 @@ void	ft_putstr_fd(char *s, int fd);
 t_env	*add_env(char *name);
 int		get_myid(t_env **env_v, char *name);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
+size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize);
+void    free_double_char_arr(char **arr);
 #endif

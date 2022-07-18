@@ -180,5 +180,7 @@ void    free_queue(t_queue *head);
 char	*ft_itoa(int n);
 char    *get_next_line(int fd);
 void    get_err(char *err, int is_exit);
-
+/***************handle_signals****************/
+void	handle_signals();
+void	handel_sigint(int sig);
 # endif

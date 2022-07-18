@@ -26,13 +26,15 @@ void    init_env(t_env **env_v, char **env)
 		{
 			spl = ft_split(env[i],'=');
         	new = ft_lstnew(spl[0], spl[1]);
+			free(spl);
 		}
 		else
 			new->name = env[i];
 		if (env_v != NULL && new != NULL)
         	ft_lstadd_back(env_v, new);
+		
         i++;
-    }
+	}
 }
 
 void	ft_env(t_env **env_v, char **av)
@@ -42,14 +44,21 @@ void	ft_env(t_env **env_v, char **av)
 
 	i = 0;
 	env = *env_v;
-	if (av[i + 1] == '\0')
+	if (av[i + 1] == '\0' && search_element(env_v, "PATH"))
 	{
 		while (env)
 		{
-			printf("%s=%s\n",env->name , env->data);
+			if (env->data != NULL)
+				printf("%s=%s\n",env->name , env->data);
 			env = env->next;
 		}
 	}
 	else
-		write(2,"Error\n",6);
+	{
+		get_nb_status = 127;
+		if (search_element(env_v, "PATH"))
+			printf("env : %s :  No such file or directory\n", av[i + 1]);
+		else
+			printf("env : No such file or directory\n");
+	}
 }

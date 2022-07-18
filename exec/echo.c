@@ -12,33 +12,51 @@
 
 #include "mini.h"
 
+void    print_echo(char **s)
+{
+    int i;
+
+    i = 0;
+    while (s[i])
+    {
+        printf("%s", s[i]);
+        if (s[i + 1])
+            printf(" ");
+        i++;
+    }
+}
+
+int     check_new(char *str)
+{
+    int	i;
+
+	i = 1;
+	while (str[i])
+    {
+        if (str[i] != 'n')
+            return (1);
+        i++;
+    }
+	return (0);
+}
+
 void    ft_echo(char **av)
 {
     int i;
-    int j;
-    int echo_e;
+    int new_line;
 
     i = 1;
-    echo_e = 0;
-    j = 0;
-    while(av[i][0] == '-'  &&  av[i][1] == 'n')
+    new_line = 0;
+    while(av[i] && av[i][0] == '-' && av[i][1] != '\0')
     {
-        j = 1;
-        while (av[i][j] == 'n')
-        {
-            echo_e = 1;
-            j++;
-        }
+        if (!check_new(av[i]))
+            new_line = 1;
+        else
+            break ;
         i++;
     }
-    while (av[i])
-    {
-        printf("%s", av[i]);
-        if (av[i] && av[i + 1])
-                printf(" ");
-        i++;
-    }
-    if (echo_e == 0)
-        printf("\n");
-	get_nb_status = 0;
+    print_echo(&av[i]);
+    if(!new_line)
+		printf("\n");
+    get_nb_status = 0;
 }

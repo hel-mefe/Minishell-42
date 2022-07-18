@@ -59,25 +59,42 @@ void	print_export(t_env **env_v)
 	}
 }
 
-void	check_evr(t_env **env_v, char **spl)
+int	is_isdigit(int c)
 {
-	int index;
+	if (c >= 48 && c <= 57)
+		return (1);
+	return (0);
+}
+
+void	check_evr(t_env **env_v, char **spl, char **av, int i)
+{
 	t_env *new;
 
 	new = *env_v;
-	new = search_element(env_v, spl[0]);
-	// index = get_myid(env_v, spl[0]);
-	// printf("my spl[0]-->%s\n", spl[0]);
-	if (new != NULL)
+	if (av[i][ft_strlen(spl[0]) - 1] != '+')
 	{
-		free(new->data);
-		new->data = spl[1];
-	}
-	else
+		new = search_element(env_v, spl[0]);
+		if (new != NULL)
 		{
-		new = ft_lstnew(spl[0], spl[1]);
-		ft_lstadd_back(env_v, new);
+			free(new->data);
+			new->data = spl[1];
 		}
+		else
+		{
+			new = ft_lstnew(spl[0], spl[1]);
+			ft_lstadd_back(env_v, new);
+		}
+	}
+	else if (av[i][ft_strlen(spl[0]) - 1] == '+')
+	{
+		spl[0] = ft_substr(av[i], 0, ft_strlen(spl[0]) - 1);
+		new = search_element(env_v, spl[0]);
+		if (new)
+			new->data = ft_strjoin(new->data, spl[1]);
+		else
+			new = ft_lstnew(spl[0], spl[1]);
+			ft_lstadd_back(env_v, new);
+	}
 }
 
 void	ft_export(t_env **env_v, char **av)
@@ -87,11 +104,12 @@ void	ft_export(t_env **env_v, char **av)
 	char *sig;
 	t_env *new;
 
-	i = 0;
-	if (av[i + 1] == '\0')
+	i = 1;
+	if (av[i] == '\0')
 		print_export(env_v);
-	else if (av[i + 1] != '\0')
+	else if (av[i] != '\0' && (ft_isalpha(av[i][0]) || av[i][0] == '_'))
 	{
+		get_nb_status = 0;
 		while (av[i])
 		{
 			sig = strstr(av[i], "=");
@@ -100,10 +118,23 @@ void	ft_export(t_env **env_v, char **av)
 				spl[1] = strdup(sig + 1);
 				spl[0] = *ft_split(av[i], '=');
 				if (spl[1] != NULL)
-					check_evr(env_v, spl);
+					check_evr(env_v, spl, av, i);
 			}
+			else 
+				{
+					if (search_element(env_v, av[i]) == NULL)
+					{
+						spl[1] = NULL;
+						spl[0] = *ft_split(av[i], '=');
+						check_evr(env_v, spl, av, 0);
+					}
+				}
 			i++;
 		}
-	} 
-	get_nb_status = 0;
+	}
+	else 
+	{
+		ft_putstr_fd("not a valid identifier\n", 2);
+		get_nb_status = 1;
+	}
 }
