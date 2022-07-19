@@ -29,7 +29,14 @@
  *  START OF THE QUEUE
  * ***/
 
+typedef struct s_global
+{
+    int get_nb_status;
+    int get_nb;
+    int new;
+}   t_global;
 int get_nb_status;
+t_global global;
 
 typedef struct s_env
 {

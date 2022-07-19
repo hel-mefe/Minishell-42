@@ -14,11 +14,20 @@
 
 void	handel_sigint(int sig)
 {
-	(void)sig;
-	write(1,"\n", 2);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (sig == SIGINT && global.get_nb == 0)
+	{
+		write(1,"\n", 2);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	else if (sig == SIGINT && global.get_nb == 1)
+	{
+		global.new = dup(0);
+		global.get_nb= -1;
+		printf("\n");
+		close(0);
+	}
 }
 
 void	handle_signals()

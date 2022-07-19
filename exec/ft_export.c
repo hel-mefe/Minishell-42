@@ -113,14 +113,20 @@ void	ft_export(t_env **env_v, char **av)
 		while (av[i])
 		{
 			sig = strstr(av[i], "=");
-			if (sig)
+			if (!av[i][ft_strlen(sig)])
+			{
+				ft_putstr_fd(ft_strjoin(av[i], " : not a valid identifier\n"), 2);
+				get_nb_status = 1;
+				break;
+			}
+			else if (sig)
 			{
 				spl[1] = strdup(sig + 1);
 				spl[0] = *ft_split(av[i], '=');
-				if (spl[1] != NULL)
+				if (spl[1] != NULL && spl[0] != NULL)
 					check_evr(env_v, spl, av, i);
 			}
-			else 
+			else
 				{
 					if (search_element(env_v, av[i]) == NULL)
 					{

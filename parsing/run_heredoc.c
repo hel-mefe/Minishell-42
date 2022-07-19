@@ -1,4 +1,5 @@
 #include "parsing.h"
+#include "../exec/mini.h"
 
 char	*expand_result(t_data *data, char *res)
 {
@@ -36,13 +37,14 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 	t_cmd	*cmd;
 
 	res = NULL;
+	global.get_nb = 0;
 	while (limiters)
 	{
-		ft_putstr("heredoc> ");
-		// s = readline("heredoc> ");
-		s = get_next_line(0);
-		
-       // keep_res = res;
+		global.get_nb = 1;
+		s = readline("haredoc> ");
+		handle_signals();
+		if (global.get_nb == -1)
+			break ;
 		if (!ft_strcmp(s, limiters->s))
 		{
 			cmd = get_command_by_id(cmds, limiters->cmd_id);
@@ -54,7 +56,7 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 					res = expand_result(data, res);
 					free(keep_res);
 				}
-				write(cmd->heredoc_pipe[1], res, ft_strlen(res));
+				write(cmd->heredoc_pipe[1], ft_strjoin(res,"\n"), ft_strlen(res));
 				close(cmd->heredoc_pipe[1]);
 			}
 			if (res)
@@ -66,5 +68,7 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 			res = ft_strjoin_free(res, s);
 		// if (keep_res)
 		// 	free(keep_res);
+
 	}
+	dup(global.new);
 }
