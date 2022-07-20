@@ -1,4 +1,5 @@
-#include "parsing.h"
+#include "../include/parsing.h"
+
 
 int get_commands_size(t_cmd *head)
 {

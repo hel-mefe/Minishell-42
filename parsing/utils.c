@@ -1,4 +1,4 @@
-#include "parsing.h"
+#include "../include/parsing.h"
 
 int     is_builtin(char *cmd)
 {

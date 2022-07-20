@@ -6,11 +6,11 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 15:23:33 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/02 16:58:00 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/20 19:36:54 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
+#include "../include/mini.h"
 
 int	ft_strchr(char *s, int c)
 {

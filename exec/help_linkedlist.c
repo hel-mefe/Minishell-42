@@ -6,16 +6,16 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 14:04:04 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/04 22:14:00 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/20 19:56:38 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
+#include "../include/mini.h"
 
 int	ft_lstsize(t_env *lst)
 {
 	unsigned int	count;
-	
+
 	count = 0;
 	if (lst == NULL)
 		return (0);
@@ -54,4 +54,28 @@ t_env	*ft_lstnew(char *name, char *data)
 	res->data = data;
 	res->next = NULL;
 	return (res);
+}
+
+t_env	*search_element(t_env **env_v, char *name)
+{
+	t_env	*tmp;
+	t_env	*current;
+
+	tmp = *env_v;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->name, name) == 0)
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+void	add_to_list(t_env **env_v, char **spl)
+{
+	t_env	*new;
+
+	new = *env_v;
+	new = ft_lstnew(spl[0], spl[1]);
+	ft_lstadd_back(env_v, new);
 }

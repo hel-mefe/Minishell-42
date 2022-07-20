@@ -6,11 +6,11 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 10:59:25 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/18 18:21:51 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/20 19:55:20 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
+#include "../include/mini.h"
 
 void	ft_putstr_fd(char *s, int fd)
 {
@@ -46,16 +46,29 @@ void	ft_error1(int code, char *str)
 	}
 }
 
+char	*check_access(char **tmp, char *tab, char *cmd, int i)
+{
+	char	*command;
+
+	tab = ft_strjoin(tmp[i], "/");
+	command = ft_strjoin(tab, cmd);
+	free(tab);
+	if (access(command, X_OK) == 0)
+		return (command);
+	free(command);
+	free(tmp[i]);
+	return (NULL);
+}
+
 char	*get_command(t_env **path, char *cmd)
 {
 	char	**tmp;
 	char	*tab;
 	char	*command;
 	int		i;
-	t_env   *new;
+	t_env	*new;
 
 	i = 0;
-
 	if (!cmd)
 		return (NULL);
 	if (check_path(cmd))
@@ -68,13 +81,8 @@ char	*get_command(t_env **path, char *cmd)
 	tmp = ft_split(new->data, ':');
 	while (tmp[i])
 	{
-		tab = ft_strjoin(tmp[i], "/");
-		command = ft_strjoin(tab, cmd);
-		free(tab);
-		if (access(command, X_OK) == 0)
-			return (command);
-		free(command);
-		free(tmp[i]);
+		if (check_access(tmp, tab, cmd, i))
+			return (check_access(tmp, tab, cmd, i));
 		i++;
 	}
 	free(tmp);

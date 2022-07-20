@@ -1,0 +1,34 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/ytijani/Desktop/lo'
+cc    -c -o builtins/cd.o builtins/cd.c
+cc    -c -o builtins/echo.o builtins/echo.c
+cc    -c -o builtins/ft_env.o builtins/ft_env.c
+cc    -c -o builtins/ft_export.o builtins/ft_export.c
+cc    -c -o builtins/ft_unset.o builtins/ft_unset.c
+cc    -c -o builtins/pwd.o builtins/pwd.c
+cc    -c -o exec/ft_memcpy.o exec/ft_memcpy.c
+cc    -c -o exec/ft_split.o exec/ft_split.c
+cc    -c -o exec/ft_strchr.o exec/ft_strchr.c
+cc    -c -o exec/ft_strlcpy.o exec/ft_strlcpy.c
+ 
+cc    -c -o exec/get_path.o exec/get_path.c
+cc    -c -o exec/help_linkedlist.o exec/help_linkedlist.c
+cc    -c -o exec/exec_cmd.o exec/exec_cmd.c
+cc    -c -o parsing/cmd.o parsing/cmd.c
+cc    -c -o parsing/destroy.o parsing/destroy.c
+cc    -c -o parsing/dollar_expansion.o parsing/dollar_expansion.c
+cc    -c -o parsing/errors.o parsing/errors.c
+ 
+cc    -c -o parsing/here_doc.o parsing/here_doc.c
+cc    -c -o parsing/parsing.o parsing/parsing.c
+cc    -c -o parsing/run_heredoc.o parsing/run_heredoc.c
+cc    -c -o parsing/utils.o parsing/utils.c
+cc    -c -o parsing/utils2.o parsing/utils2.c
+cc    -c -o parsing/utils3.o parsing/utils3.c
+cc    -c -o parsing/utils4.o parsing/utils4.c
+cc    -c -o parsing/get_next_line.o parsing/get_next_line.c
+cc    -c -o parsing/get_next_line_utils.o parsing/get_next_line_utils.c
+cc    -c -o exec/main.o exec/main.c
+cc  -lreadline -fsanitize=address -L /Users/ytijani/.brew/opt/readline/lib -I /Users/ytijani/.brew/opt/readline/include builtins/cd.c builtins/echo.c builtins/ft_env.c builtins/ft_export.c builtins/ft_unset.c builtins/pwd.c exec/ft_memcpy.c exec/ft_split.c exec/ft_strchr.c exec/ft_strlcpy.c exec/get_path.c exec/help_linkedlist.c exec/exec_cmd.c parsing/cmd.c parsing/destroy.c parsing/dollar_expansion.c parsing/errors.c parsing/here_doc.c parsing/parsing.c parsing/run_heredoc.c parsing/utils.c parsing/utils2.c parsing/utils3.c parsing/utils4.c parsing/get_next_line.c parsing/get_next_line_utils.c exec/main.c -o minishell
+make: Leaving directory `/Users/ytijani/Desktop/lo'
+ 

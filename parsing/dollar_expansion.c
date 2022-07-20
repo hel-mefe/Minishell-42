@@ -1,4 +1,4 @@
-#include "parsing.h"
+#include "../include/parsing.h"
 
 char    *ft_strjoin(char *s1, char *s2)
 {
@@ -174,7 +174,7 @@ char    *expand_string(t_dollar *dollars, char **env, int *place, char *s)
                 // free(part);
             }
             // k_res = res;
-            part = ft_itoa(get_nb_status);
+            part = ft_itoa(g_global.get_nb_status);
             res = ft_strjoin_free(res, part);
             // if (k_res)
             //     free(k_res);

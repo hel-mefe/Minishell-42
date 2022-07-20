@@ -6,11 +6,11 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 14:26:26 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/03 18:13:42 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:43:27 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
+#include "../include/mini.h"
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {

@@ -6,11 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:26:28 by marvin            #+#    #+#             */
-/*   Updated: 2022/06/26 19:39:42 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/20 13:31:34 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
+#include "../include/mini.h"
 
 void	ft_sort(t_env **env_v)
 {
@@ -41,17 +41,17 @@ void	ft_sort(t_env **env_v)
 
 void	print_export(t_env **env_v)
 {
-	t_env *new;
+	t_env	*new;
 
 	ft_sort(env_v);
 	new = *env_v;
-	while(new)
+	while (new)
 	{
-		printf("declare -x %s",new->name);
+		printf("declare -x %s", new->name);
 		if (new->data != NULL)
 		{
 			printf("=\"");
-			printf("%s",new->data);
+			printf("%s", new->data);
 			printf("\"");
 		}
 		printf("\n");
@@ -59,16 +59,9 @@ void	print_export(t_env **env_v)
 	}
 }
 
-int	is_isdigit(int c)
-{
-	if (c >= 48 && c <= 57)
-		return (1);
-	return (0);
-}
-
 void	check_evr(t_env **env_v, char **spl, char **av, int i)
 {
-	t_env *new;
+	t_env	*new;
 
 	new = *env_v;
 	if (av[i][ft_strlen(spl[0]) - 1] != '+')
@@ -80,10 +73,7 @@ void	check_evr(t_env **env_v, char **spl, char **av, int i)
 			new->data = spl[1];
 		}
 		else
-		{
-			new = ft_lstnew(spl[0], spl[1]);
-			ft_lstadd_back(env_v, new);
-		}
+			add_to_list(env_v, spl);
 	}
 	else if (av[i][ft_strlen(spl[0]) - 1] == '+')
 	{
@@ -92,55 +82,56 @@ void	check_evr(t_env **env_v, char **spl, char **av, int i)
 		if (new)
 			new->data = ft_strjoin(new->data, spl[1]);
 		else
-			new = ft_lstnew(spl[0], spl[1]);
-			ft_lstadd_back(env_v, new);
+			add_to_list(env_v, spl);
+	}
+}
+
+void	help_export(t_env **env_v, char *sig, char **av, int i)
+{
+	char	*spl[2];
+
+	if (sig)
+	{
+		spl[1] = strdup(sig + 1);
+		spl[0] = *ft_split(av[i], '=');
+		if (spl[1] != NULL && spl[0] != NULL)
+			check_evr(env_v, spl, av, i);
+	}
+	else
+	{
+		if (search_element(env_v, av[i]) == NULL)
+		{
+			spl[1] = NULL;
+			spl[0] = *ft_split(av[i], '=');
+			check_evr(env_v, spl, av, 0);
+		}
 	}
 }
 
 void	ft_export(t_env **env_v, char **av)
 {
-	int i;
-	char *spl[2];
-	char *sig;
-	t_env *new;
+	int		i;
+	char	*sig;
+	t_env	*new;
 
 	i = 1;
 	if (av[i] == '\0')
 		print_export(env_v);
-	else if (av[i] != '\0' && (ft_isalpha(av[i][0]) || av[i][0] == '_'))
+	else
 	{
-		get_nb_status = 0;
+		g_global.get_nb_status = 0;
 		while (av[i])
 		{
 			sig = strstr(av[i], "=");
-			if (!av[i][ft_strlen(sig)])
+			if (!av[i][ft_strlen(sig)] ||
+					(!ft_isalpha(av[i][0]) && av[i][0] != '_'))
 			{
-				ft_putstr_fd(ft_strjoin(av[i], " : not a valid identifier\n"), 2);
-				get_nb_status = 1;
-				break;
-			}
-			else if (sig)
-			{
-				spl[1] = strdup(sig + 1);
-				spl[0] = *ft_split(av[i], '=');
-				if (spl[1] != NULL && spl[0] != NULL)
-					check_evr(env_v, spl, av, i);
+				ft_putstr_fd(ft_strjoin(av[i], ": not a valid identifier\n"), 2);
+				g_global.get_nb_status = 1;
 			}
 			else
-				{
-					if (search_element(env_v, av[i]) == NULL)
-					{
-						spl[1] = NULL;
-						spl[0] = *ft_split(av[i], '=');
-						check_evr(env_v, spl, av, 0);
-					}
-				}
+				help_export(env_v, sig, av, i);
 			i++;
 		}
-	}
-	else 
-	{
-		ft_putstr_fd("not a valid identifier\n", 2);
-		get_nb_status = 1;
 	}
 }

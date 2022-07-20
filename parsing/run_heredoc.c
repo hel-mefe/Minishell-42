@@ -1,5 +1,5 @@
-#include "parsing.h"
-#include "../exec/mini.h"
+
+#include "../include/parsing.h"
 
 char	*expand_result(t_data *data, char *res)
 {
@@ -37,13 +37,13 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 	t_cmd	*cmd;
 
 	res = NULL;
-	global.get_nb = 0;
+	g_global.get_nb = 0;
 	while (limiters)
 	{
-		global.get_nb = 1;
+		g_global.get_nb = 1;
 		s = readline("haredoc> ");
 		handle_signals();
-		if (global.get_nb == -1)
+		if (g_global.get_nb == -1)
 			break ;
 		if (!ft_strcmp(s, limiters->s))
 		{
@@ -70,5 +70,5 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 		// 	free(keep_res);
 
 	}
-	dup(global.new);
+	dup(g_global.new);
 }

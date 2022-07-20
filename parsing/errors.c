@@ -1,4 +1,4 @@
-#include "parsing.h"
+#include "../include/parsing.h"
 
 void    get_err(char *err, int is_exit)
 {

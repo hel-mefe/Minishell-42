@@ -6,12 +6,11 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 14:33:33 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/18 17:00:30 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:43:44 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "mini.h"
+#include "../include/mini.h"
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize)
 {
