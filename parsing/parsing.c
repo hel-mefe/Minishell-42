@@ -77,9 +77,29 @@ void    print_heredoc(t_queue *head)
     }
 }
 
+void    is_there_any_alpha(t_data *data, char *s, int is_heredoc)
+{
+    size_t  i;
+
+    i = 0;
+    while (s[i])
+    {
+        if (!is_space(s[i]) && s[i] != '|')
+            return ;
+        if (s[i] == '|' && is_heredoc)
+        {
+            data->err = SYNTAX_ERR_NEAR_PIPE;
+            return ;
+        }
+        i++;
+    }
+    data->err = SYNTAX_ERR;
+}
+
 void    parse_expression(char *s, t_data *data, t_cmd *cmd)
 {
     size_t  i;
+    size_t  j;
     int     place;
     char    *res;
 
@@ -91,16 +111,24 @@ void    parse_expression(char *s, t_data *data, t_cmd *cmd)
         else if (s[i] == '>' && s[i + 1] == '>')
         {
             cmd->outfile_mode = O_APPEND;
+            j = i;
             i += get_string(s + i + 2, OUTFILE, data, cmd) + 2;
+            is_there_any_alpha(data, s + j + 2, 0);
             if (i > ft_strlen(s))
                 break ;
         }
         else if (s[i] == '<')
+        {
+            j = i;
             i += get_string(s + i + 1, INFILE, data, cmd) + 1;
+            is_there_any_alpha(data, s + j + 1, 0);
+        }
         else if (s[i] == '>')
         {
+            j = i;
             cmd->outfile_mode = O_CREAT;
             i += get_string(s + i + 1, OUTFILE, data, cmd) + 1;
+            is_there_any_alpha(data, s + j + 1, 0);
         }
         else if (!is_space(s[i]) && !cmd->cmd_name)
             i += get_string(s + i, COMMAND, data, cmd);
@@ -111,14 +139,14 @@ void    parse_expression(char *s, t_data *data, t_cmd *cmd)
             cmd->error = 0;
             data->is_syntax_valid = 0;
         }
+        if (s[i] == '|')
+            data->err = UNEXPECTED_PIPE_TOKEN_ERR;
+        if (data->err)
+            break ;
 		if (s[i] && is_space(s[i]))
 			i++;
-        printf("%zu - %s\n", i, s + i);
     }
-    printf("%zu\n", i);
     cmd->main_args = get_args(cmd);
-    print_args(cmd->args, 0);
-    // free_queue(cmd->args);
 }
 
 void    parse_commands(t_data *data)
@@ -202,12 +230,13 @@ t_data  *parse_line(char *s, char **env, t_env *main_env)
     data = (t_data *) malloc (sizeof(t_data));
     if (!data)
         return (NULL);
-    data->commands = get_commands(s);
+    data->commands = get_commands(data, s);
     data->heredoc = NULL;
     data->env = env;
     data->is_syntax_valid = 1;
     data->pipes = NULL;
     data->main_env = main_env;
+    data->err = NULL;
     parse_commands(data);
     mark_builtins(data->commands);
     data->n_cmds = get_commands_size(data->commands);

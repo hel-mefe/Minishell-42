@@ -55,13 +55,11 @@ void    mark_breaking_quotes(char *s)
     {
         if (c == 0 && (s[i] == '\'' || s[i] == '\"'))
         {
-            printf("%zu\n", i);
             c = s[i];
             s[i] = BREAKING_POINT;
         }
         else if (c && s[i] == c)
         {
-            printf("%zu\n", i);
             if (search_for_char(s + i + 1, opposite, c) || (s[i] == '\"' && s[i + 1] == '\"'))
                 s[i] = BREAKING_POINT;
             else if (!search_for_char(s + i + 1, c, 0))
@@ -86,6 +84,8 @@ char	*remove_quotes(char *s)
 	char	*res;
 	char	c;
 
+    if (!s)
+        return (NULL);
     res = 0;
     mark_breaking_quotes(s);
     i = 0;
@@ -97,10 +97,6 @@ char	*remove_quotes(char *s)
             res = ft_strjoin_free(res, slice(s, a, i));
             a = i + 1;
         }
-        if (s[i] > 0)
-            printf("%c", s[i]);
-        else
-            printf("*quote*");
         i++;
     }
     if (i > a)

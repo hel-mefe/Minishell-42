@@ -65,7 +65,6 @@ char    *slice(char *s, size_t a, size_t b)
     size_t  i;
 
     len = b - a;
-    printf("SLICE ==> %zu | %zu\n", a, b);
     if (len < 0)
         return (NULL);
     res = (char *) malloc ((len + 1) * sizeof(char));
@@ -162,8 +161,6 @@ char    *get_singly_string(char *s, t_cmd *cmd)
             break ;
         i++;
     }
-    if (!valid)
-        printf("INVALID SINGLY\n");
     if (!s[i])
         res = slice(s, 0, i);
     else
@@ -188,8 +185,6 @@ char    *get_doubly_string(char *s, t_cmd *cmd)
             break ;
         i++;
     }
-    if (!valid)
-        printf("INVALID DOUBLY\n");
     if (!s[i])
         res = slice(s, 0, i);
     else
@@ -222,6 +217,10 @@ size_t  get_string(char *s, int place, t_data *data, t_cmd *cmd)
     }
     else
         expanded_res = ft_strdup(res);
+    if (place == NONE_AMBIGUOUS)
+        data->err = AMBIGUOUS_ERR;
+    else
+        data->err = NULL;
     i += ft_strlen(res);
     k_res = expanded_res;
     expanded_res = remove_quotes(ft_strdup(expanded_res));

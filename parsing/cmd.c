@@ -84,12 +84,10 @@ size_t  get_quote_end(char *s, char c)
             break ;
         i++;
     }
-    if (end == -1)
-        printf("QUOTES ARE NOT CLOSED PROPERLY!");
     return (end);
 }
 
-t_cmd   *get_commands(char *s)
+t_cmd   *get_commands(t_data *data, char *s)
 {
     size_t  i;
     size_t  j;
@@ -115,11 +113,6 @@ t_cmd   *get_commands(char *s)
                 new->line = slice(s, j, i);
             push_command(&head, new);
             j = i + 1;
-            if (s[j] == '|')
-            {
-                printf("UNEXPECTED PIPE TOKEN!");
-                exit(EXIT_FAILURE);
-            }
         }
     }
     return (head);

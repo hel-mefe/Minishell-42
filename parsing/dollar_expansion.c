@@ -143,8 +143,6 @@ char    *expand_string(t_dollar *dollars, char **env, int *place, char *s)
             k_res = res;
             part = slice(s, j, i);
             res = ft_strjoin_free(res, part);
-            // if (k_res)
-            //     free(k_res);
             i += 1;
             j = i + 1;
         }
@@ -155,9 +153,6 @@ char    *expand_string(t_dollar *dollars, char **env, int *place, char *s)
                 k_res = part;
                 part = slice(s, j, i);
                 res = ft_strjoin_free(res, part);
-                // free(part);
-                // if (k_res)
-                //     free(k_res);
             }
             k_res = res;
             res = ft_strjoin(res, dollars->val);
@@ -196,8 +191,13 @@ char    *expand_string(t_dollar *dollars, char **env, int *place, char *s)
         // if (k_res)
         //     free(k_res);
     }
-    if (!res[0])
-        *place = NONE;
+    if (res && !res[0])
+    {
+        if (*place == INFILE || *place == OUTFILE)
+            *place = NONE_AMBIGUOUS;
+        else
+            *place = NONE;
+    }
     return (res);
 }
 

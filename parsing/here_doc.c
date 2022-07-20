@@ -82,12 +82,18 @@ size_t  get_heredoc(char *s, t_data *data, t_cmd *cmd)
 
     trigger = 0;
     i = 0;
+    is_there_any_alpha(data, s + i, 1);
+    if (data->err)
+        return (i);
     while (s[i])
     {
         while (is_space(s[i]))
             i++;
         if (s[i] == '<' && s[i + 1] == '<' && trigger)
             i += 2;
+        is_there_any_alpha(data, s + i, 1);
+        if (data->err)
+            break ;
         else if (trigger)
             return (i);
         i += get_string(s + i, HERE_DOC, data, cmd);

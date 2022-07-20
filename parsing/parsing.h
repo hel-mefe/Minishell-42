@@ -8,11 +8,15 @@
 # include <fcntl.h>
 # include <errno.h>
 
-# define SYNTAX_ERR "SYNTAX ERROR!";
-# define MAX_HERE_DOC_EXCEEDED_ERR "MAX HEREDOC LIMITERS HAVE BEEN EXCEEDED!"
+# define SYNTAX_ERR "Minishell_1337: syntax error near unexpected token `newline'";
+# define MAX_HERE_DOC_EXCEEDED_ERR "Minishell_1337: max heredoc limiters have been exceeded"
 # define REDIRECTION_ERR "Unambiguous redirection error!"
+# define UNEXPECTED_PIPE_TOKEN_ERR "Minishell_1337: unexpected pipe token '|'"
+# define AMBIGUOUS_ERR "Minishell_1337: ambiguous redirect"
+# define SYNTAX_ERR_NEAR_PIPE "Minishell_1337: syntax error near unexpected token `|'"
 
 # define NONE 0
+# define NONE_AMBIGUOUS -1
 # define INFILE 1
 # define OUTFILE 2
 # define COMMAND 3
@@ -168,7 +172,7 @@ void    mark_builtins(t_cmd *head);
 int     is_builtin(char *cmd);
 
 int     get_commands_size(t_cmd *head);
-t_cmd   *get_commands(char *s);
+t_cmd   *get_commands(t_data *data, char *s);
 size_t  get_quote_end(char *s, char c);
 void    push_command(t_cmd **head, t_cmd *new);
 t_cmd   *new_command(t_cmd *head);
@@ -187,6 +191,7 @@ void    free_queue(t_queue *head);
 char	*ft_itoa(int n);
 char    *get_next_line(int fd);
 void    get_err(char *err, int is_exit);
+void     is_there_any_alpha(t_data *data, char *s, int is_heredoc);
 /***************handle_signals****************/
 void	handle_signals();
 void	handel_sigint(int sig);
