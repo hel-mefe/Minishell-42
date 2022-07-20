@@ -62,7 +62,7 @@ void    mark_breaking_quotes(char *s)
         else if (c && s[i] == c)
         {
             printf("%zu\n", i);
-            if (search_for_char(s + i + 1, opposite, c))
+            if (search_for_char(s + i + 1, opposite, c) || (s[i] == '\"' && s[i + 1] == '\"'))
                 s[i] = BREAKING_POINT;
             else if (!search_for_char(s + i + 1, c, 0))
                 s[i] = BREAKING_POINT;

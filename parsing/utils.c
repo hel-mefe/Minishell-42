@@ -65,6 +65,7 @@ char    *slice(char *s, size_t a, size_t b)
     size_t  i;
 
     len = b - a;
+    printf("SLICE ==> %zu | %zu\n", a, b);
     if (len < 0)
         return (NULL);
     res = (char *) malloc ((len + 1) * sizeof(char));
@@ -199,6 +200,7 @@ char    *get_doubly_string(char *s, t_cmd *cmd)
 size_t  get_string(char *s, int place, t_data *data, t_cmd *cmd)
 {
     size_t  i;
+    size_t  j;
     char    *k_res;
     char    *res;
     char    *expanded_res;

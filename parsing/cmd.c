@@ -85,10 +85,7 @@ size_t  get_quote_end(char *s, char c)
         i++;
     }
     if (end == -1)
-    {
         printf("QUOTES ARE NOT CLOSED PROPERLY!");
-        exit(EXIT_FAILURE);
-    }
     return (end);
 }
 

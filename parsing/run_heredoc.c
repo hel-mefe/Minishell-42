@@ -42,7 +42,7 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 	{
 		global.get_nb = 1;
 		s = readline("haredoc> ");
-		handle_signals();
+		// handle_signals();
 		if (global.get_nb == -1)
 			break ;
 		if (!ft_strcmp(s, limiters->s))
