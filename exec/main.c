@@ -194,15 +194,11 @@ int main(int ac, char **av, char **env)
 			printf("*********************************************\n");
 			run_heredoc(data, data->heredoc, data->commands);
 			if (!data->err)
-			{
 				run_cmd(&env_v, data, data->commands);
-				destory_data(&data);
-				free(s);
-				free(data);
-				data = NULL;
-			}
 			else
 				printf("%s\n", data->err);
+			destory_data(&data);
+			data = NULL;
 		}
     }
 }
