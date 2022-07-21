@@ -15,7 +15,7 @@ NAME = minishell
 SRC = builtins/cd.c builtins/echo.c builtins/ft_env.c builtins/ft_export.c builtins/ft_unset.c builtins/pwd.c\
 exec/ft_memcpy.c exec/ft_split.c exec/ft_strchr.c exec/ft_strlcpy.c exec/get_path.c exec/help_linkedlist.c exec/exec_cmd.c \
 parsing/cmd.c parsing/destroy.c parsing/dollar_expansion.c parsing/errors.c parsing/here_doc.c parsing/parsing.c parsing/run_heredoc.c\
-parsing/utils.c parsing/utils2.c parsing/utils3.c parsing/utils4.c parsing/get_next_line.c parsing/get_next_line_utils.c\
+parsing/utils.c parsing/utils2.c parsing/utils3.c parsing/utils4.c parsing/get_next_line.c parsing/get_next_line_utils.c \
 exec/main.c
 
 CC = cc

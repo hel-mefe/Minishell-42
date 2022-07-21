@@ -1,0 +1,6 @@
+Dak foler dial parsing_after howa li fih new updates w dakchii kaml, lassalit norminette dialo
+ghangad dakchii w npushih, ms ra ghankhdm b parsing.h li gaditi liha norminette l3zz!
+
+---> export lolo="         k"
+ARGS[0] => "export"
+ARGS[1] => "lolo=         k" // spliti b '='
