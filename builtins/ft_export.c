@@ -108,6 +108,26 @@ void	help_export(t_env **env_v, char *sig, char **av, int i)
 	}
 }
 
+int	check_oper(char **av)
+{
+	int i;
+	int j;
+
+	i = 1;
+	j = 0;
+	while (av[i])
+	{
+		j = 0;
+		while (av[i][j])
+		{
+			if ((av[i][j] == '+'  && av[i][j + 1] != '=') || av[i][j] == '-' || (av[i][j] > 91 && av[i][j] < 96))
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
 void	ft_export(t_env **env_v, char **av)
 {
 	int		i;
@@ -124,7 +144,7 @@ void	ft_export(t_env **env_v, char **av)
 		{
 			sig = strstr(av[i], "=");
 			if (!av[i][ft_strlen(sig)] ||
-					(!ft_isalpha(av[i][0]) && av[i][0] != '_'))
+					(!ft_isalpha(av[i][0]) && av[i][0] != '_') || check_oper(av))
 			{
 				ft_putstr_fd(ft_strjoin(av[i], ": not a valid identifier\n"), 2);
 				g_global.get_nb_status = 1;

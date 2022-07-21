@@ -8,6 +8,7 @@ int     is_builtin(char *cmd)
             || !ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "export") || !ft_strcmp(cmd, "unset") \
             || !ft_strcmp(cmd, "exit"));
 }
+
 void    mark_builtins(t_cmd *head)
 {
     while (head)

@@ -30,6 +30,7 @@ void	ft_cd(t_env **env_v, char **av);
 void	ft_export(t_env **env_v, char **av);
 void	ft_pwd(t_env **env_v);
 void	ft_env(t_env **env_v, char **av);
+void    ft_exit(char **av);
 /**************Help->builtins*******************/
 void	init_env(t_env **env_v, char **env);
 void	ft_sort(t_env **env_v);

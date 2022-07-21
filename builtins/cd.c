@@ -66,6 +66,8 @@ void	change_link(t_env **env_v, int i)
 		if (!buffer)
 			buffer = new->data;
 		new = search_element(env_v, "OLDPWD");
+		if (!new)
+			return ;
 		remove_name(env_v, new->name);
 		new = ft_lstnew("OLDPWD", strdup(buffer));
 		ft_lstadd_back(env_v, new);

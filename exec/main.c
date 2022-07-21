@@ -52,6 +52,8 @@ void	run_builtin(t_env **env_v, char **av)
 		ft_export(env_v, av);
 	else if ((ft_strcmp(av[0], "unset")) == 0)
 		ft_unset(env_v, av);
+	else if ((ft_strcmp(av[0], "exit")) == 0)
+		ft_exit(av);
 }
 
 void	close_pipe(int **pipes, int a, int b, int n)
@@ -69,20 +71,20 @@ void	close_pipe(int **pipes, int a, int b, int n)
 	}
 }
 
-int	main(int ac, char **av, char **env)
+int main(int ac, char **av, char **env)
 {
-	char	*s;
-	t_env	*env_v;
-	t_data	*data;
+    char    *s;
+    t_env   *env_v;
+    t_data  *data;
 
-	(void)ac;
-	(void)av;
+    (void)av;
+    (void)ac;
 	env_v = NULL;
-	init_env(&env_v, env);
+    init_env(&env_v, env);
 	handle_signals();
-	while (1)
-	{
-		s = readline("minishell> ");
+    while (1)
+    {
+       s = readline("minishell> ");
 		if (s == NULL)
 		{
 			printf("exit\n");
@@ -90,14 +92,15 @@ int	main(int ac, char **av, char **env)
 		}
 		if (s != NULL && s[0])
 		{
-			add_history(s);
-			data = parse_line(s, env, env_v);
+        	add_history(s);
+       		data = parse_line(s, env, env_v);
 			run_heredoc(data, data->heredoc, data->commands);
-			run_cmd(&env_v, data, data->commands);
+			if (!data->err)
+				run_cmd(&env_v, data, data->commands);
+			else
+				printf("%s\n", data->err);
 			destory_data(&data);
-			free(s);
-			free(data);
 			data = NULL;
 		}
-	}
+    }
 }

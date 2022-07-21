@@ -47,13 +47,21 @@ void	ft_echo(char **av)
 
 	i = 1;
 	new_line = 0;
-	while (av[i] && av[i][0] == '-' && av[i][1] != '\0')
+	if (!ft_strcmp(av[i], "~") && av[i + 1] == 0)
 	{
-		if (!check_new(av[i]))
-			new_line = 1;
-		else
-			break ;
-		i++;
+		printf("/Users/ytijani\n");
+		return ;
+	}
+	else
+	{
+		while (av[i] && av[i][0] == '-' && av[i][1] != '\0')
+		{
+			if (!check_new(av[i]))
+				new_line = 1;
+			else
+				break ;
+			i++;
+		}
 	}
 	print_echo(&av[i]);
 	if (!new_line)

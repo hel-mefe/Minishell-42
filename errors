@@ -1,0 +1,22 @@
+# export : l="  l   l"
+
+# < $l cat > out  | wc > out1 | < $lf
+# bash: $lf: ambiguous redirect
+# bash: $l: ambiguous redirect
+# < $l cat > out  | < $l wc > out1 | < $lf
+# bash: $l: ambiguous redirect
+# bash: $l: ambiguous redirect
+# //bash: $lf: ambiguous redirect
+
+
+>>> cat <<ok <<ko the last herdoc makhdamx
+>>> maxi error katsb9o lpipe errors cat <<> <<|
+>>> | ghalat khas ikon parce error
+>>> || khas tzido f lparce errors
+>>> cat >                     > ls katl3 msg ghalt
+>>> cat <<                    > tst ghalta makahs itrana heredoc
+>>> ctl C dyal lherdoc "ytijjani"
+>>> c''a''t >> ghalta 
+
+
+# dont forget exit status << anf < and  | ....
