@@ -37,14 +37,13 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 	t_cmd	*cmd;
 
 	res = NULL;
-	g_global.get_nb = 0;
 	while (limiters)
 	{
-		g_global.get_nb = 1;
+		// g_global.get_nb = 1;
 		s = readline("haredoc> ");
-		handle_signals();
-		if (g_global.get_nb == -1)
-			break ;
+		// // handle_signals();
+		// if (g_global.get_nb == -1)
+		// 	break ;
 		if (!ft_strcmp(s, limiters->s))
 		{
 			cmd = get_command_by_id(cmds, limiters->cmd_id);
@@ -56,7 +55,7 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 					res = expand_result(data, res);
 					free(keep_res);
 				}
-				write(cmd->heredoc_pipe[1], ft_strjoin(res,"\n"), ft_strlen(res));
+				write(cmd->heredoc_pipe[1], res, ft_strlen(res));
 				close(cmd->heredoc_pipe[1]);
 			}
 			if (res)
@@ -65,10 +64,13 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 		    limiters = limiters->next;
 		}
 		else
+		{
 			res = ft_strjoin_free(res, s);
+			res = ft_strjoin_free(res, ft_strdup("\n"));
+		}
 		// if (keep_res)
 		// 	free(keep_res);
 
 	}
-	dup(g_global.new);
+	// dup(g_global.new);
 }

@@ -40,16 +40,20 @@ int	check_new(char *str)
 	return (0);
 }
 
-void	ft_echo(char **av)
+void	ft_echo(t_env **env_v, char **av)
 {
 	int	i;
 	int	new_line;
+	t_env	*new;
 
 	i = 1;
 	new_line = 0;
 	if (!ft_strcmp(av[i], "~") && av[i + 1] == 0)
 	{
-		printf("/Users/ytijani\n");
+		new = search_element(env_v, "HOME");
+		if (!new)
+			return ;
+		printf("%s\n", new->data);
 		return ;
 	}
 	else

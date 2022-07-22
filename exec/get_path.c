@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 10:59:25 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/21 20:23:01 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/22 11:05:25 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	check_path(char *cmd)
 	char	*command;
 
 	command = cmd;
-	if (access(command, X_OK) == 0)
+	if (access(command, R_OK) == 0)
 		return (1);
 	else
 		return (0);
@@ -71,9 +71,7 @@ char	*get_command(t_env **path, char *cmd)
 	i = 0;
 	if (!cmd)
 		exit(0);
-	if (check_path(cmd))
-		return (cmd);
-	if (cmd[0] == '/')
+	if (cmd[0] == '/' && !check_path(cmd))
 		ft_error1(-1, "no such file or directory\n");
 	new = search_element(path, "PATH");
 	if (new == NULL)
@@ -85,6 +83,8 @@ char	*get_command(t_env **path, char *cmd)
 			return (check_access(tmp, tab, cmd, i));
 		i++;
 	}
+	if (check_path(cmd))
+		return (cmd);
 	free(tmp);
 	return (NULL);
 }

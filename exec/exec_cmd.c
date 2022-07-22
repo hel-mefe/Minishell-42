@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:01:19 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/21 21:47:43 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/22 16:46:26 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	wait_close(t_data *data, t_cmd *tmp)
 	}
 	while (tmp)
 	{
-		if ((waitpid(-1, &g_global.get_nb_status, WUNTRACED)) < 0)
+		if ((waitpid(-1, &tmp->status, WUNTRACED)) < 0)
 			perror("waitpid");
-		if (WEXITSTATUS(tmp->status))
-			g_global.get_nb_status = WEXITSTATUS(g_global.get_nb_status);
+		if (WIFEXITED(tmp->status))
+			g_global.get_nb_status  = WEXITSTATUS(tmp->status);
 		tmp = tmp->next;
 	}
 }
@@ -37,8 +37,9 @@ void	help_runcmd(t_data *data, t_cmd *cmd, t_env **env, char **str)
 {
 	pid_t	pid;
 
-	signal(SIGINT, SIG_IGN);
 	pid = fork();
+	// signal(SIGQUIT, SIG_DFL);
+	// signal(SIGINT, SIG_DFL);
 	if (pid < 0)
 	{
 		printf("pipe Error\n");
@@ -46,8 +47,6 @@ void	help_runcmd(t_data *data, t_cmd *cmd, t_env **env, char **str)
 	}
 	else if (pid == 0)
 	{
-		signal(SIGQUIT, SIG_DFL);
-		signal(SIGINT, SIG_DFL);
 		close_pipe(data->pipes, cmd->read_end, cmd->write_end, data->n_cmds);
 		if (cmd->is_builtin)
 		{
@@ -93,8 +92,7 @@ void	ever(char **cmd, t_env **env_v, char **env, t_data *data)
 {
 	if (execve(get_command(env_v, *cmd), cmd, env) == -1)
 	{
-		if (data->commands->has_heredoc)
-			exit(0); 
+
 		if (strstr(cmd[0], "/"))
 			ft_error1(-1, ft_strjoin(*cmd, ": no such file or directory\n"));
 		else

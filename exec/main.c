@@ -18,14 +18,14 @@ void	handel_sigint(int sig)
 	{
 		g_global.get_nb_status = 1;
 		printf("\n");
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
 	else if (sig == SIGINT && g_global.get_nb == 1)
-	{
-		g_global.get_nb_status = 1;
+	{		
 		g_global.new = dup(0);
+		g_global.get_nb_status = 1;
 		g_global.get_nb = -1;
 		printf("\n");
 		close(0);
@@ -41,7 +41,7 @@ void	handle_signals(void)
 void	run_builtin(t_env **env_v, char **av)
 {
 	if ((ft_strcmp(av[0], "echo")) == 0)
-		ft_echo(av);
+		ft_echo(env_v, av);
 	else if ((ft_strcmp(av[0], "pwd")) == 0)
 		ft_pwd(env_v);
 	else if ((ft_strcmp(av[0], "cd")) == 0)
@@ -81,10 +81,10 @@ int main(int ac, char **av, char **env)
     (void)ac;
 	env_v = NULL;
     init_env(&env_v, env);
-	handle_signals();
     while (1)
     {
-       s = readline("minishell> ");
+      	s = readline("minishell> ");
+	    handle_signals();
 		if (s == NULL)
 		{
 			printf("exit\n");

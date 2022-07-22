@@ -25,7 +25,7 @@
 # include "../include/parsing.h"
 
 /*************builtins*******************/
-void	ft_echo(char **av);
+void	ft_echo(t_env **env_v, char **av);
 void	ft_cd(t_env **env_v, char **av);
 void	ft_export(t_env **env_v, char **av);
 void	ft_pwd(t_env **env_v);
@@ -74,4 +74,5 @@ void	free_double_char_arr(char **arr);
 void	run_cmd(t_env **env, t_data *data, t_cmd *cmd);
 void	ever(char **cmd, t_env **env_v, char **env, t_data *data);
 void	run_builtin(t_env **env_v, char **av);
+void    rl_replace_line(const char *, int);
 #endif

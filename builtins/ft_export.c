@@ -146,7 +146,7 @@ void	ft_export(t_env **env_v, char **av)
 			if (!av[i][ft_strlen(sig)] ||
 					(!ft_isalpha(av[i][0]) && av[i][0] != '_') || check_oper(av))
 			{
-				ft_putstr_fd(ft_strjoin(av[i], ": not a valid identifier\n"), 2);
+				ft_putstr_fd(ft_strjoin(av[i], " : not a valid identifier\n"), 2);
 				g_global.get_nb_status = 1;
 			}
 			else

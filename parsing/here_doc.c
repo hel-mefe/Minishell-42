@@ -91,11 +91,11 @@ size_t  get_heredoc(char *s, t_data *data, t_cmd *cmd)
             i++;
         if (s[i] == '<' && s[i + 1] == '<' && trigger)
             i += 2;
+        else if (trigger)
+            return (i);
         is_there_any_alpha(data, s + i, 1);
         if (data->err)
             break ;
-        else if (trigger)
-            return (i);
         i += get_string(s + i, HERE_DOC, data, cmd);
         trigger = 1;
     }
