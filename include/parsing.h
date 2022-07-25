@@ -19,110 +19,10 @@
 # include <readline/readline.h>
 # include <fcntl.h>
 # include <errno.h>
+# include "structures.h"
+# include "macros.h"
 
-# define SYNTAX_ERR "SYNTAX ERROR!";
-# define MAX_HERE_DOC_EXCEEDED_ERR "MAX HEREDOC LIMITERS HAVE BEEN EXCEEDED!"
-# define REDIRECTION_ERR "Unambiguous redirection error!"
-# define UNEXPECTED_PIPE_TOKEN_ERR "Minishell_1337: unexpected pipe token '|'"
-# define AMBIGUOUS_ERR "Minishell_1337: ambiguous redirect"
-# define SYNTAX_ERR_NEAR_PIPE "Minishell_1337: syntax error near unexpected token `|'"
-
-# define NONE_AMBIGUOUS -1
-# define NONE 0
-# define INFILE 1
-# define OUTFILE 2
-# define COMMAND 3
-# define HERE_DOC 4
-# define ARGUMENT 5
-# define EXPANDED_HERE_DOC 6
-
-# define HERE_DOC_MAX 16
-
-# define BREAKING_POINT -1
 # define HERE_DOC_NAME "Minishell-42-heredoc"
-/***
- * Had Queue howa fin kaytstoraw limiters dial heredoc
- *  START OF THE QUEUE
- * ***/
-typedef struct s_global
-{
-	int			get_nb_status;
-	int			get_nb;
-	int			new;
-}	t_global;
-
-t_global g_global;
-
-typedef struct s_env
-{
-	char			*name;
-	char			*data;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
-
-typedef struct queue
-{
-	char			*s;
-	int				ex;
-	int				cmd_id;
-	struct queue	*next;
-}	t_queue;
-
-typedef struct heredoc
-{
-	t_queue			*limiters;
-	struct heredoc	*next;
-}	t_heredoc;
-
-typedef struct dollar // only valid dollar names
-{
-	char			*var;
-	char			*val;
-	struct dollar	*next;
-}	t_dollar;
-
-typedef struct cmd
-{
-	char		*line;
-	char		*cmd_name;
-	char		*infile;
-	char		*outfile;
-	char		**main_args;
-	char		**env;
-	char		*syntax;
-	int			cmd_id;
-	int			error;
-	int			outfile_mode;
-	int			status;
-	int			is_builtin;
-	int			has_heredoc;
-	int			heredoc_file;
-	int			heredoc_pipe[2];
-	int			write_end;
-	int			read_end;
-	t_queue		*args;
-	t_queue		*heredoc;
-	t_dollar	*vars;
-	struct cmd	*next;
-	struct cmd	*prev;
-}	t_cmd;
-
-/*** END OF STRUCTURE DIAL COMMAND ***/
-
-/*** MAIN STRUCTURE DIAL PARSING LI FIHA DATA KAMLA ***/
-
-typedef struct s_data
-{
-	t_cmd	*commands;
-	t_queue	*heredoc;
-	int		n_cmds;
-	int		**pipes;
-	int		is_syntax_valid;
-	char	*err;
-	char	**env;
-	t_env	*main_env;
-}	t_data;
 
 /*** END DIAL MAIN STRUCTURE ***/
 
@@ -192,7 +92,10 @@ void		free_queue(t_queue *head);
 char		*ft_itoa(int n);
 char		*get_next_line(int fd);
 void		get_err(char *err, int is_exit);
-void    is_there_any_alpha(t_data *data, char *s, int is_heredoc);
+void    	is_there_any_alpha(t_data *data, char *s, int is_heredoc);
+int     	is_there_char(char *s);
+void		catch_syntax_err(t_data *data, char *s);
+int 		search_for_char(char *s, char c, char end);
 /***************handle_signals****************/
 void		handle_signals(void);
 void		handel_sigint(int sig);

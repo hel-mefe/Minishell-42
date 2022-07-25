@@ -1,6 +1,9 @@
-Dak foler dial parsing_after howa li fih new updates w dakchii kaml, lassalit norminette dialo
-ghangad dakchii w npushih, ms ra ghankhdm b parsing.h li gaditi liha norminette l3zz!
+The parsing part is well-organized now but basically you have to change some things in the Makefile because the architecture of the folders has been changed.
 
----> export lolo="         k"
-ARGS[0] => "export"
-ARGS[1] => "lolo=         k" // spliti b '='
+
+Don't forget changi assat dakchii dial leaks f program 3endek.
+
+
+Also, ba9i ghan editi chi blanat w ghan3awd npushi so this is not the last version li khas t9ad liha norminette.
+
+L3zz

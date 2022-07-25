@@ -82,13 +82,29 @@ void    is_there_any_alpha(t_data *data, char *s, int is_heredoc)
     size_t  i;
 
     i = 0;
+    i += s[i] == '<';
     while (s[i])
     {
-        if (!is_space(s[i]) && s[i] != '|')
+        if (!is_space(s[i]) && s[i] != '|' && s[i] != '<' && s[i] != '>')
             return ;
         if (s[i] == '|' && is_heredoc)
         {
             data->err = SYNTAX_ERR_NEAR_PIPE;
+            return ;
+        }
+        if (s[i] == '<')
+        {
+            data->err = SYNTAX_ERR_NEAR_INFILE;
+            return ;
+        }
+        if (s[i] == '>' && s[i + 1] == '>')
+        {
+            data->err = SYNTAX_ERR_NEAR_OUTFILE_APPEND;
+            return ;
+        }
+        if (s[i] == '>')
+        {
+            data->err = SYNTAX_ERR_NEAR_OUTFILE;
             return ;
         }
         i++;
@@ -104,46 +120,54 @@ void    parse_expression(char *s, t_data *data, t_cmd *cmd)
     char    *res;
 
     i = 0;
-    while (s[i])
+    while (s[i] && !data->err && data->is_syntax_valid)
     {
         if (s[i] == '<' && s[i + 1] == '<')
+        {
             i += get_heredoc(s + i + 2, data, cmd) + 2;
+            if (data->err)
+                break ;
+        }
         else if (s[i] == '>' && s[i + 1] == '>')
         {
             cmd->outfile_mode = O_APPEND;
-            j = i;
-            i += get_string(s + i + 2, OUTFILE, data, cmd) + 2;
-            is_there_any_alpha(data, s + j + 2, 0);
-            if (i > ft_strlen(s))
+            catch_syntax_err(data, s + i + 2);
+            if (data->err)
                 break ;
+            i += get_string(s + i + 2, OUTFILE, data, cmd) + 2;
         }
         else if (s[i] == '<')
         {
-            j = i;
+            catch_syntax_err(data, s + i + 1);
+            if (data->err)
+                break ;
             i += get_string(s + i + 1, INFILE, data, cmd) + 1;
-            is_there_any_alpha(data, s + j + 1, 0);
         }
         else if (s[i] == '>')
         {
-            j = i;
+            catch_syntax_err(data, s + i + 1);
+            if (data->err)
+                break ;
             cmd->outfile_mode = O_CREAT;
             i += get_string(s + i + 1, OUTFILE, data, cmd) + 1;
-            is_there_any_alpha(data, s + j + 1, 0);
         }
         else if (!is_space(s[i]) && !cmd->cmd_name)
             i += get_string(s + i, COMMAND, data, cmd);
         else if (!is_space(s[i]))
             i += get_string(s + i, ARGUMENT, data, cmd);
-        if (s[i] == '|')
-        {
-            cmd->error = 0;
-            data->is_syntax_valid = 0;
-        }
-        if (s[i] == '|')
-            data->err = UNEXPECTED_PIPE_TOKEN_ERR;
-        if (data->err)
+        // if (data->err)
+        // {
+        //     printf("%s\n", data->err);
+        //     break ;
+        // }
+        if (i >= ft_strlen(s))
             break ;
-		if (s[i] && is_space(s[i]))
+        if (s[i] && !is_token(s[i]))
+        {
+            printf("%c\n", s[i]);
+            i++;
+        }
+		while (s[i] && (is_space(s[i]) || !is_token(s[i])))
 			i++;
     }
     cmd->main_args = get_args(cmd);
@@ -153,12 +177,22 @@ void    parse_commands(t_data *data)
 {
     t_cmd   *command;
 
+    if (!data->is_syntax_valid)
+    {
+        printf("%s\n", data->err);
+        return ;
+    }
     command = data->commands;
     while (command)
     {
         command->has_heredoc = 0;
         command->is_builtin = 0;
         parse_expression(command->line, data, command);
+        if (!data->is_syntax_valid)
+        {
+            printf("%s\n", data->err);
+            break ;
+        }
         command = command->next;
     }
 }
@@ -230,13 +264,13 @@ t_data  *parse_line(char *s, char **env, t_env *main_env)
     data = (t_data *) malloc (sizeof(t_data));
     if (!data)
         return (NULL);
-    data->commands = get_commands(data, s);
     data->heredoc = NULL;
     data->env = env;
     data->is_syntax_valid = 1;
     data->pipes = NULL;
     data->main_env = main_env;
     data->err = NULL;
+    data->commands = get_commands(data, s);
     parse_commands(data);
     mark_builtins(data->commands);
     data->n_cmds = get_commands_size(data->commands);
@@ -251,29 +285,33 @@ t_data  *parse_line(char *s, char **env, t_env *main_env)
 
 
 
-// int main(int ac, char **av, char **env)
-// {
-//     char    *s;
-//     t_data  *data;
-//     t_env   *main_env;
+int main(int ac, char **av, char **env)
+{
+    char    *s;
+    t_data  *data;
+    t_env   *main_env;
 
-//     init_env(&main_env, env);
-//     // t_env *k = main_env;
-//     // while (k)
-//     // {
-//     //     printf("%s => %s\n", k->name, k->data);
-//     //     k = k->next;
-//     // }
-//     while (1)
-//     {
-//         s = readline("minishell> ");
-//         data = parse_line(s, env, main_env);
-//         if (get_queue_size(data->heredoc) > HERE_DOC_MAX)
-//             get_err(MAX_HERE_DOC_EXCEEDED_ERR, 1);
-//         print_commands(data->commands);
-//         print_heredoc(data->heredoc);
-//         run_heredoc(data, data->heredoc, data->commands);
-//         free(s);
-//         destory_data(&data);
-//     }
-// }
+    init_env(&main_env, env);
+    // t_env *k = main_env;
+    // while (k)
+    // {
+    //     printf("%s => %s\n", k->name, k->data);
+    //     k = k->next;
+    // }
+    while (1)
+    {
+        s = readline("minishell> ");
+        data = NULL;
+        if (s && s[0])
+        {
+            data = parse_line(s, env, main_env);
+            if (get_queue_size(data->heredoc) > HERE_DOC_MAX)
+                get_err(MAX_HERE_DOC_EXCEEDED_ERR, 1);
+            // print_commands(data->commands);
+            // print_heredoc(data->heredoc);
+            run_heredoc(data, data->heredoc, data->commands);
+            // free(s);
+            // destory_data(&data);
+        }
+    }
+}

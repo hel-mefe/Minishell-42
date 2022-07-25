@@ -1,47 +1,4 @@
-#include "../include/parsing.h"
-
-int is_syntax_token(char c)
-{
-    return (c == '|' || c == '<' || c == '>');
-}
-
-int search_for_char(char *s, char c, char end)
-{
-    size_t  i;
-
-    i = 0;
-    while (s[i] && s[i] != end)
-    {
-        if (s[i] == c)
-            return (1);
-        i++;
-    }
-    return (0);
-}
-
-int is_singly(char c)
-{
-    return (c == '\'');
-}
-
-int is_doubly(char c)
-{
-    return (c == '\"');
-}
-
-
-int in_string(char *s, char c)
-{
-    size_t  i;
-
-    i = -1;
-    while (s[++i])
-    {
-        if (s[i] == c)
-            return (1);
-    }
-    return (0);
-}
+#include "../../include/parsing.h"
 
 void    mark_breaking_quotes(char *s)
 {
@@ -132,26 +89,26 @@ char    *remove_chars(char *s, char *r)
     return (res);
 }
 
-char    *remove_char(char *s, char c)
-{
-    size_t  i;
-    size_t  j;
-    char    *res;
+// char    *remove_char(char *s, char c)
+// {
+//     size_t  i;
+//     size_t  j;
+//     char    *res;
 
-    res = NULL;
-    j = 0;
-    i = 0;
-    while (s[i])
-    {
-        if (s[i] == c)
-        {
-            res = ft_strjoin(res, slice(s, j, i));
-            while (s[i] == c)
-                i++;
-            j = i;
-        }
-        else
-            i++;
-    }
-    return (res);
-}
+//     res = NULL;
+//     j = 0;
+//     i = 0;
+//     while (s[i])
+//     {
+//         if (s[i] == c)
+//         {
+//             res = ft_strjoin(res, slice(s, j, i));
+//             while (s[i] == c)
+//                 i++;
+//             j = i;
+//         }
+//         else
+//             i++;
+//     }
+//     return (res);
+// }

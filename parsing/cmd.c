@@ -1,75 +1,5 @@
 #include "../include/parsing.h"
 
-
-int get_commands_size(t_cmd *head)
-{
-    if (!head)
-        return (0);
-    return (1 + get_commands_size(head->next));
-}
-
-t_cmd   *get_command_by_id(t_cmd *head, int id)
-{
-    while (head)
-    {
-        if (head->cmd_id == id)
-            return (head);
-        head = head->next;
-    }
-    return (NULL); // NOT FOUND
-}
-
-t_cmd   *get_last_command(t_cmd *head)
-{
-    if (!head)
-        return (NULL);
-    if (!head->next)
-        return (head);
-    return (get_last_command(head->next));
-}
-
-t_cmd   *new_command(t_cmd *head)
-{
-    t_cmd   *new;
-
-    new = (t_cmd *) malloc (sizeof(t_cmd));
-    if (!new)
-        return (NULL);
-    new->args = NULL;
-    new->infile = NULL;
-    new->outfile = NULL;
-    new->syntax = NULL;
-    new->main_args = NULL;
-    new->outfile_mode = O_CREAT;
-    new->vars = NULL;
-    new->cmd_name = NULL;
-    new->line = NULL;
-    new->is_builtin = 0;
-    new->cmd_id = get_commands_size(head) + 1;
-    new->error = -1;
-    new->write_end = -1;
-    new->read_end = -1;
-    return (new);
-}
-
-void    push_command(t_cmd **head, t_cmd *new)
-{
-    t_cmd   *last;
-
-    if (!(*head))
-    {
-        *head = new;
-        new->prev = NULL;
-    }
-    else
-    {
-        last = get_last_command(*head);
-        last->next = new;
-        new->prev = last;
-    }
-    new->next = NULL;
-}
-
 size_t  get_quote_end(char *s, char c)
 {
     size_t  i;
@@ -86,6 +16,37 @@ size_t  get_quote_end(char *s, char c)
         i++;
     }
     return (end);
+}
+
+int is_there_char(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (!is_space(s[i]))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void    get_pipe_err(t_data *data, char *s, int i)
+{
+    int j;
+
+    j = i - 1;
+    while (j >= 0)
+    {
+        if (s[j] == '|')
+            break ;
+        if (!is_space(s[j]))
+            return ;
+        j--;
+    }
+    data->is_syntax_valid = 0;
+    data->err = UNEXPECTED_PIPE_TOKEN_ERR;
 }
 
 t_cmd   *get_commands(t_data *data, char *s)
@@ -107,12 +68,18 @@ t_cmd   *get_commands(t_data *data, char *s)
             i += get_quote_end(s + i + 1, '\"') + 1;
         if (s[i] == '|' || !s[i + 1])
         {
+            if (s[i] == '|')
+                get_pipe_err(data, s, i);
+            if (data->err)
+                break ;
             new = new_command(head);
-            if (!s[i + 1])
+            if (!s[i + 1] && s[i] != '|')
                 new->line = slice(s, j, i + 1);
             else
                 new->line = slice(s, j, i);
             push_command(&head, new);
+            if (!s[i + 1])
+                break ;
             j = i + 1;
         }
     }

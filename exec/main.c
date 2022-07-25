@@ -18,7 +18,7 @@ void	handel_sigint(int sig)
 	{
 		g_global.get_nb_status = 1;
 		printf("\n");
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
@@ -71,36 +71,36 @@ void	close_pipe(int **pipes, int a, int b, int n)
 	}
 }
 
-int main(int ac, char **av, char **env)
-{
-    char    *s;
-    t_env   *env_v;
-    t_data  *data;
+// int main(int ac, char **av, char **env)
+// {
+//     char    *s;
+//     t_env   *env_v;
+//     t_data  *data;
 
-    (void)av;
-    (void)ac;
-	env_v = NULL;
-    init_env(&env_v, env);
-    while (1)
-    {
-      	s = readline("minishell> ");
-	    handle_signals();
-		if (s == NULL)
-		{
-			printf("exit\n");
-			exit(0);
-		}
-		if (s != NULL && s[0])
-		{
-        	add_history(s);
-       		data = parse_line(s, env, env_v);
-			run_heredoc(data, data->heredoc, data->commands);
-			if (!data->err)
-				run_cmd(&env_v, data, data->commands);
-			else
-				printf("%s\n", data->err);
-			destory_data(&data);
-			data = NULL;
-		}
-    }
-}
+//     (void)av;
+//     (void)ac;
+// 	env_v = NULL;
+//     init_env(&env_v, env);
+//     while (1)
+//     {
+//       	s = readline("minishell> ");
+// 	    handle_signals();
+// 		if (s == NULL)
+// 		{
+// 			printf("exit\n");
+// 			exit(0);
+// 		}
+// 		if (s != NULL && s[0])
+// 		{
+//         	add_history(s);
+//        		data = parse_line(s, env, env_v);
+// 			run_heredoc(data, data->heredoc, data->commands);
+// 			if (!data->err)
+// 				run_cmd(&env_v, data, data->commands);
+// 			else
+// 				printf("%s\n", data->err);
+// 			destory_data(&data);
+// 			data = NULL;
+// 		}
+//     }
+// }

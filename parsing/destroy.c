@@ -5,7 +5,7 @@ void    close_pipes(int **pipes, int size)
     size_t  i;
 
     i = 0;
-    while (pipes[i])
+    while (i < size && pipes[i])
     {
         close(pipes[i][0]);
         close(pipes[i][1]);
@@ -22,6 +22,7 @@ void    free_queue(t_queue *head)
         return ;
     free_queue(head->next);
     free(head->s);
+    free(head);
 }
 
 void    free_double_int_arr(int **arr, int size)
@@ -65,14 +66,21 @@ void    free_dollars(t_dollar *head)
     }
 }
 
+void    free_str(char **ptr)
+{
+    if (*ptr)
+        free(*ptr);
+    *ptr = NULL;
+}
+
 void    free_commands(t_cmd *cmd)
 {
     if (!cmd)
         return ;
-    free(cmd->line);
-    free(cmd->cmd_name);
-    free(cmd->infile);
-    free(cmd->outfile);
+    free_str(&cmd->line);
+    free_str(&cmd->cmd_name);
+    free_str(&cmd->infile);
+    free_str(&cmd->outfile);
     free_queue(cmd->args);
     free_double_char_arr(cmd->main_args);
     free_dollars(cmd->vars);
@@ -89,8 +97,7 @@ void    destory_data(t_data **data)
     free_queue((*data)->heredoc);
     (*data)->heredoc = NULL;
     free_commands((*data)->commands);
-    close_pipes((*data)->pipes, (*data)->n_cmds - 1);
-   // free_double_int_arr((*data)->pipes, (*data)->n_cmds - 1);
+   free((*data)->pipes);
     (*data)->commands = NULL;
     free(*data);
     *data = NULL;
