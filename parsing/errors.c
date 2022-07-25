@@ -1,5 +1,20 @@
 #include "../include/parsing.h"
 
+void	set_syntax_error(t_data *data, char c, char next_c)
+{
+	if (c == '>' && next_c == '>')
+		data->err = SYNTAX_ERR_NEAR_OUTFILE_APPEND;
+	else if (c == '>')
+		data->err = SYNTAX_ERR_NEAR_OUTFILE;
+	if (c == '<' && next_c == '<')
+		data->err = SYNTAX_ERR_NEAR_HEREDOC;
+	else if (c == '<')
+		data->err = SYNTAX_ERR_NEAR_INFILE;
+	if (c == '|')
+		data->err = SYNTAX_ERR_NEAR_PIPE;
+	data->is_syntax_valid = 0;
+}
+
 void	catch_syntax_err(t_data *data, char *s)
 {
 	size_t	i;
@@ -17,23 +32,47 @@ void	catch_syntax_err(t_data *data, char *s)
 			return ;
 		if (is_token(s[i]))
 		{
-			if (s[i] == '>' && s[i + 1] == '>')
-				data->err = SYNTAX_ERR_NEAR_OUTFILE_APPEND;
-			else if (s[i] == '>')
-				data->err = SYNTAX_ERR_NEAR_OUTFILE;
-			if (s[i] == '<' && s[i + 1] == '<')
-				data->err = SYNTAX_ERR_NEAR_HEREDOC;
-			else if (s[i] == '<')
-				data->err = SYNTAX_ERR_NEAR_INFILE;
-			if (s[i] == '|')
-				data->err = SYNTAX_ERR_NEAR_PIPE;
-			data->is_syntax_valid = 0;
+			set_syntax_error(data, s[i], s[i + 1]);
+			// if (s[i] == '>' && s[i + 1] == '>')
+			// 	data->err = SYNTAX_ERR_NEAR_OUTFILE_APPEND;
+			// else if (s[i] == '>')
+			// 	data->err = SYNTAX_ERR_NEAR_OUTFILE;
+			// if (s[i] == '<' && s[i + 1] == '<')
+			// 	data->err = SYNTAX_ERR_NEAR_HEREDOC;
+			// else if (s[i] == '<')
+			// 	data->err = SYNTAX_ERR_NEAR_INFILE;
+			// if (s[i] == '|')
+			// 	data->err = SYNTAX_ERR_NEAR_PIPE;
+			// data->is_syntax_valid = 0;
 			return ;
 		}
 		i++;
 	}
 	data->is_syntax_valid = 0;
 	data->err = SYNTAX_ERR_NEAR_NEWLINE;
+}
+
+void    get_pipe_err(t_data *data, char *s, int i)
+{
+    int j;
+
+    j = i - 1;
+    while (j >= 0)
+    {
+        if (s[j] == '|')
+            break ;
+		if (s[j] == '<' || s[j] == '>')
+		{
+			data->err = SYNTAX_ERR_NEAR_PIPE;
+			data->is_syntax_valid = 0;
+			return ;
+		}
+        if (!is_space(s[j]))
+            return ;
+        j--;
+    }
+    data->is_syntax_valid = 0;
+    data->err = UNEXPECTED_PIPE_TOKEN_ERR;
 }
 
 void    get_err(char *err, int is_exit)

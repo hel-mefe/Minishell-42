@@ -32,22 +32,6 @@ int is_there_char(char *s)
 	return (0);
 }
 
-void    get_pipe_err(t_data *data, char *s, int i)
-{
-    int j;
-
-    j = i - 1;
-    while (j >= 0)
-    {
-        if (s[j] == '|')
-            break ;
-        if (!is_space(s[j]))
-            return ;
-        j--;
-    }
-    data->is_syntax_valid = 0;
-    data->err = UNEXPECTED_PIPE_TOKEN_ERR;
-}
 
 t_cmd   *get_commands(t_data *data, char *s)
 {

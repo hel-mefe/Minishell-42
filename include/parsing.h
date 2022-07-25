@@ -82,6 +82,7 @@ t_cmd		*get_last_command(t_cmd *head);
 void		run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds);
 void		init_env(t_env **env_v, char **env);
 
+void        prepare_data(t_data *data);
 void		destory_data(t_data **data);
 void		free_commands(t_cmd *cmd);
 void		free_dollars(t_dollar *head);
@@ -96,6 +97,14 @@ void    	is_there_any_alpha(t_data *data, char *s, int is_heredoc);
 int     	is_there_char(char *s);
 void		catch_syntax_err(t_data *data, char *s);
 int 		search_for_char(char *s, char c, char end);
+void        get_pipe_err(t_data *data, char *s, int i);
+
+void	put_infile(t_cmd *cmd, char *infile_name);
+void	put_outfile(t_cmd *cmd, char *outfile_name);
+void	put_heredoc(t_data *data, t_cmd *cmd, int place, char *limiter);
+void	put_argument(t_cmd *cmd, char *argument);
+void	put_command(t_cmd *cmd, char *cmd_name);
+
 /***************handle_signals****************/
 void		handle_signals(void);
 void		handel_sigint(int sig);

@@ -1,5 +1,32 @@
 #include "../../include/parsing.h"
 
+void    set_quote(char *c, char *si, char opposite)
+{
+    if (!(*c) && (*si == '\'' || *si == '\"'))
+    {
+        *c = *si;
+        *si = BREAKING_POINT;
+    }
+    else if (*c && *si == *c)
+    {
+        if (search_for_char(si + 1, opposite, *c) || (*si == '\"' && *(si + 1) == '\"'))
+            *si = BREAKING_POINT;
+        else if (!search_for_char(si + 1, *c, 0))
+            *si = BREAKING_POINT;
+        else if ((*si + 1) || is_space(*(si + 1)) || is_token(*(si + 1)))
+            *si = BREAKING_POINT;
+        *c = 0;
+    }
+ }
+
+void    set_opposite(char *c, char *opposite)
+{
+    if (*c == '\'')
+        *opposite = '\"';
+    else
+        *opposite = '\'';
+}
+
 void    mark_breaking_quotes(char *s)
 {
     size_t  i;
@@ -10,25 +37,8 @@ void    mark_breaking_quotes(char *s)
     i = 0;
     while (s[i])
     {
-        if (c == 0 && (s[i] == '\'' || s[i] == '\"'))
-        {
-            c = s[i];
-            s[i] = BREAKING_POINT;
-        }
-        else if (c && s[i] == c)
-        {
-            if (search_for_char(s + i + 1, opposite, c) || (s[i] == '\"' && s[i + 1] == '\"'))
-                s[i] = BREAKING_POINT;
-            else if (!search_for_char(s + i + 1, c, 0))
-                s[i] = BREAKING_POINT;
-            else if (!s[i + 1] || is_space(s[i + 1]) || is_token(s[i + 1]))
-                s[i] = BREAKING_POINT;
-            c = 0;
-        }
-        if (c == '\'')
-            opposite = '\"';
-        else
-            opposite = '\'';
+        set_quote(&c, s + i, opposite);
+        set_opposite(&c, &opposite);
         i++;
     }
 }
@@ -37,9 +47,7 @@ char	*remove_quotes(char *s)
 {
 	size_t	i;
 	size_t	a;
-	size_t	b;
 	char	*res;
-	char	c;
 
     if (!s)
         return (NULL);
