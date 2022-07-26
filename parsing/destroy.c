@@ -30,6 +30,8 @@ void    free_double_int_arr(int **arr, int size)
     size_t  i;
 
     i = 0;
+    if (!arr)
+        return ;
     while (i < size - 1 && arr[i])
     {
         free(arr[i]);
@@ -44,6 +46,8 @@ void    free_double_char_arr(char **arr)
     size_t  i;
 
     i = 0;
+    if (!arr)
+        return ;
     while (arr[i])
     {
         free(arr[i]);

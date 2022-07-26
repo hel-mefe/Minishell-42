@@ -133,7 +133,7 @@ int	main(int ac, char **av, char **env)
 	env_v = NULL;
 	init_env(&env_v, env);
 	history = open(".minishell_History" , O_CREAT | O_RDWR | O_APPEND , 0644);
-	get_line(history, s);
+	// get_line(history, s);
 	while (1)
 	{
 		handle_signals();
