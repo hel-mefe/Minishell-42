@@ -38,14 +38,14 @@ int	try_command_push(t_data *data, t_cmd **head, char *s, size_t *s_end)
 
 	if (s[s_end[1]] == '|')
 		get_pipe_err(data, s, s_end[1]);
-	if (data->err)
-		return (0);
 	new = new_command(*head);
 	if (!s[s_end[1] + 1] && s[s_end[1]] != '|')
 		new->line = slice(s, s_end[0], s_end[1] + 1);
 	else
 		new->line = slice(s, s_end[0], s_end[1]);
 	push_command(head, new);
+	if (data->err)
+		return (0);
 	return (1);
 }
 

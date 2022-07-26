@@ -19,7 +19,7 @@ void	handel_sigint(int sig)
 		printf("\n");
 		g_global.get_nb_status = 1;
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	else if (sig == SIGINT && g_global.get_nb == 1)
@@ -95,10 +95,11 @@ int	main(int ac, char **av, char **env)
 			add_history(s);
 			data = parse_line(s, env, env_v);
 			run_heredoc(data, data->heredoc, data->commands);
+			if (data->err)
+				printf("%s\n", data->err);
 			if (data->is_syntax_valid)
 				run_cmd(&env_v, data, data->commands);
 			destory_data(&data);
-	
 			data = NULL;
 		}
 		free(s);
