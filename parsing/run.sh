@@ -1,1 +1,1 @@
-gcc functions/*.c gnl/*.c data_structures/* variables/* ../exec/*.c ../builtins/*.c *.c -lreadline #../exec/*.c #-lreadline -fsanitize=address -L /Users/ytijani/.brew/opt/readline/lib -I /Users/ytijani/.brew/opt/readline/include
+gcc functions/*.c data_structures/* variables/* ../exec/*.c ../builtins/*.c *.c -lreadline #../exec/*.c #-lreadline -fsanitize=address -L /Users/ytijani/.brew/opt/readline/lib -I /Users/ytijani/.brew/opt/readline/include

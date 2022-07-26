@@ -33,17 +33,6 @@ void	catch_syntax_err(t_data *data, char *s)
 		if (is_token(s[i]))
 		{
 			set_syntax_error(data, s[i], s[i + 1]);
-			// if (s[i] == '>' && s[i + 1] == '>')
-			// 	data->err = SYNTAX_ERR_NEAR_OUTFILE_APPEND;
-			// else if (s[i] == '>')
-			// 	data->err = SYNTAX_ERR_NEAR_OUTFILE;
-			// if (s[i] == '<' && s[i + 1] == '<')
-			// 	data->err = SYNTAX_ERR_NEAR_HEREDOC;
-			// else if (s[i] == '<')
-			// 	data->err = SYNTAX_ERR_NEAR_INFILE;
-			// if (s[i] == '|')
-			// 	data->err = SYNTAX_ERR_NEAR_PIPE;
-			// data->is_syntax_valid = 0;
 			return ;
 		}
 		i++;
@@ -52,36 +41,38 @@ void	catch_syntax_err(t_data *data, char *s)
 	data->err = SYNTAX_ERR_NEAR_NEWLINE;
 }
 
-void    get_pipe_err(t_data *data, char *s, int i)
+void	get_pipe_err(t_data *data, char *s, int i)
 {
-    int j;
+	int	j;
 
-    j = i - 1;
-    while (j >= 0)
-    {
-        if (s[j] == '|')
-            break ;
+	j = i - 1;
+	while (j >= 0)
+	{
+		if (s[j] == '|')
+			break ;
 		if (s[j] == '<' || s[j] == '>')
 		{
 			data->err = SYNTAX_ERR_NEAR_PIPE;
 			data->is_syntax_valid = 0;
 			return ;
 		}
-        if (!is_space(s[j]))
-            return ;
-        j--;
-    }
-    data->is_syntax_valid = 0;
-    data->err = UNEXPECTED_PIPE_TOKEN_ERR;
+		if (!is_space(s[j]))
+			return ;
+		j--;
+	}
+	data->is_syntax_valid = 0;
+	data->err = UNEXPECTED_PIPE_TOKEN_ERR;
+	ft_putstr(data->err);
+	data->err = NULL;
 }
 
-void    get_err(char *err, int is_exit)
+void	get_err(char *err, int is_exit)
 {
-    size_t  i;
+	size_t	i;
 
-    i = -1;
-    while (err[++i])
-        write(2, &err[i], 1);
-    if (is_exit)
-        exit(EXIT_FAILURE);
+	i = -1;
+	while (err[++i])
+		write(2, &err[i], 1);
+	if (is_exit)
+		exit(EXIT_FAILURE);
 }

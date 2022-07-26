@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   quotes.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ytijani <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/25 23:45:07 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/25 23:51:34 by ytijani          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../include/parsing.h"
 
 void	set_quote(char *c, char *si, char opposite)
@@ -109,27 +97,3 @@ char	*remove_chars(char *s, char *r)
 		res = ft_strjoin(res, slice(s, j, i));
 	return (res);
 }
-
-// char    *remove_char(char *s, char c)
-// {
-//     size_t  i;
-//     size_t  j;
-//     char    *res;
-
-//     res = NULL;
-//     j = 0;
-//     i = 0;
-//     while (s[i])
-//     {
-//         if (s[i] == c)
-//         {
-//             res = ft_strjoin(res, slice(s, j, i));
-//             while (s[i] == c)
-//                 i++;
-//             j = i;
-//         }
-//         else
-//             i++;
-//     }
-//     return (res);
-// }

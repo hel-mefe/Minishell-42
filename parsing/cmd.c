@@ -1,24 +1,24 @@
 #include "../include/parsing.h"
 
-size_t  get_quote_end(char *s, char c)
+size_t	get_quote_end(char *s, char c)
 {
-    size_t  i;
-    int     end;
+	size_t	i;
+	int		end;
 
-    end = -1;
-    i = 0;
-    while (s[i])
-    {
-        if (s[i] == c)
-            end = i;
-        if (s[i] == c && (!s[i + 1] || is_space(s[i + 1]) || s[i + 1] == '|'))
-            break ;
-        i++;
-    }
-    return (end);
+	end = -1;
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
+			end = i;
+		if (s[i] == c && (!s[i + 1] || is_space(s[i + 1]) || s[i + 1] == '|'))
+			break ;
+		i++;
+	}
+	return (end);
 }
 
-int is_there_char(char *s)
+int	is_there_char(char *s)
 {
 	int	i;
 
@@ -32,40 +32,44 @@ int is_there_char(char *s)
 	return (0);
 }
 
-
-t_cmd   *get_commands(t_data *data, char *s)
+int	try_command_push(t_data *data, t_cmd **head, char *s, size_t *s_end)
 {
-    size_t  i;
-    size_t  j;
-    t_cmd   *head;
-    t_cmd   *new;
-    char    *cmd;
+	t_cmd	*new;
 
-    head = NULL;
-    i = -1;
-    j = 0;
-    while (s[++i])
-    {
-        if (s[i] == '\'')
-            i += get_quote_end(s + i + 1, '\'') + 1;
-        else if (s[i] == '\"')
-            i += get_quote_end(s + i + 1, '\"') + 1;
-        if (s[i] == '|' || !s[i + 1])
-        {
-            if (s[i] == '|')
-                get_pipe_err(data, s, i);
-            if (data->err)
-                break ;
-            new = new_command(head);
-            if (!s[i + 1] && s[i] != '|')
-                new->line = slice(s, j, i + 1);
-            else
-                new->line = slice(s, j, i);
-            push_command(&head, new);
-            if (!s[i + 1])
-                break ;
-            j = i + 1;
-        }
-    }
-    return (head);
+	if (s[s_end[1]] == '|')
+		get_pipe_err(data, s, s_end[1]);
+	if (data->err)
+		return (0);
+	new = new_command(*head);
+	if (!s[s_end[1] + 1] && s[s_end[1]] != '|')
+		new->line = slice(s, s_end[0], s_end[1] + 1);
+	else
+		new->line = slice(s, s_end[0], s_end[1]);
+	push_command(head, new);
+	return (1);
+}
+
+t_cmd	*get_commands(t_data *data, char *s)
+{
+	size_t	s_end[2];
+	t_cmd	*head;
+	t_cmd	*new;
+
+	s_end[0] = 0;
+	s_end[1] = -1;
+	head = NULL;
+	while (s[++s_end[1]])
+	{
+		if (s[s_end[1]] == '\'')
+			s_end[1] += get_quote_end(s + s_end[1] + 1, '\'') + 1;
+		else if (s[s_end[1]] == '\"')
+			s_end[1] += get_quote_end(s + s_end[1] + 1, '\"') + 1;
+		if (s[s_end[1]] == '|' || !s[s_end[1] + 1])
+		{
+			if (!try_command_push(data, &head, s, s_end))
+				break ;
+			s_end[0] = s_end[1] + 1;
+		}
+	}
+	return (head);
 }
