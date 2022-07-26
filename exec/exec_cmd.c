@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:01:19 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/25 20:40:23 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/26 20:45:15 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	wait_close(t_data *data, t_cmd *tmp)
 	}
 	while (tmp)
 	{
-		if ((waitpid(-1, &tmp->status, WUNTRACED)) < 0)
+		if ((waitpid(-1, &tmp->status, 0)) < 0)
 			perror("waitpid");
 		if (WIFEXITED(tmp->status))
 			g_global.get_nb_status = WEXITSTATUS(tmp->status);
@@ -57,7 +57,8 @@ void	help_runcmd(t_data *data, t_cmd *cmd, t_env **env, char **str)
 		}
 		if (cmd->error > 0)
 			ft_error1(-1, strerror(cmd->error));
-		ever(cmd->main_args, env, str, data);
+		if (!cmd->is_builtin)
+			ever(cmd->main_args, env, str);
 	}
 }
 
@@ -87,7 +88,7 @@ char	**change_env(t_env **env_v)
 	return (res);
 }
 
-void	ever(char **cmd, t_env **env_v, char **env, t_data *data)
+void	ever(char **cmd, t_env **env_v, char **env)
 {
 	if (execve(get_command(env_v, *cmd), cmd, env) == -1)
 	{
@@ -100,7 +101,6 @@ void	ever(char **cmd, t_env **env_v, char **env, t_data *data)
 
 void	run_cmd(t_env **env, t_data *data, t_cmd *cmd)
 {	
-	int		i;
 	t_cmd	*tmp;
 	char	**str;
 

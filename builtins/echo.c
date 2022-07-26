@@ -56,6 +56,7 @@ void	ft_echo(t_env **env_v, char **av)
 
 	i = 1;
 	new_line = 0;
+	new = NULL;
 	if (!ft_strcmp(av[i], "~") && av[i + 1] == 0)
 	{
 		handle_sign(env_v, new);

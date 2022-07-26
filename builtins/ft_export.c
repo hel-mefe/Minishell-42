@@ -70,17 +70,21 @@ void	check_evr(t_env **env_v, char **spl, char **av, int i)
 		if (new != NULL)
 		{
 			free(new->data);
-			new->data = spl[1];
+			new->data = ft_strdup(spl[1]);
 		}
 		else
 			add_to_list(env_v, spl);
 	}
 	else if (av[i][ft_strlen(spl[0]) - 1] == '+')
 	{
+		free(spl[0]);
 		spl[0] = ft_substr(av[i], 0, ft_strlen(spl[0]) - 1);
 		new = search_element(env_v, spl[0]);
 		if (new)
+		{
+			free(new->data);
 			new->data = ft_strjoin(new->data, spl[1]);
+		}
 		else
 			add_to_list(env_v, spl);
 	}
@@ -88,7 +92,7 @@ void	check_evr(t_env **env_v, char **spl, char **av, int i)
 
 void	help_export(t_env **env_v, char *sig, char **av, int i)
 {
-	char	*spl[2];
+	char	*spl[3];
 	int		len;
 	int		len1;
 
@@ -98,8 +102,13 @@ void	help_export(t_env **env_v, char *sig, char **av, int i)
 	{
 		spl[1] = ft_strdup(sig + 1);
 		spl[0] = ft_substr(av[i], 0, ((len - 1) - ft_strlen(spl[1])));
+		spl[2] = NULL;
 		if (spl[1] != NULL && spl[0] != NULL)
+		{
 			check_evr(env_v, spl, av, i);
+		}
+		free(spl[1]);
+		free(spl[0]);
 	}
 	else
 	{
@@ -118,7 +127,6 @@ void	ft_export(t_env **env_v, char **av)
 	int		i;
 	char	*sig;
 	char	*res;
-	t_env	*new;
 
 	i = 1;
 	if (av[i] == '\0')

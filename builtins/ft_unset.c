@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:21:23 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/23 17:29:00 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/26 15:39:42 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	check_unset(char **av)
 void	help_unset(t_env **env_v, char **name, int i)
 {
 	t_env	*current_node;
-	t_env	*new;
 	t_env	*prev;
 
 	prev = *env_v;
@@ -60,8 +59,6 @@ void	ft_unset(t_env **env_v, char **name)
 {
 	int		i;
 	t_env	*new;
-	t_env	*prev;
-	t_env	*current_node;
 
 	i = 1;
 	while (name[i])

@@ -41,7 +41,9 @@ void	handle_signals(void)
 void	run_builtin(t_env **env_v, char **av)
 {
 	if ((ft_strcmp(av[0], "echo")) == 0)
+	{
 		ft_echo(env_v, av);
+	}
 	else if ((ft_strcmp(av[0], "pwd")) == 0)
 		ft_pwd(env_v);
 	else if ((ft_strcmp(av[0], "cd")) == 0)
@@ -71,37 +73,79 @@ void	close_pipe(int **pipes, int a, int b, int n)
 	}
 }
 
+void	get_line(int history, char *s)
+{
+	s = get_next_line(history);
+	if (s)
+		{
+			free(s);
+			s = ft_strtrim(s, "\n");
+			add_history(s);
+		}
+	while (s)
+	{
+		free(s);
+		s = get_next_line(history);
+		if (s)
+		{
+			free(s);
+			s = ft_strtrim(s, "\n");
+			add_history(s);
+		}
+	}
+	free(s);
+}
+
+void	check_cmd(t_env *env_v, char *s, char	**env, t_data *data)
+{
+	if (s == NULL)
+	{
+		printf("exit\n");
+		exit(0);
+	}
+	if (s != NULL && s[0])
+	{
+		add_history(s);
+		data = parse_line(s, env, env_v);
+		run_heredoc(data, data->heredoc, data->commands);
+		if (data->err)
+		{
+			g_global.get_nb_status = 258;
+			printf("%s\n", data->err);
+		}
+		if (data->is_syntax_valid)
+			run_cmd(&env_v, data, data->commands);
+		destory_data(&data);
+		data = NULL;
+	}
+}
+
 int	main(int ac, char **av, char **env)
 {
 	char	*s;
 	t_env	*env_v;
 	t_data	*data;
+	int		history;
+	char	*res;
 
 	(void)av;
 	(void)ac;
 	env_v = NULL;
 	init_env(&env_v, env);
+	history = open(".minishell_History" , O_CREAT | O_RDWR | O_APPEND , 0644);
+	get_line(history, s);
 	while (1)
 	{
 		handle_signals();
 		s = readline("minishell> ");
-		if (s == NULL)
+		if (s)
 		{
-			printf("exit\n");
-			exit(0);
+			res = ft_strjoin(s, "\n");
+			ft_putstr_fd(res, history);
+			free(res);
 		}
-		if (s != NULL && s[0])
-		{
-			add_history(s);
-			data = parse_line(s, env, env_v);
-			run_heredoc(data, data->heredoc, data->commands);
-			if (data->err)
-				printf("%s\n", data->err);
-			if (data->is_syntax_valid)
-				run_cmd(&env_v, data, data->commands);
-			// destory_data(&data);
-			data = NULL;
-		}
+		check_cmd(env_v, s, env, data);
 		free(s);
 	}
+	close(history);
 }

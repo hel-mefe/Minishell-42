@@ -31,6 +31,8 @@ void	change_link(t_env **env_v, int i)
 	char	*buffer;
 	t_env	*new;
 
+	buffer = NULL;
+	new = NULL;
 	if (i == 1)
 	{
 		new = search_element(env_v, "PWD");
@@ -56,11 +58,6 @@ void	change_link(t_env **env_v, int i)
 
 void	change_pwd(t_env **env_v, char **av, char *path, int i)
 {
-	char	s[1024];
-	char	*buffer;
-	char	*res;
-	t_env	*new;
-
 	change_link(env_v, 1);
 	if (i == 0)
 	{
@@ -78,23 +75,6 @@ void	change_pwd(t_env **env_v, char **av, char *path, int i)
 	change_link(env_v, 2);
 }
 
-void	hundle_sign(t_env **env_v, char **av)
-{
-	t_env	*new;
-	char	*buffer;
-
-	new = search_element(env_v, "OLDPWD");
-	if (!new)
-	{
-		printf("cd : OLDPWD not set\n");
-		return ;
-	}
-	change_link(env_v, 1);
-	chdir(new->data);
-	change_link(env_v, 2);
-	printf("%s\n", new->data);
-}
-
 void	ft_cd(t_env **env_v, char **av)
 {
 	char	*path;
@@ -109,8 +89,6 @@ void	ft_cd(t_env **env_v, char **av)
 		change_pwd(env_v, av, new->data, 1);
 		g_global.get_nb_status = 0;
 	}
-	else if (av[1][0] == '-' && av[1][1] == '\0')
-		hundle_sign(env_v, av);
 	else if (av[1])
 	{
 		g_global.get_nb_status = 0;

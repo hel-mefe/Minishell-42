@@ -75,7 +75,9 @@ void	*ft_memcpy(void *dst, const void *src, size_t n);
 size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize);
 void	free_double_char_arr(char **arr);
 void	run_cmd(t_env **env, t_data *data, t_cmd *cmd);
-void	ever(char **cmd, t_env **env_v, char **env, t_data *data);
+void	ever(char **cmd, t_env **env_v, char **env);
 void	run_builtin(t_env **env_v, char **av);
 void    rl_replace_line(const char *, int);
+char	*ft_strjoins(char *save, char *buffer);
+char	*ft_strtrim(char *s1, char *set);
 #endif

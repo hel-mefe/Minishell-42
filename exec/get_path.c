@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 10:59:25 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/25 20:39:54 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/26 15:56:02 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ char	*get_command(t_env **path, char *cmd)
 {
 	char	**tmp;
 	char	*tab;
-	char	*command;
 	int		i;
 	t_env	*new;
 
 	i = 0;
+	tab = NULL;
 	if (!cmd)
 		exit(0);
 	if (cmd[0] == '/' && !check_path(cmd))

@@ -54,17 +54,17 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 	res = NULL;
 	while (limiters)
 	{
-		// g_global.get_nb = 1;
+		g_global.get_nb = 1;
 		s = readline("haredoc> ");
-		// // handle_signals();
-		// if (g_global.get_nb == -1)
-		// 	break ;
+		handle_signals();
+		if (g_global.get_nb == -1)
+			break ;
 		if (!ft_strcmp(s, limiters->s))
 			limiter_found(data, &limiters, &res);
 		else
 			limiter_not_found(&res, &s);
-		// if (keep_res)
-		// 	free(keep_res);
+		if (keep_res)
+			free(keep_res);
 	}
-	// dup(g_global.new);
+	dup(g_global.new);
 }
