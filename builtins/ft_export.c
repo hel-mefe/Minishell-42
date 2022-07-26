@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:26:28 by marvin            #+#    #+#             */
-/*   Updated: 2022/07/20 13:31:34 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/25 20:36:13 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,15 @@ void	check_evr(t_env **env_v, char **spl, char **av, int i)
 void	help_export(t_env **env_v, char *sig, char **av, int i)
 {
 	char	*spl[2];
+	int		len;
+	int		len1;
 
+	len = ft_strlen(av[i]);
+	len1 = ft_strlen(av[i]);
 	if (sig)
 	{
-		spl[1] = strdup(sig + 1);
-		spl[0] = *ft_split(av[i], '=');
+		spl[1] = ft_strdup(sig + 1);
+		spl[0] = ft_substr(av[i], 0, ((len - 1) - ft_strlen(spl[1])));
 		if (spl[1] != NULL && spl[0] != NULL)
 			check_evr(env_v, spl, av, i);
 	}
@@ -102,56 +106,38 @@ void	help_export(t_env **env_v, char *sig, char **av, int i)
 		if (search_element(env_v, av[i]) == NULL)
 		{
 			spl[1] = NULL;
-			spl[0] = *ft_split(av[i], '=');
+			spl[0] = ft_substr(av[i], 0, (len - ft_strlen(spl[1])));
 			check_evr(env_v, spl, av, 0);
+			free(spl[0]);
 		}
 	}
 }
 
-int	check_oper(char **av)
-{
-	int i;
-	int j;
-
-	i = 1;
-	j = 0;
-	while (av[i])
-	{
-		j = 0;
-		while (av[i][j])
-		{
-			if ((av[i][j] == '+'  && av[i][j + 1] != '=') || av[i][j] == '-' || (av[i][j] > 91 && av[i][j] < 96))
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
 void	ft_export(t_env **env_v, char **av)
 {
 	int		i;
 	char	*sig;
+	char	*res;
 	t_env	*new;
 
 	i = 1;
 	if (av[i] == '\0')
 		print_export(env_v);
-	else
+	while (av[i])
 	{
 		g_global.get_nb_status = 0;
-		while (av[i])
+		sig = strstr(av[i], "=");
+		if (!av[i][ft_strlen(sig)] ||
+			(!ft_isalpha(av[i][0]) && av[i][0] != '_')
+				|| check_oper(av))
 		{
-			sig = strstr(av[i], "=");
-			if (!av[i][ft_strlen(sig)] ||
-					(!ft_isalpha(av[i][0]) && av[i][0] != '_') || check_oper(av))
-			{
-				ft_putstr_fd(ft_strjoin(av[i], " : not a valid identifier\n"), 2);
-				g_global.get_nb_status = 1;
-			}
-			else
-				help_export(env_v, sig, av, i);
-			i++;
+			res = ft_strjoin(av[i], " : not a valid identifier\n");
+			ft_putstr_fd(res, 2);
+			free(res);
+			g_global.get_nb_status = 1;
 		}
+		else
+			help_export(env_v, sig, av, i);
+		i++;
 	}
 }

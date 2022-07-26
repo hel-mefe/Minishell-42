@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:21:23 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/20 21:12:39 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/23 17:29:00 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,15 @@ void	help_unset(t_env **env_v, char **name, int i)
 		prev = prev->next;
 		current_node = current_node->next;
 	}
-	prev->next = current_node->next;
-	free(current_node);
+	if (current_node)
+	{
+		prev->next = current_node->next;
+		free(current_node->data);
+		free(current_node->name);
+		free(current_node);
+	}
+	else
+		prev->next = NULL;
 }
 
 void	ft_unset(t_env **env_v, char **name)

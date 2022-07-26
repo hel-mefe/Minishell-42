@@ -227,33 +227,33 @@ t_data  *parse_line(char *s, char **env, t_env *main_env)
 
 
 
-int main(int ac, char **av, char **env)
-{
-    char    *s;
-    t_data  *data;
-    t_env   *main_env;
+// int main(int ac, char **av, char **env)
+// {
+//     char    *s;
+//     t_data  *data;
+//     t_env   *main_env;
 
-    init_env(&main_env, env);
-    // t_env *k = main_env;
-    // while (k)
-    // {
-    //     printf("%s => %s\n", k->name, k->data);
-    //     k = k->next;
-    // }
-    while (1)
-    {
-        s = readline("minishell> ");
-        data = NULL;
-        if (s && s[0])
-        {
-            data = parse_line(s, env, main_env);
-            if (get_queue_size(data->heredoc) > HERE_DOC_MAX)
-                get_err(MAX_HERE_DOC_EXCEEDED_ERR, 1);
-            // print_commands(data->commands);
-            // print_heredoc(data->heredoc);
-            run_heredoc(data, data->heredoc, data->commands);
-            // free(s);
-            // destory_data(&data);
-        }
-    }
-}
+//     init_env(&main_env, env);
+//     // t_env *k = main_env;
+//     // while (k)
+//     // {
+//     //     printf("%s => %s\n", k->name, k->data);
+//     //     k = k->next;
+//     // }
+//     while (1)
+//     {
+//         s = readline("minishell> ");
+//         data = NULL;
+//         if (s && s[0])
+//         {
+//             data = parse_line(s, env, main_env);
+//             if (get_queue_size(data->heredoc) > HERE_DOC_MAX)
+//                 get_err(MAX_HERE_DOC_EXCEEDED_ERR, 1);
+//             // print_commands(data->commands);
+//             // print_heredoc(data->heredoc);
+//             run_heredoc(data, data->heredoc, data->commands);
+//             // free(s);
+//             // destory_data(&data);
+//         }
+//     }
+// }

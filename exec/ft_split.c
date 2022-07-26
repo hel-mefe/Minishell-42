@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 12:30:03 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/20 19:18:54 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/23 17:40:45 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,17 +110,3 @@ char	**ft_split(char const *s, char c)
 	}
 	return (str);
 }
-/*int main()
-{
-	char str[] = "	hello	meme lolo	tiik	";
-
-	char c = ' ';
-	char **res = ft_split(str, ' ');
-	int	i = 0;
-
-	while (res[i])
-	{
-		printf("%s \n", res[i]);
-		i++;
-	}
-}*/

@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 10:59:25 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/22 11:05:25 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/25 20:39:54 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	ft_error1(int code, char *str)
 	if (code < 0)
 	{
 		ft_putstr_fd(str, 2);
+		write(2, "\n", 1);
 		exit(127);
 	}
 }

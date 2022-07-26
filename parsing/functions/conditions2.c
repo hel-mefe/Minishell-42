@@ -1,16 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   conditions2.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ytijani <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/25 23:37:19 by ytijani           #+#    #+#             */
+/*   Updated: 2022/07/25 23:38:12 by ytijani          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/parsing.h"
 
-int is_syntax_token(char c)
+int	is_syntax_token(char c)
 {
-    return (c == '|' || c == '<' || c == '>');
+	return (c == '|' || c == '<' || c == '>');
 }
 
-int is_singly(char c)
+int	is_singly(char c)
 {
-    return (c == '\'');
+	return (c == '\'');
 }
 
-int is_doubly(char c)
+int	is_doubly(char c)
 {
-    return (c == '\"');
+	return (c == '\"');
 }

@@ -1,23 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expansion.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/25 23:11:01 by ytijani           #+#    #+#             */
+/*   Updated: 2022/07/26 10:07:33 by ytijani          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/parsing.h"
 
-char    *expand_string(t_dollar *dollars, char **env, int *place, char *s)
+char	*expand_string(t_dollar *dollars, char **env, int *place, char *s)
 {
-    size_t  i;
-    size_t  j;
-    char    *res;
-    char    *part;
-    char    *k_res;
-    int     singly;
+	size_t	i;
+	size_t	j;
+	char	*res;
+	char	*part;
+	char	*k_res;
+	int		singly;
 
-    singly = 0;
-    res = NULL;
-    i = 0;
-    j = 0;
-    while (s[i])
-    {
-        if (s[i] == '\'')
-            singly = !singly;
-        if (s[i] == '$' && ft_isdigit(s[i + 1]) && !singly)
+	singly = 0;
+	res = NULL;
+	i = 0;
+	j = 0;
+	while (s[i])
+	{
+		
+	if (s[i] == '$' && ft_isdigit(s[i + 1]) && !singly)
         {
             k_res = res;
             part = slice(s, j, i);
@@ -41,41 +52,32 @@ char    *expand_string(t_dollar *dollars, char **env, int *place, char *s)
             if (k_res)
                 free(k_res);
         }
-        else if (s[i] == '$' && s[i + 1] == '?' && !singly)
-        {
-            if (j != i)
-            {
-                k_res = res;
-                part = slice(s, j, i);
-                res = ft_strjoin_free(res, part);
-                // if (k_res)
-                //     free(k_res);
-                // free(part);
+		else if (s[i] == '$' && s[i + 1] == '?' && !singly)
+		{
+			if (j != i)
+			{
+				k_res = res;
+				part = slice(s, j, i);
+				res = ft_strjoin_free(res, part);
             }
-            // k_res = res;
-            part = ft_itoa(g_global.get_nb_status);
-            res = ft_strjoin_free(res, part);
-            // if (k_res)
-            //     free(k_res);
-            i += 1;
-            j = i + 1;
-        }
-        i++;
-    }
-    if (i != j)
-    {
-        // k_res = res;
-        part = slice(s, j, i);
-        res = ft_strjoin_free(res, part);
-        // if (k_res)
-        //     free(k_res);
-    }
-    if (res && !res[0])
-    {
-        if (*place == INFILE || *place == OUTFILE)
-            *place = NONE_AMBIGUOUS;
-        else
-            *place = NONE;
-    }
-    return (res);
+			part = ft_itoa(g_global.get_nb_status);
+			res = ft_strjoin_free(res, part);
+			i += 1;
+			j = i + 1;
+		}
+		i++;
+	}
+	if (i != j)
+	{
+		part = slice(s, j, i);
+		res = ft_strjoin_free(res, part);
+	}
+	if (res && !res[0])
+	{
+		if (*place == INFILE || *place == OUTFILE)
+			*place = NONE_AMBIGUOUS;
+		else
+			*place = NONE;
+	}
+	return (res);
 }

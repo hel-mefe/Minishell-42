@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:21:47 by marvin            #+#    #+#             */
-/*   Updated: 2022/07/19 20:38:11 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/25 20:18:53 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,32 +40,34 @@ int	check_new(char *str)
 	return (0);
 }
 
+void	handle_sign(t_env **env_v, t_env *new)
+{
+	new = search_element(env_v, "HOME");
+	if (!new)
+		return ;
+	printf("%s\n", new->data);
+}
+
 void	ft_echo(t_env **env_v, char **av)
 {
-	int	i;
-	int	new_line;
+	int		i;
+	int		new_line;
 	t_env	*new;
 
 	i = 1;
 	new_line = 0;
 	if (!ft_strcmp(av[i], "~") && av[i + 1] == 0)
 	{
-		new = search_element(env_v, "HOME");
-		if (!new)
-			return ;
-		printf("%s\n", new->data);
+		handle_sign(env_v, new);
 		return ;
 	}
-	else
+	while (av[i] && av[i][0] == '-' && av[i][1] != '\0')
 	{
-		while (av[i] && av[i][0] == '-' && av[i][1] != '\0')
-		{
-			if (!check_new(av[i]))
-				new_line = 1;
-			else
-				break ;
-			i++;
-		}
+		if (!check_new(av[i]))
+			new_line = 1;
+		else
+			break ;
+		i++;
 	}
 	print_echo(&av[i]);
 	if (!new_line)

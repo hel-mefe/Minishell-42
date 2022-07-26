@@ -26,3 +26,28 @@ int in_string(char *s, char c)
     }
     return (0);
 }
+
+char	*ft_substr(const char *s, unsigned int start, size_t len)
+{
+	size_t	i;
+	char	*res;
+
+	if (!s)
+		return (NULL);
+	if (start > len || start > ft_strlen(s))
+		return (ft_strdup(""));
+	else if (len > ft_strlen(s))
+		len = ft_strlen(s) - start;
+	res = (char *) malloc ((len + 1) * sizeof(char));
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		res[i] = s[start];
+		i++;
+		start++;
+	}
+	res[i] = 0;
+	return (res);
+}

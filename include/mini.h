@@ -37,6 +37,9 @@ void	ft_sort(t_env **env_v);
 void	run_builtin(t_env **env_v, char **av);
 void	print_export(t_env **env_v);
 void	ft_unset(t_env **env_v, char **name);
+void	remove_name(t_env **env_v, char *name);
+void	help_cd(t_env **env_v, t_env *current_node, t_env *prev, char *name);
+int	check_oper(char **av);
 /*************help_linked_list*******************/
 void	ft_lstadd_back(t_env **lst, t_env *new);
 t_env	*ft_lstnew(char *name, char *data);
