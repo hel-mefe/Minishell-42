@@ -1,5 +1,82 @@
 #include "../include/parsing.h"
 
+void    print_dollars(t_dollar *head)
+{
+    while (head)
+    {
+        printf("DOLLAR VARNAME: %s\n", head->var);
+        printf("DOLLAR VARVAL: %s\n", head->val);
+        head = head->next;
+    }
+}
+
+void    print_matrix(char **m)
+{
+    size_t  i;
+
+    i = 0;
+    while (m[i])
+    {
+        printf("Index %zu: %s\n", i, m[i]);
+        i++;
+    }
+}
+
+void    print_args(t_queue *head, int n)
+{
+    int i;
+
+    i = 1;
+    while (head)
+    {
+        printf("ARGUMENT %d cmd - %d => %s\n", i, n, head->s);
+        head = head->next;
+        i++;
+    }
+}
+
+void    print_cmd(t_cmd *cmd, int n)
+{
+    printf("infile - cmd %d: => %s\n", n, cmd->infile);
+    printf("outfile - cmd %d: => %s\n", n, cmd->outfile);
+    printf("cmd_name - cmd %d: %s\n", n, cmd->cmd_name);
+}
+
+void    print_commands(t_cmd *head)
+{
+    int i;
+
+    i = 0;
+	printf("*********** COMMAND DATA *********\n");
+    while (head)
+    {
+        print_cmd(head, i);
+		printf("command id -> %d\n", head->cmd_id);
+        print_matrix(head->main_args);
+        printf("cmd %d line ==> %s\n", i, head->line);
+        printf("is_builtin %d: => %d\n", i, head->is_builtin);
+		printf("r_end -> %d | w_end -> %d\n", head->read_end, head->write_end);
+		printf("has_heredoc -> %d\n", head->has_heredoc);
+        head = head->next;
+        i++;
+    }
+	printf("*********** COMMAND DATA *********\n");
+}
+
+void    print_heredoc(t_queue *head)
+{
+    int i;
+
+    i = 1;
+    while (head)
+    {
+        printf("Limiter %d: %s - %p\n", i, head->s, head);
+        head = head->next;
+        i++;
+    }
+}
+
+
 int	get_inout_expression(t_data *data, t_cmd *cmd, char *s, size_t *i)
 {
 	int		trigger;
@@ -12,14 +89,14 @@ int	get_inout_expression(t_data *data, t_cmd *cmd, char *s, size_t *i)
 		catch_syntax_err(data, s + j + 1);
 		if (!data->err)
 			*i += get_string(s + j + 1, INFILE, data, cmd) + 1;
-		trigger = 1;
+        trigger = 1;
 	}
 	else if (s[j] == '>')
 	{
 		catch_syntax_err(data, s + j + 1);
 		if (!data->err)
 			*i += get_string(s + j + 1, OUTFILE, data, cmd) + 1;
-		trigger = 1;
+        trigger = 1;
 	}
 	return (trigger);
 }
@@ -35,11 +112,11 @@ size_t	get_expression(t_data *data, t_cmd *cmd, char *s, size_t i)
 		if (!data->err)
 			i += get_string(s + i + 2, OUTFILE, data, cmd) + 2;
 	}
-	else if (!get_inout_expression(data, cmd, s, &i))
+	else if (!get_inout_expression(data, cmd, s, &i) && !data->err)
 	{
-		if (!is_space(s[i] && !cmd->cmd_name))
-			i += get_string(s + i, COMMAND, data, cmd);
-		else if (!is_space(s[i]))
+		if (!is_space(s[i]) && !cmd->cmd_name)
+        	i += get_string(s + i, COMMAND, data, cmd);
+        else if (!is_space(s[i]))
 			i += get_string(s + i, ARGUMENT, data, cmd);
 	}
 	return (i);
@@ -49,15 +126,17 @@ void	parse_expression(char *s, t_data *data, t_cmd *cmd)
 {
 	size_t	i;
 	size_t	j;
+    size_t  len;
 	int		place;
 
+    len = ft_strlen(s);
 	i = 0;
-	while (s[i] && !data->err && data->is_syntax_valid)
+	while (i < len && s[i] && !data->err && data->is_syntax_valid)
 	{
-		i += get_expression(data, cmd, s, i);
-		if (data->err)
+		i = get_expression(data, cmd, s, i);
+		if (data->err || !data->is_syntax_valid)
 			break ;
-		while (s[i] && (is_space(s[i]) || !is_token(s[i])))
+		while (i < len && s[i] && is_space(s[i]))
 			i++;
 	}
 	cmd->main_args = get_args(cmd);
@@ -122,8 +201,8 @@ t_data	*parse_line(char *s, char **env, t_env *main_env)
 //             data = parse_line(s, env, main_env);
 //             if (get_queue_size(data->heredoc) > HERE_DOC_MAX)
 //                 get_err(MAX_HERE_DOC_EXCEEDED_ERR, 1);
-//             // print_commands(data->commands);
-//             // print_heredoc(data->heredoc);
+//             print_commands(data->commands);
+//             print_heredoc(data->heredoc);
 //             run_heredoc(data, data->heredoc, data->commands);
 //             // free(s);
 //             // destory_data(&data);

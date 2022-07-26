@@ -22,7 +22,7 @@ char	*get_expansion(t_data *data, int *place, char *s, char *res)
 	t_dollar	*variables;
 	char		*expanded;
 
-	if (s[0] == '\'')
+	if (s[0] != '\'')
 	{
 		variables = get_all_dollars(s, data->env, data->main_env);
 		expanded = expand_string(variables, data->env, place, res);
@@ -67,6 +67,6 @@ size_t	get_string(char *s, int place, t_data *data, t_cmd *cmd)
 	expanded_res = get_expansion(data, &place, s + i, res);
 	i += ft_strlen(res);
 	expanded_res = clean_string(res, expanded_res, &place);
-	assign_string(expanded_res, place, data, cmd);
-	return (i);
+    assign_string(expanded_res, place, data, cmd);
+    return (i);
 }

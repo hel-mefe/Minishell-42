@@ -99,7 +99,7 @@ int	main(int ac, char **av, char **env)
 				printf("%s\n", data->err);
 			if (data->is_syntax_valid)
 				run_cmd(&env_v, data, data->commands);
-			destory_data(&data);
+			// destory_data(&data);
 			data = NULL;
 		}
 		free(s);

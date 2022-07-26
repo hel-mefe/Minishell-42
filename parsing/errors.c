@@ -60,10 +60,14 @@ void	get_pipe_err(t_data *data, char *s, int i)
 			return ;
 		j--;
 	}
-	data->is_syntax_valid = 0;
-	data->err = UNEXPECTED_PIPE_TOKEN_ERR;
-	ft_putstr(data->err);
-	data->err = NULL;
+	if (data->is_syntax_valid)
+	{
+		data->is_syntax_valid = 0;
+		data->err = UNEXPECTED_PIPE_TOKEN_ERR;
+		ft_putstr(data->err);
+		ft_putstr("\n");
+		data->err = NULL;
+	}
 }
 
 void	get_err(char *err, int is_exit)
