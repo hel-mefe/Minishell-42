@@ -88,7 +88,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		handle_signals();
-		s = readline("minishell> ");
+		s = show_prompt(env_v);
 		if (s)
 		{
 			res = ft_strjoin(s, "\n");

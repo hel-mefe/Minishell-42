@@ -92,6 +92,7 @@ void	put_outfile(t_cmd *cmd, char *outfile_name);
 void	put_heredoc(t_data *data, t_cmd *cmd, int place, char *limiter);
 void	put_argument(t_cmd *cmd, char *argument);
 void	put_command(t_cmd *cmd, char *cmd_name);
+char	*show_prompt(t_env *head);
 
 /***************handle_signals****************/
 void		handle_signals(void);

@@ -110,16 +110,12 @@ void	run_cmd(t_env **env, t_data *data, t_cmd *cmd)
 	tmp = cmd;
 	if (cmd->is_builtin && cmd->next == NULL)
 	{
-		dup2(cmd->write_end, 1);
-		dup2(cmd->read_end, 0);
 		if (cmd->error > 0)
 		{
 			g_global.get_nb_status = 1;
-			printf("%s\n", strerror(cmd->error));
+			printf(ERROR_COLOR"%s\n", strerror(cmd->error));
 			return ;
 		}
-		close(cmd->write_end);
-		close(cmd->read_end);
 		run_builtin(env, cmd->main_args);
 		free_double_char_arr(str);
 		return ;

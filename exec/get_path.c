@@ -19,6 +19,12 @@ void	ft_putstr_fd(char *s, int fd)
 	i = 0;
 	if (!s)
 		return ;
+	if (fd == 2)
+	{
+		while (ERROR_COLOR[i])
+			write(fd, &ERROR_COLOR[i++], 1);
+		i = 0;
+	}
 	while (s[i])
 	{
 		write (fd, &s[i], 1);

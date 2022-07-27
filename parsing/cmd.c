@@ -18,14 +18,14 @@ size_t	get_quote_end(char *s, char c)
 	return (end);
 }
 
-int	is_there_char(char *s)
+int	lookup_for_char(char *s)
 {
 	int	i;
 
 	i = 0;
 	while (s[i])
 	{
-		if (!is_space(s[i]))
+		if (!is_space(s[i]) && s[i] != '|')
 			return (1);
 		i++;
 	}
@@ -38,6 +38,8 @@ int	try_command_push(t_data *data, t_cmd **head, char *s, size_t *s_end)
 
 	if (s[s_end[1]] == '|')
 		get_pipe_err(data, s, s_end[1]);
+	if (!lookup_for_char(s + s_end[1] + 1))
+		data->err = UNCLOSED_PIPE_ERR;
 	new = new_command(*head);
 	if (!s[s_end[1] + 1] && s[s_end[1]] != '|')
 		new->line = slice(s, s_end[0], s_end[1] + 1);

@@ -51,7 +51,7 @@ void	check_cmd(t_env *env_v, char *s, char	**env, t_data *data)
 		if (data->err)
 		{
 			g_global.get_nb_status = 258;
-			printf("%s\n", data->err);
+			printf(ERROR_COLOR"%s\n", data->err);
 		}
 		if (data->is_syntax_valid)
 			run_cmd(&env_v, data, data->commands);

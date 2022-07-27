@@ -19,7 +19,7 @@ parsing/functions/builtins.c parsing/functions/compare.c parsing/functions/condi
 parsing/functions/quotes.c parsing/functions/search.c parsing/functions/strings.c parsing/variables/expansion.c parsing/variables/get_dollars.c parsing/buckets.c \
 get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
 parsing/cmd.c parsing/destroy.c parsing/errors.c parsing/expressions1.c parsing/expressions2.c parsing/here_doc.c parsing/parsing.c parsing/redirect.c parsing/run_heredoc.c \
-exec/main.c
+exec/main.c parsing/prompt.c
 
 CC = cc
 
