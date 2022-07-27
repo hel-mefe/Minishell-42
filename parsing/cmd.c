@@ -38,7 +38,7 @@ int	try_command_push(t_data *data, t_cmd **head, char *s, size_t *s_end)
 
 	if (s[s_end[1]] == '|')
 		get_pipe_err(data, s, s_end[1]);
-	if (!lookup_for_char(s + s_end[1] + 1))
+	if (s[s_end[1]] == '|' && !lookup_for_char(s + s_end[1] + 1))
 		data->err = UNCLOSED_PIPE_ERR;
 	new = new_command(*head);
 	if (!s[s_end[1] + 1] && s[s_end[1]] != '|')

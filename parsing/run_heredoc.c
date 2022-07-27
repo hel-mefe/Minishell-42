@@ -62,9 +62,13 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 		if (g_global.get_nb == -1)
 			break ;
 		if (!ft_strcmp(s, limiters->s))
+		{
 			limiter_found(data, &limiters, &res);
+			free(s);
+		}
 		else
 			limiter_not_found(&res, &s);
 	}
+	printf("===> %p\n", data->heredoc);
 	dup(g_global.new);
 }

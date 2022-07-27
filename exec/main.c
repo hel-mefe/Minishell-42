@@ -18,7 +18,7 @@ void	handel_sigint(int sig)
 	{
 		printf("\n");
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	else if (sig == SIGINT && g_global.get_nb == 1)
