@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 10:01:36 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/27 11:24:46 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/27 13:12:58 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,22 @@ void	check_cmd(t_env *env_v, char *s, char	**env, t_data *data)
 		destory_data(&data);
 		data = NULL;
 	}
+}
+
+
+//*******************Help_export_err**************************//
+
+int	check_export(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if ((str[i] == '+' && str[i + 1] != '\0') || str[i] == '-' ||
+			((str[i] > 91 && str[i] < 96) && str[i] != '_'))
+			return (0);
+		i++;
+	}
+	return (1);
 }

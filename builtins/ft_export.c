@@ -81,19 +81,26 @@ void	check_evr(t_env **env_v, char **spl, char **av, int i)
 
 void	help_export(t_env **env_v, char *sig, char **av, int i)
 {
-	char	*spl[3];
+	char	*spl[2];
 	int		len;
+	char	*res;
 
 	len = ft_strlen(av[i]);
+	res = NULL;
 	if (sig)
 	{
 		spl[1] = ft_strdup(sig + 1);
 		spl[0] = ft_substr(av[i], 0, ((len - 1) - ft_strlen(spl[1])));
-		spl[2] = NULL;
-		if (spl[1] != NULL && spl[0] != NULL)
-		{
+		if (!check_export(spl[0]))
+			{
+				res = ft_strjoin(*av, " : not a valid identifier\n");
+				ft_putstr_fd(res, 2);
+				free(res);
+				g_global.get_nb_status = 1;
+				return ;
+			}
+		else if (spl[1] != NULL && spl[0] != NULL)
 			check_evr(env_v, spl, av, i);
-		}
 		free(spl[1]);
 		free(spl[0]);
 	}
@@ -119,9 +126,8 @@ void	ft_export(t_env **env_v, char **av)
 	{
 		g_global.get_nb_status = 0;
 		sig = strstr(av[i], "=");
-		if (!av[i][ft_strlen(sig)] ||
-			(!ft_isalpha(av[i][0]) && av[i][0] != '_')
-				|| check_oper(av))
+		if ((!av[i][ft_strlen(sig)] ||
+			(!ft_isalpha(av[i][0]) && av[i][0] != '_')))
 		{
 			res = ft_strjoin(av[i], " : not a valid identifier\n");
 			ft_putstr_fd(res, 2);

@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:01:19 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/26 20:45:15 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/27 13:28:40 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	help_runcmd(t_data *data, t_cmd *cmd, t_env **env, char **str)
 	int		i;
 
 	i = 0;
+	handle_signals();
 	pid = fork();
 	if (pid < 0)
 	{
@@ -103,11 +104,22 @@ void	run_cmd(t_env **env, t_data *data, t_cmd *cmd)
 {	
 	t_cmd	*tmp;
 	char	**str;
+	int 	res;
 
 	str = change_env(env);
 	tmp = cmd;
 	if (cmd->is_builtin && cmd->next == NULL)
 	{
+		dup2(cmd->write_end, 1);
+		dup2(cmd->read_end, 0);
+		if (cmd->error > 0)
+		{
+			g_global.get_nb_status = 1;
+			printf("%s\n", strerror(cmd->error));
+			return ;
+		}
+		close(cmd->write_end);
+		close(cmd->read_end);
 		run_builtin(env, cmd->main_args);
 		free_double_char_arr(str);
 		return ;

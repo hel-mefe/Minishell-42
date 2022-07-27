@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:22:53 by marvin            #+#    #+#             */
-/*   Updated: 2022/07/27 11:25:42 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/27 11:22:39 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	handel_sigint(int sig)
 	if (sig == SIGINT && g_global.get_nb == 0)
 	{
 		printf("\n");
-		g_global.get_nb_status = 1;
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -26,7 +25,6 @@ void	handel_sigint(int sig)
 	{		
 		g_global.new = dup(0);
 		printf("\n");
-		g_global.get_nb_status = 1;
 		g_global.get_nb = -1;
 		close(0);
 	}

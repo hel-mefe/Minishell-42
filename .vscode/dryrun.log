@@ -1,14 +1,12 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/ytijani/Desktop/Minishell-42'
 cc    -c -o builtins/cd.o builtins/cd.c
 cc    -c -o builtins/echo.o builtins/echo.c
- 
 cc    -c -o builtins/ft_env.o builtins/ft_env.c
 cc    -c -o builtins/ft_export.o builtins/ft_export.c
 cc    -c -o builtins/ft_unset.o builtins/ft_unset.c
 cc    -c -o builtins/pwd.o builtins/pwd.c
 cc    -c -o builtins/ft_exit.o builtins/ft_exit.c
- 
 cc    -c -o builtins/utils.o builtins/utils.c
 cc    -c -o exec/ft_memcpy.o exec/ft_memcpy.c
 cc    -c -o exec/ft_split.o exec/ft_split.c
@@ -18,13 +16,13 @@ cc    -c -o exec/get_path.o exec/get_path.c
 cc    -c -o exec/help_linkedlist.o exec/help_linkedlist.c
 cc    -c -o exec/exec_cmd.o exec/exec_cmd.c
 cc    -c -o exec/utils.o exec/utils.c
- 
 cc    -c -o parsing/data_structures/commands.o parsing/data_structures/commands.c
 cc    -c -o parsing/data_structures/dollars.o parsing/data_structures/dollars.c
 cc    -c -o parsing/data_structures/heredocs.o parsing/data_structures/heredocs.c
 cc    -c -o parsing/data_structures/queue.o parsing/data_structures/queue.c
 cc    -c -o parsing/functions/builtins.o parsing/functions/builtins.c
 cc    -c -o parsing/functions/compare.o parsing/functions/compare.c
+ 
 cc    -c -o parsing/functions/conditions.o parsing/functions/conditions.c
 cc    -c -o parsing/functions/conditions2.o parsing/functions/conditions2.c
 cc    -c -o parsing/functions/itoa.o parsing/functions/itoa.c
@@ -38,6 +36,7 @@ cc    -c -o parsing/buckets.o parsing/buckets.c
 cc    -c -o get_next_line/get_next_line.o get_next_line/get_next_line.c
 cc    -c -o get_next_line/get_next_line_utils.o get_next_line/get_next_line_utils.c
 cc    -c -o parsing/cmd.o parsing/cmd.c
+ 
 cc    -c -o parsing/destroy.o parsing/destroy.c
 cc    -c -o parsing/errors.o parsing/errors.c
 cc    -c -o parsing/expressions1.o parsing/expressions1.c

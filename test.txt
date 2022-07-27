@@ -1,0 +1,4 @@
+export a+="hello"
+unset USER asdasd+ +asdasd
+exit code after signal
+ls > hi  | sleep 2 | sleep 8 | cat + ctrl C
