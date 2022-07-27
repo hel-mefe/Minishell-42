@@ -1,6 +1,52 @@
 make --dry-run --keep-going --print-directory
 make: Entering directory `/Users/ytijani/Desktop/Minishell-42'
+cc    -c -o builtins/cd.o builtins/cd.c
+cc    -c -o builtins/echo.o builtins/echo.c
  
-make: Nothing to be done for `all'.
+cc    -c -o builtins/ft_env.o builtins/ft_env.c
+cc    -c -o builtins/ft_export.o builtins/ft_export.c
+cc    -c -o builtins/ft_unset.o builtins/ft_unset.c
+cc    -c -o builtins/pwd.o builtins/pwd.c
+cc    -c -o builtins/ft_exit.o builtins/ft_exit.c
+ 
+cc    -c -o builtins/utils.o builtins/utils.c
+cc    -c -o exec/ft_memcpy.o exec/ft_memcpy.c
+cc    -c -o exec/ft_split.o exec/ft_split.c
+cc    -c -o exec/ft_strchr.o exec/ft_strchr.c
+cc    -c -o exec/ft_strlcpy.o exec/ft_strlcpy.c
+cc    -c -o exec/get_path.o exec/get_path.c
+cc    -c -o exec/help_linkedlist.o exec/help_linkedlist.c
+cc    -c -o exec/exec_cmd.o exec/exec_cmd.c
+cc    -c -o exec/utils.o exec/utils.c
+ 
+cc    -c -o parsing/data_structures/commands.o parsing/data_structures/commands.c
+cc    -c -o parsing/data_structures/dollars.o parsing/data_structures/dollars.c
+cc    -c -o parsing/data_structures/heredocs.o parsing/data_structures/heredocs.c
+cc    -c -o parsing/data_structures/queue.o parsing/data_structures/queue.c
+cc    -c -o parsing/functions/builtins.o parsing/functions/builtins.c
+cc    -c -o parsing/functions/compare.o parsing/functions/compare.c
+cc    -c -o parsing/functions/conditions.o parsing/functions/conditions.c
+cc    -c -o parsing/functions/conditions2.o parsing/functions/conditions2.c
+cc    -c -o parsing/functions/itoa.o parsing/functions/itoa.c
+cc    -c -o parsing/functions/join_strings.o parsing/functions/join_strings.c
+cc    -c -o parsing/functions/quotes.o parsing/functions/quotes.c
+cc    -c -o parsing/functions/search.o parsing/functions/search.c
+cc    -c -o parsing/functions/strings.o parsing/functions/strings.c
+cc    -c -o parsing/variables/expansion.o parsing/variables/expansion.c
+cc    -c -o parsing/variables/get_dollars.o parsing/variables/get_dollars.c
+cc    -c -o parsing/buckets.o parsing/buckets.c
+cc    -c -o get_next_line/get_next_line.o get_next_line/get_next_line.c
+cc    -c -o get_next_line/get_next_line_utils.o get_next_line/get_next_line_utils.c
+cc    -c -o parsing/cmd.o parsing/cmd.c
+cc    -c -o parsing/destroy.o parsing/destroy.c
+cc    -c -o parsing/errors.o parsing/errors.c
+cc    -c -o parsing/expressions1.o parsing/expressions1.c
+cc    -c -o parsing/expressions2.o parsing/expressions2.c
+cc    -c -o parsing/here_doc.o parsing/here_doc.c
+cc    -c -o parsing/parsing.o parsing/parsing.c
+cc    -c -o parsing/redirect.o parsing/redirect.c
+cc    -c -o parsing/run_heredoc.o parsing/run_heredoc.c
+cc    -c -o exec/main.o exec/main.c
+cc -lreadline -L /Users/ytijani/.brew/opt/readline/lib -I /Users/ytijani/.brew/opt/readline/include builtins/cd.c builtins/echo.c builtins/ft_env.c builtins/ft_export.c builtins/ft_unset.c builtins/pwd.c builtins/ft_exit.c builtins/utils.c exec/ft_memcpy.c exec/ft_split.c exec/ft_strchr.c exec/ft_strlcpy.c exec/get_path.c exec/help_linkedlist.c exec/exec_cmd.c exec/utils.c parsing/data_structures/commands.c parsing/data_structures/dollars.c parsing/data_structures/heredocs.c parsing/data_structures/queue.c parsing/functions/builtins.c parsing/functions/compare.c parsing/functions/conditions.c parsing/functions/conditions2.c parsing/functions/itoa.c parsing/functions/join_strings.c parsing/functions/quotes.c parsing/functions/search.c parsing/functions/strings.c parsing/variables/expansion.c parsing/variables/get_dollars.c parsing/buckets.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c parsing/cmd.c parsing/destroy.c parsing/errors.c parsing/expressions1.c parsing/expressions2.c parsing/here_doc.c parsing/parsing.c parsing/redirect.c parsing/run_heredoc.c exec/main.c -o minishell
 make: Leaving directory `/Users/ytijani/Desktop/Minishell-42'
  

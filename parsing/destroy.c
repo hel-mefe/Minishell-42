@@ -101,8 +101,9 @@ void    destory_data(t_data **data)
     free_queue((*data)->heredoc);
     (*data)->heredoc = NULL;
     free_commands((*data)->commands);
-   free((*data)->pipes);
+    close_pipes((*data)->pipes, (*data)->n_cmds - 1);
     (*data)->commands = NULL;
+    free((*data)->pipes);
     free(*data);
     *data = NULL;
 }

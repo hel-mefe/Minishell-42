@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:26:28 by marvin            #+#    #+#             */
-/*   Updated: 2022/07/25 20:36:13 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/27 11:16:44 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,28 +76,15 @@ void	check_evr(t_env **env_v, char **spl, char **av, int i)
 			add_to_list(env_v, spl);
 	}
 	else if (av[i][ft_strlen(spl[0]) - 1] == '+')
-	{
-		free(spl[0]);
-		spl[0] = ft_substr(av[i], 0, ft_strlen(spl[0]) - 1);
-		new = search_element(env_v, spl[0]);
-		if (new)
-		{
-			free(new->data);
-			new->data = ft_strjoin(new->data, spl[1]);
-		}
-		else
-			add_to_list(env_v, spl);
-	}
+		join_strcheckevr(env_v, spl, i, av);
 }
 
 void	help_export(t_env **env_v, char *sig, char **av, int i)
 {
 	char	*spl[3];
 	int		len;
-	int		len1;
 
 	len = ft_strlen(av[i]);
-	len1 = ft_strlen(av[i]);
 	if (sig)
 	{
 		spl[1] = ft_strdup(sig + 1);
@@ -110,15 +97,12 @@ void	help_export(t_env **env_v, char *sig, char **av, int i)
 		free(spl[1]);
 		free(spl[0]);
 	}
-	else
+	else if (sig == NULL && search_element(env_v, av[i]) == NULL)
 	{
-		if (search_element(env_v, av[i]) == NULL)
-		{
-			spl[1] = NULL;
-			spl[0] = ft_substr(av[i], 0, (len - ft_strlen(spl[1])));
-			check_evr(env_v, spl, av, 0);
-			free(spl[0]);
-		}
+		spl[1] = NULL;
+		spl[0] = ft_substr(av[i], 0, (len - ft_strlen(spl[1])));
+		check_evr(env_v, spl, av, 0);
+		free(spl[0]);
 	}
 }
 

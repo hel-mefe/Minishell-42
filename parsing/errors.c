@@ -63,6 +63,7 @@ void	get_pipe_err(t_data *data, char *s, int i)
 	if (data->is_syntax_valid)
 	{
 		data->is_syntax_valid = 0;
+		g_global.get_nb_status = 258;
 		data->err = UNEXPECTED_PIPE_TOKEN_ERR;
 		ft_putstr(data->err);
 		ft_putstr("\n");

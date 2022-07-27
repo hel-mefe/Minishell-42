@@ -25,6 +25,12 @@ void	help_changelink(t_env **env_v, char *buffer, char *s, t_env *new)
 	ft_lstadd_back(env_v, new);
 }
 
+void	change_oldpwd(t_env **env_v, char *str, char *buffer, t_env *new)
+{
+	new = ft_lstnew(ft_strdup(str), ft_strdup(buffer));
+	ft_lstadd_back(env_v, new);
+}
+
 void	change_link(t_env **env_v, int i)
 {
 	char	s[1024];
@@ -44,13 +50,11 @@ void	change_link(t_env **env_v, int i)
 		new = search_element(env_v, "OLDPWD");
 		if (!new)
 		{
-			new = ft_lstnew(ft_strdup("OLDPWD"), ft_strdup(buffer));
-			ft_lstadd_back(env_v, new);
+			change_oldpwd(env_v, "OLDPWD", buffer, new);
 			return ;
 		}
 		remove_name(env_v, new->name);
-		new = ft_lstnew(ft_strdup("OLDPWD"), ft_strdup(buffer));
-		ft_lstadd_back(env_v, new);
+		change_oldpwd(env_v, "OLDPWD", buffer, new);
 	}
 	else if (i == 2)
 		help_changelink(env_v, buffer, s, new);

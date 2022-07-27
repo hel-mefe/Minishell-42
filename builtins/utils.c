@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:31:44 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/26 19:35:40 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/27 11:21:08 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ int	check_oper(char **av)
 	}
 	return (0);
 }
- //**************************LIbft_Function******************//
+
+//**************************LIbft_Function******************//
 char	*ft_strtrim(char *s1, char *set)
 {
 	int	start;
@@ -90,4 +91,23 @@ char	*ft_strtrim(char *s1, char *set)
 	if (start > end)
 		return (ft_strdup(""));
 	return (ft_substr(s1, start, end - start + 1));
+}
+
+//************Help_Export****************************?/
+
+void	join_strcheckevr(t_env **env_v, char **spl, int i, char **av)
+{
+	t_env	*new;
+
+	new = *env_v;
+	free(spl[0]);
+	spl[0] = ft_substr(av[i], 0, ft_strlen(spl[0]) - 1);
+	new = search_element(env_v, spl[0]);
+	if (new)
+	{
+		free(new->data);
+		new->data = ft_strjoin(new->data, spl[1]);
+	}
+	else
+		add_to_list(env_v, spl);
 }

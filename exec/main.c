@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:22:53 by marvin            #+#    #+#             */
-/*   Updated: 2022/07/25 20:43:54 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/27 11:25:42 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handel_sigint(int sig)
 		printf("\n");
 		g_global.get_nb_status = 1;
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	else if (sig == SIGINT && g_global.get_nb == 1)
@@ -73,53 +73,6 @@ void	close_pipe(int **pipes, int a, int b, int n)
 	}
 }
 
-void	get_line(int history, char *s)
-{
-	s = get_next_line(history);
-	if (s)
-		{
-			free(s);
-			s = ft_strtrim(s, "\n");
-			add_history(s);
-		}
-	while (s)
-	{
-		free(s);
-		s = get_next_line(history);
-		if (s)
-		{
-			free(s);
-			s = ft_strtrim(s, "\n");
-			add_history(s);
-		}
-	}
-	free(s);
-}
-
-void	check_cmd(t_env *env_v, char *s, char	**env, t_data *data)
-{
-	if (s == NULL)
-	{
-		printf("exit\n");
-		exit(0);
-	}
-	if (s != NULL && s[0])
-	{
-		add_history(s);
-		data = parse_line(s, env, env_v);
-		run_heredoc(data, data->heredoc, data->commands);
-		if (data->err)
-		{
-			g_global.get_nb_status = 258;
-			printf("%s\n", data->err);
-		}
-		if (data->is_syntax_valid)
-			run_cmd(&env_v, data, data->commands);
-		destory_data(&data);
-		data = NULL;
-	}
-}
-
 int	main(int ac, char **av, char **env)
 {
 	char	*s;
@@ -132,8 +85,8 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	env_v = NULL;
 	init_env(&env_v, env);
-	history = open(".minishell_History" , O_CREAT | O_RDWR | O_APPEND , 0644);
-	// get_line(history, s);
+	history = open(".minishell_History", O_CREAT | O_RDWR | O_APPEND, 0644);
+	get_line(history, s);
 	while (1)
 	{
 		handle_signals();

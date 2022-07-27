@@ -80,4 +80,7 @@ void	run_builtin(t_env **env_v, char **av);
 void    rl_replace_line(const char *, int);
 char	*ft_strjoins(char *save, char *buffer);
 char	*ft_strtrim(char *s1, char *set);
+void	check_cmd(t_env *env_v, char *s, char	**env, t_data *data);
+void	get_line(int history, char *s);
+void	join_strcheckevr(t_env **env_v, char **spl, int i, char **av);
 #endif
