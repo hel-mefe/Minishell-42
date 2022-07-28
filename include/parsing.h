@@ -94,6 +94,11 @@ void	put_argument(t_cmd *cmd, char *argument);
 void	put_command(t_cmd *cmd, char *cmd_name);
 char	*show_prompt(t_env *head);
 
+void	close_pipes(int **pipes, int size);
+void	free_queue(t_queue *head);
+void	free_double_int_arr(int **arr, int size);
+void	free_double_char_arr(char **arr);
+void	free_dollars(t_dollar *head);
 /***************handle_signals****************/
 void	    handle_signals(int i);
 void		handel_sigint(int sig);

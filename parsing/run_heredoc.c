@@ -56,10 +56,10 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 	while (limiters)
 	{
 		g_global.get_nb = 1;
+		handle_signals(1);
 		s = readline("haredoc> ");
 		if (s == NULL)
 			g_global.get_nb_status = -1;
-		// handle_signals();
 		if (g_global.get_nb == -1)
 			break ;
 		if (!ft_strcmp(s, limiters->s))
@@ -70,6 +70,5 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 		else
 			limiter_not_found(&res, &s);
 	}
-	// printf("===> %p\n", data->heredoc);
-	// dup(g_global.new);
+	dup(g_global.new);
 }

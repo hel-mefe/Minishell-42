@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 14:54:02 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/28 15:39:50 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/29 00:02:58 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_exit(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (!ft_isalnum(str[i]))
+		if (ft_isalpha(str[i]))
 			return (0);
 		i++;
 	}
@@ -35,7 +35,7 @@ void	ft_exit(char **av)
 		exit(g_global.get_nb_status);
 	else if (av[i] && av[i + 1] == 0)
 	{
-		if (check_exit(av[i]))
+		if (!check_exit(av[i]))
 		{
 			printf("exit\n");
 			printf("Minishell : exit :%s :numeric argument required ", av[i]);

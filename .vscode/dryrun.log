@@ -1,4 +1,4 @@
-make --dry-run --always-make --keep-going --print-directory
+make --dry-run --keep-going --print-directory
 make: Entering directory `/Users/ytijani/Desktop/Minishell-42'
 cc    -c -o builtins/cd.o builtins/cd.c
 cc    -c -o builtins/echo.o builtins/echo.c
@@ -33,6 +33,9 @@ cc    -c -o parsing/functions/strings.o parsing/functions/strings.c
 cc    -c -o parsing/variables/expansion.o parsing/variables/expansion.c
 cc    -c -o parsing/variables/get_dollars.o parsing/variables/get_dollars.c
 cc    -c -o parsing/buckets.o parsing/buckets.c
+cc    -c -o parsing/help_destroy.o parsing/help_destroy.c
+cc    -c -o get_next_line/get_next_line.o get_next_line/get_next_line.c
+cc    -c -o get_next_line/get_next_line_utils.o get_next_line/get_next_line_utils.c
 cc    -c -o parsing/cmd.o parsing/cmd.c
 cc    -c -o parsing/destroy.o parsing/destroy.c
 cc    -c -o parsing/errors.o parsing/errors.c
@@ -44,8 +47,6 @@ cc    -c -o parsing/redirect.o parsing/redirect.c
 cc    -c -o parsing/run_heredoc.o parsing/run_heredoc.c
 cc    -c -o exec/main.o exec/main.c
 cc    -c -o parsing/prompt.o parsing/prompt.c
+cc -lreadline -L /Users/ytijani/.brew/opt/readline/lib -I /Users/ytijani/.brew/opt/readline/include builtins/cd.c builtins/echo.c builtins/ft_env.c builtins/ft_export.c builtins/ft_unset.c builtins/pwd.c builtins/ft_exit.c builtins/utils.c exec/ft_memcpy.c exec/ft_split.c exec/ft_strchr.c exec/ft_strlcpy.c exec/get_path.c exec/help_linkedlist.c exec/exec_cmd.c exec/utils.c  exec/handle_signals.c parsing/data_structures/commands.c parsing/data_structures/dollars.c parsing/data_structures/heredocs.c parsing/data_structures/queue.c parsing/functions/builtins.c parsing/functions/compare.c parsing/functions/conditions.c parsing/functions/conditions2.c parsing/functions/itoa.c parsing/functions/join_strings.c parsing/functions/quotes.c parsing/functions/search.c parsing/functions/strings.c parsing/variables/expansion.c parsing/variables/get_dollars.c parsing/buckets.c parsing/help_destroy.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c parsing/cmd.c parsing/destroy.c parsing/errors.c parsing/expressions1.c parsing/expressions2.c parsing/here_doc.c parsing/parsing.c parsing/redirect.c parsing/run_heredoc.c exec/main.c parsing/prompt.c -o minishell
 make: Leaving directory `/Users/ytijani/Desktop/Minishell-42'
  
-make: *** No rule to make target `get_next_line/get_next_line.o', needed by `minishell'.
-make: *** No rule to make target `get_next_line/get_next_line_utils.o', needed by `minishell'.
-

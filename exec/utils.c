@@ -6,11 +6,24 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 10:01:36 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/28 19:07:26 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/28 23:47:46 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/mini.h"
+
+void	check_err(t_cmd *cmd)
+{
+	if (cmd->error_file)
+	{
+		ft_putstr_fd(ft_strdup(cmd->error_file), 2);
+		ft_putstr_fd(ft_strdup(": "), 2);
+	}
+	if (cmd->error == 0)
+		ft_error1(1, AMBIGUOUS_ERR);
+	if (cmd->error > 0)
+		ft_error1(1, strerror(cmd->error));
+}
 
 void	get_line(int history, char *s)
 {

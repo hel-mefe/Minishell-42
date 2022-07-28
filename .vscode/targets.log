@@ -10,7 +10,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `builtins/cd.o', needed by `minishell'.  Stop.
 
 
-# Make data base, printed on Thu Jul 28 19:03:11 2022
+# Make data base, printed on Fri Jul 29 00:52:29 2022
 
 # Variables
 
@@ -21,7 +21,7 @@ make: *** No rule to make target `builtins/cd.o', needed by `minishell'.  Stop.
 # makefile (from `Makefile', line 28)
 OBJCT = ${SRC:.c=.o}
 # makefile (from `Makefile', line 15)
-SRC = builtins/cd.c builtins/echo.c builtins/ft_env.c builtins/ft_export.c builtins/ft_unset.c builtins/pwd.c builtins/ft_exit.c builtins/utils.c exec/ft_memcpy.c exec/ft_split.c exec/ft_strchr.c exec/ft_strlcpy.c exec/get_path.c exec/help_linkedlist.c exec/exec_cmd.c exec/utils.c  exec/handle_signals.c parsing/data_structures/commands.c parsing/data_structures/dollars.c parsing/data_structures/heredocs.c parsing/data_structures/queue.c parsing/functions/builtins.c parsing/functions/compare.c parsing/functions/conditions.c parsing/functions/conditions2.c parsing/functions/itoa.c parsing/functions/join_strings.c parsing/functions/quotes.c parsing/functions/search.c parsing/functions/strings.c parsing/variables/expansion.c parsing/variables/get_dollars.c parsing/buckets.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c parsing/cmd.c parsing/destroy.c parsing/errors.c parsing/expressions1.c parsing/expressions2.c parsing/here_doc.c parsing/parsing.c parsing/redirect.c parsing/run_heredoc.c exec/main.c parsing/prompt.c
+SRC = builtins/cd.c builtins/echo.c builtins/ft_env.c builtins/ft_export.c builtins/ft_unset.c builtins/pwd.c builtins/ft_exit.c builtins/utils.c exec/ft_memcpy.c exec/ft_split.c exec/ft_strchr.c exec/ft_strlcpy.c exec/get_path.c exec/help_linkedlist.c exec/exec_cmd.c exec/utils.c  exec/handle_signals.c parsing/data_structures/commands.c parsing/data_structures/dollars.c parsing/data_structures/heredocs.c parsing/data_structures/queue.c parsing/functions/builtins.c parsing/functions/compare.c parsing/functions/conditions.c parsing/functions/conditions2.c parsing/functions/itoa.c parsing/functions/join_strings.c parsing/functions/quotes.c parsing/functions/search.c parsing/functions/strings.c parsing/variables/expansion.c parsing/variables/get_dollars.c parsing/buckets.c parsing/help_destroy.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c parsing/cmd.c parsing/destroy.c parsing/errors.c parsing/expressions1.c parsing/expressions2.c parsing/here_doc.c parsing/parsing.c parsing/redirect.c parsing/run_heredoc.c exec/main.c parsing/prompt.c
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -41,7 +41,7 @@ MAKEFILE_LIST :=  Makefile
 # environment
 VSCODE_CWD = /
 # environment
-Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.VYraVTHaMJ/Render
+Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.wpmoxwV9he/Render
 # environment
 PATH = /Users/ytijani/goinfre/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
 # environment
@@ -49,7 +49,7 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.c9AqTnROPw/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.8liqh34YNd/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -83,6 +83,7 @@ MAKECMDGOALS := all
 # environment
 HOMEBREW_CACHE = /tmp/ytijani/Homebrew/Caches
 # environment
+ 
 SHLVL = 1
 # makefile (from `Makefile', line 24)
 CC = cc
@@ -115,7 +116,7 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000012.Electron
+XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000002.Electron
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -131,7 +132,7 @@ MAKEFILES :=
 # environment
 LC_ALL = C
 # environment
-SECURITYSESSIONID = 18979
+SECURITYSESSIONID = 186aa
 # automatic
 ^F = $(notdir $^)
 # default
@@ -143,7 +144,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 42327
+VSCODE_PID = 4124
 # variable set hash-table stats:
 # Load=65/1024=6%, Rehash=0, Collisions=1/93=1%
 
@@ -153,9 +154,9 @@ VSCODE_PID = 42327
 
 # Directories
 
-# . (device 16777227, inode 5717245): 12 files, no impossibilities.
+# . (device 16777227, inode 5729001): 13 files, no impossibilities.
 
-# 12 files, no impossibilities in 1 directories.
+# 13 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -183,6 +184,12 @@ parsing/data_structures/commands.o:
 
 # Not a target:
 parsing/data_structures/queue.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+parsing/help_destroy.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -272,7 +279,7 @@ parsing/functions/conditions2.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-28 18:49:33
+#  Last modified 2022-07-29 00:52:20
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -304,7 +311,6 @@ builtins/utils.o:
 
 # Not a target:
 exec/ft_strlcpy.o:
- 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -333,14 +339,14 @@ parsing/functions/search.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-minishell: builtins/cd.o builtins/echo.o builtins/ft_env.o builtins/ft_export.o builtins/ft_unset.o builtins/pwd.o builtins/ft_exit.o builtins/utils.o exec/ft_memcpy.o exec/ft_split.o exec/ft_strchr.o exec/ft_strlcpy.o exec/get_path.o exec/help_linkedlist.o exec/exec_cmd.o exec/utils.o exec/handle_signals.o parsing/data_structures/commands.o parsing/data_structures/dollars.o parsing/data_structures/heredocs.o parsing/data_structures/queue.o parsing/functions/builtins.o parsing/functions/compare.o parsing/functions/conditions.o parsing/functions/conditions2.o parsing/functions/itoa.o parsing/functions/join_strings.o parsing/functions/quotes.o parsing/functions/search.o parsing/functions/strings.o parsing/variables/expansion.o parsing/variables/get_dollars.o parsing/buckets.o get_next_line/get_next_line.o get_next_line/get_next_line_utils.o parsing/cmd.o parsing/destroy.o parsing/errors.o parsing/expressions1.o parsing/expressions2.o parsing/here_doc.o parsing/parsing.o parsing/redirect.o parsing/run_heredoc.o exec/main.o parsing/prompt.o
+minishell: builtins/cd.o builtins/echo.o builtins/ft_env.o builtins/ft_export.o builtins/ft_unset.o builtins/pwd.o builtins/ft_exit.o builtins/utils.o exec/ft_memcpy.o exec/ft_split.o exec/ft_strchr.o exec/ft_strlcpy.o exec/get_path.o exec/help_linkedlist.o exec/exec_cmd.o exec/utils.o exec/handle_signals.o parsing/data_structures/commands.o parsing/data_structures/dollars.o parsing/data_structures/heredocs.o parsing/data_structures/queue.o parsing/functions/builtins.o parsing/functions/compare.o parsing/functions/conditions.o parsing/functions/conditions2.o parsing/functions/itoa.o parsing/functions/join_strings.o parsing/functions/quotes.o parsing/functions/search.o parsing/functions/strings.o parsing/variables/expansion.o parsing/variables/get_dollars.o parsing/buckets.o parsing/help_destroy.o get_next_line/get_next_line.o get_next_line/get_next_line_utils.o parsing/cmd.o parsing/destroy.o parsing/errors.o parsing/expressions1.o parsing/expressions2.o parsing/here_doc.o parsing/parsing.o parsing/redirect.o parsing/run_heredoc.o exec/main.o parsing/prompt.o
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 #  commands to execute (from `Makefile', line 32):
-	@$(CC) -lreadline -fsanitize=address -L /Users/ytijani/.brew/opt/readline/lib -I /Users/ytijani/.brew/opt/readline/include $(SRC) -o $(NAME)
+	@$(CC) -lreadline -L /Users/ytijani/.brew/opt/readline/lib -I /Users/ytijani/.brew/opt/readline/include $(SRC) -o $(NAME)
 	
 
 # Not a target:
@@ -373,6 +379,7 @@ parsing/functions/builtins.o:
 exec/help_linkedlist.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 
 # Not a target:
@@ -503,7 +510,7 @@ parsing/run_heredoc.o:
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=54/1024=5%, Rehash=0, Collisions=5/117=4%
+# Load=55/1024=5%, Rehash=0, Collisions=5/119=4%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -515,6 +522,6 @@ parsing/run_heredoc.o:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Thu Jul 28 19:03:11 2022
+# Finished Make data base on Fri Jul 29 00:52:29 2022
 
  

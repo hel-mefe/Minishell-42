@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 10:59:25 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/28 18:51:08 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/28 23:50:43 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,6 @@ void	ft_putstr_fd(char *s, int fd)
 	i = 0;
 	if (!s)
 		return ;
-	// if (fd == 2)
-	// {
-	// 	while (ERROR_COLOR[++i])
-	// 		write(fd, &ERROR_COLOR[i], 1);
-	// 	i = 0;
-	// }
 	while (s[i])
 	{
 		write (fd, &s[i], 1);
@@ -50,6 +44,12 @@ void	ft_error1(int code, char *str)
 		ft_putstr_fd(str, 2);
 		write(2, "\n", 1);
 		exit(127);
+	}
+	else if (code == 1)
+	{
+		ft_putstr_fd(str, 2);
+		write(2, "\n", 1);
+		exit(1);
 	}
 }
 

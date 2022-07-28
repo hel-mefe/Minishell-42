@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:01:19 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/28 19:06:19 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/28 23:49:54 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,7 @@ int	help_runcmd(t_data *data, t_cmd *cmd, t_env **env, char **str)
 			run_builtin(env, cmd->main_args, cmd);
 			exit(g_global.get_nb_status);
 		}
-		if (cmd->error_file)
-		{
-			ft_putstr_fd(ft_strdup(cmd->error_file), 2);
-			ft_putstr_fd(ft_strdup(": "), 2);
-		}
-		if (cmd->error == 0)
-			ft_error1(-1, AMBIGUOUS_ERR);
-		if (cmd->error > 0)
-			ft_error1(-1, strerror(cmd->error));
+		check_err(cmd);
 		ever(cmd->main_args, env, str);
 	}
 	return (pid);
@@ -124,7 +116,6 @@ void	run_cmd(t_env **env, t_data *data, t_cmd *cmd)
 	if (cmd->is_builtin && cmd->next == NULL)
 	{
 		help_runbuilt(cmd, env, res, str);
-		
 		return ;
 	}
 	while (cmd)

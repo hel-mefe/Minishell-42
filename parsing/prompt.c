@@ -15,6 +15,7 @@ char	*show_prompt(t_env *head)
 {
 	char	*path;
 	char	*input;
+
 	path = get_prompt_path(head);
 	printf(PATH_COLOR"(%s)$\n", path);
 	free(path);

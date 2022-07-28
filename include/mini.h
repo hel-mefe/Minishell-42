@@ -61,6 +61,7 @@ void	handle_signals(int i);
 /***************Check_Error****************/
 void	ft_error1(int code, char *str);
 void	print_err(char **av);
+void	check_err(t_cmd *cmd);
 /****************OTHERS********************/
 char	*get_command(t_env	**path, char *cmd);
 t_data	*get_data(t_env	**env);
@@ -88,4 +89,5 @@ void	check_cmd(t_env *env_v, char *s, char	**env, t_data *data);
 void	get_line(int history, char *s);
 void	join_strcheckevr(t_env **env_v, char **spl, int i, char **av);
 int	    check_export(char *str);
+
 #endif

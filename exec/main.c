@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:22:53 by marvin            #+#    #+#             */
-/*   Updated: 2022/07/28 16:12:29 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/28 23:51:52 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	close_pipe(int **pipes, int a, int b, int n)
 	int	i;
 
 	i = 0;
-
 	while (i < n - 1)
 	{
 		if (pipes[i][0] != a)
