@@ -44,6 +44,7 @@ t_cmd	*new_command(t_cmd *head)
 	new->cmd_name = NULL;
 	new->line = NULL;
 	new->is_builtin = 0;
+	new->error_file = NULL;
 	new->cmd_id = get_commands_size(head) + 1;
 	new->error = -1;
 	new->write_end = -1;

@@ -29,7 +29,7 @@ OBJCT = ${SRC:.c=.o}
 
 all : $(NAME)
 $(NAME) : $(OBJCT)
-	@$(CC) -lreadline -fsanitize=address -L /Users/ytijani/.brew/opt/readline/lib -I /Users/ytijani/.brew/opt/readline/include $(SRC) -o $(NAME)
+	@$(CC) -lreadline -L /Users/ytijani/.brew/opt/readline/lib -I /Users/ytijani/.brew/opt/readline/include $(SRC) -o $(NAME)
 
 clean :
 	@rm -f $(OBJCT)

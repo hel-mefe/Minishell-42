@@ -58,10 +58,15 @@ int	help_runcmd(t_data *data, t_cmd *cmd, t_env **env, char **str)
 			run_builtin(env, cmd->main_args, cmd);
 			exit(g_global.get_nb_status);
 		}
-		if (cmd->error > 0)
-			ft_error1(-1, strerror(cmd->error));
+		if (cmd->error_file)
+		{
+			ft_putstr_fd(ft_strdup(cmd->error_file), 2);
+			ft_putstr_fd(ft_strdup(": "), 2);
+		}
 		if (cmd->error == 0)
 			ft_error1(-1, AMBIGUOUS_ERR);
+		if (cmd->error > 0)
+			ft_error1(-1, strerror(cmd->error));
 		ever(cmd->main_args, env, str);
 	}
 	return (pid);

@@ -11,6 +11,7 @@ char	*expand_result(t_data *data, char *res)
 		return (NULL);
 	vars = get_all_dollars(res, data->env, data->main_env);
 	expanded = expand_string(vars, data->env, &place, res);
+	free_dollars(vars);
 	return (expanded);
 }
 

@@ -22,7 +22,7 @@ char	*get_expansion(t_data *data, int *place, char *s, char *res)
 	t_dollar	*variables;
 	char		*expanded;
 
-	if (s[0] != '\'')
+	if (s[0] != '\'' && *place != HERE_DOC)
 	{
 		variables = get_all_dollars(s, data->env, data->main_env);
 		expanded = expand_string(variables, data->env, place, res);
@@ -30,10 +30,13 @@ char	*get_expansion(t_data *data, int *place, char *s, char *res)
 	}
 	else
 		expanded = ft_strdup(res);
-	if (*place == NONE_AMBIGUOUS)
-		data->err = AMBIGUOUS_ERR;
-	else
-		data->err = NULL;
+	if (expanded && !expanded[0])
+	{
+		if (*place == INFILE || *place == OUTFILE)
+			*place = NONE_AMBIGUOUS;
+		else
+			*place = NONE;
+	}
 	return (expanded);
 }
 
@@ -68,6 +71,8 @@ size_t	get_string(char *s, int place, t_data *data, t_cmd *cmd)
 	expanded_res = get_expansion(data, &place, s + i, res);
 	i += ft_strlen(res);
 	expanded_res = clean_string(res, expanded_res, &place);
+	if (place == NONE_AMBIGUOUS && cmd->error < 0)
+		cmd->error = 0;
 	assign_string(expanded_res, place, data, cmd);
 	return (i);
 }

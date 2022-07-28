@@ -19,7 +19,7 @@ void	handel_sigint(int sig)
 		g_global.get_nb_status = 130;
 		write(1, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	else if (sig == SIGINT && g_global.get_nb == 1)
@@ -38,7 +38,7 @@ void	handel_sigint1(int sig)
 	g_global.get_nb_status = 1;
 	write(1, "\n", 1);
 	rl_on_new_line();
-	rl_replace_line("", 0);
+	// rl_replace_line("", 0);
 	rl_redisplay();
 }
 
@@ -46,7 +46,7 @@ void	handel_sigint2(int sig)
 {
 	write(1, "\n", 1);
 	rl_on_new_line();
-	rl_replace_line("", 0);
+	// rl_replace_line("", 0);
 	rl_redisplay();
 }
 

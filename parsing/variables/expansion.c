@@ -72,12 +72,5 @@ char	*expand_string(t_dollar *dollars, char **env, int *place, char *s)
 		part = slice(s, j, i);
 		res = ft_strjoin_free(res, part);
 	}
-	if (res && !res[0])
-	{
-		if (*place == INFILE || *place == OUTFILE)
-			*place = NONE_AMBIGUOUS;
-		else
-			*place = NONE;
-	}
 	return (res);
 }
