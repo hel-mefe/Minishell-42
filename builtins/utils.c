@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:31:44 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/27 11:21:08 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/28 15:49:25 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,29 +52,18 @@ void	remove_name(t_env **env_v, char *name)
 }
 
 //***************************Help_export*******************//
-int	check_oper(char **av)
+void	print_err(char **av)
 {
-	int	i;
-	int	j;
+	char	*res;
 
-	i = 1;
-	j = 0;
-	while (av[i])
-	{
-		j = 0;
-		while (av[i][j])
-		{
-			if (((av[i][j] == '+' && av[i][j + 1] != '=') || av[i][j] == '-' ||
-						(av[i][j] > 91 && av[i][j] < 96)) && av[i][j] != '_')
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
+	res = NULL;
+	res = ft_strjoin(*av, " : not a valid identifier\n");
+	ft_putstr_fd(res, 2);
+	free(res);
+	g_global.get_nb_status = 1;
 }
-
 //**************************LIbft_Function******************//
+
 char	*ft_strtrim(char *s1, char *set)
 {
 	int	start;

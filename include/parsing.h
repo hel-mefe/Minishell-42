@@ -95,6 +95,6 @@ void	put_command(t_cmd *cmd, char *cmd_name);
 char	*show_prompt(t_env *head);
 
 /***************handle_signals****************/
-void		handle_signals(void);
+void	    handle_signals(int i);
 void		handel_sigint(int sig);
 #endif

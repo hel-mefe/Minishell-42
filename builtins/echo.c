@@ -12,16 +12,28 @@
 
 #include "../include/mini.h"
 
-void	print_echo(char **s)
+void	print_str(char *str, int fd)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		write(fd, &str[i], 1);
+		i++;
+	}
+}
+
+void	print_echo(char **s, int fd)
 {
 	int	i;
 
 	i = 0;
 	while (s[i])
 	{
-		printf("%s", s[i]);
+		print_str(s[i], fd);
 		if (s[i + 1])
-			printf(" ");
+			print_str(" ", fd);
 		i++;
 	}
 }
@@ -48,7 +60,7 @@ void	handle_sign(t_env **env_v, t_env *new)
 	printf("%s\n", new->data);
 }
 
-void	ft_echo(t_env **env_v, char **av)
+void	ft_echo(t_env **env_v, char **av, int fd)
 {
 	int		i;
 	int		new_line;
@@ -70,8 +82,8 @@ void	ft_echo(t_env **env_v, char **av)
 			break ;
 		i++;
 	}
-	print_echo(&av[i]);
+	print_echo(&av[i], fd);
 	if (!new_line)
-		printf("\n");
+		print_str("\n", fd);
 	g_global.get_nb_status = 0;
 }

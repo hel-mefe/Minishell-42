@@ -6,15 +6,16 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:01:19 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/27 13:28:40 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/28 19:06:19 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/mini.h"
 
-void	wait_close(t_data *data, t_cmd *tmp)
+void	wait_close(t_data *data, t_cmd *tmp, int pid)
 {
 	int	i;
+	int	status;
 
 	i = 0;
 	while (i < data->n_cmds - 1)
@@ -23,44 +24,47 @@ void	wait_close(t_data *data, t_cmd *tmp)
 		close(data->pipes[i][1]);
 		i++;
 	}
-	while (tmp)
+	if (pid != -1)
 	{
-		if ((waitpid(-1, &tmp->status, 0)) < 0)
+		if ((waitpid(pid, &tmp->status, 0)) < 0)
 			perror("waitpid");
 		if (WIFEXITED(tmp->status))
 			g_global.get_nb_status = WEXITSTATUS(tmp->status);
-		tmp = tmp->next;
 	}
+	while (wait(NULL) != -1)
+		;
+	if (WIFEXITED(tmp->status))
+		g_global.get_nb_status = WEXITSTATUS(tmp->status);
 }
 
-void	help_runcmd(t_data *data, t_cmd *cmd, t_env **env, char **str)
+int	help_runcmd(t_data *data, t_cmd *cmd, t_env **env, char **str)
 {
-	pid_t	pid;
-	int		i;
+	int	pid;
+	int	i;
 
 	i = 0;
-	handle_signals();
 	pid = fork();
+	handle_signals(1);
 	if (pid < 0)
 	{
-		printf("pipe Error\n");
+		ft_putstr_fd("pipe Error\n", 2);
 		g_global.get_nb_status = 127;
 	}
 	else if (pid == 0)
 	{
-		signal(SIGQUIT, SIG_DFL);
-		signal(SIGINT, SIG_DFL);
 		close_pipe(data->pipes, cmd->read_end, cmd->write_end, data->n_cmds);
 		if (cmd->is_builtin)
 		{
-			run_builtin(env, cmd->main_args);
+			run_builtin(env, cmd->main_args, cmd);
 			exit(g_global.get_nb_status);
 		}
 		if (cmd->error > 0)
 			ft_error1(-1, strerror(cmd->error));
-		if (!cmd->is_builtin)
-			ever(cmd->main_args, env, str);
+		if (cmd->error == 0)
+			ft_error1(-1, AMBIGUOUS_ERR);
+		ever(cmd->main_args, env, str);
 	}
+	return (pid);
 }
 
 char	**change_env(t_env **env_v)
@@ -104,28 +108,28 @@ void	run_cmd(t_env **env, t_data *data, t_cmd *cmd)
 {	
 	t_cmd	*tmp;
 	char	**str;
-	int 	res;
+	int		res;
+	int		pid;
+	int		v;
 
 	str = change_env(env);
 	tmp = cmd;
+	pid = -1;
+	res = 0;
 	if (cmd->is_builtin && cmd->next == NULL)
 	{
-		if (cmd->error > 0)
-		{
-			g_global.get_nb_status = 1;
-			printf(ERROR_COLOR"%s\n", strerror(cmd->error));
-			return ;
-		}
-		run_builtin(env, cmd->main_args);
-		free_double_char_arr(str);
+		help_runbuilt(cmd, env, res, str);
+		
 		return ;
 	}
 	while (cmd)
 	{
-		help_runcmd(data, cmd, env, str);
+		if (cmd->next == NULL)
+			pid = help_runcmd(data, cmd, env, str);
+		else
+			v = help_runcmd(data, cmd, env, str);
 		cmd = cmd->next;
 	}
-	wait_close(data, tmp);
+	wait_close(data, tmp, pid);
 	free_double_char_arr(str);
-	handle_signals();
 }

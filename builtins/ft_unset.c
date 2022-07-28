@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:21:23 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/27 11:20:07 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/27 19:37:31 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,13 @@ void	ft_unset(t_env **env_v, char **name)
 {
 	int		i;
 	t_env	*new;
+	int		len;
 
 	i = 1;
+	len = ft_strlen(name[i]);
 	while (name[i])
 	{
-		if (!ft_isalpha(name[i][0]) && name[i][0] != '_')
+		if (!check_export(name[i]))
 		{
 			printf("unset : %s : not a valid identifier\n", name[1]);
 			g_global.get_nb_status = 1;

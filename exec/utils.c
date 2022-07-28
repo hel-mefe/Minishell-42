@@ -6,13 +6,12 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 10:01:36 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/27 13:12:58 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/28 19:07:26 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/mini.h"
 
-//*******************Hellp_function_main******//
 void	get_line(int history, char *s)
 {
 	s = get_next_line(history);
@@ -52,6 +51,7 @@ void	check_cmd(t_env *env_v, char *s, char	**env, t_data *data)
 		{
 			g_global.get_nb_status = 258;
 			printf(ERROR_COLOR"%s\n", data->err);
+			return ;
 		}
 		if (data->is_syntax_valid)
 			run_cmd(&env_v, data, data->commands);
@@ -60,18 +60,20 @@ void	check_cmd(t_env *env_v, char *s, char	**env, t_data *data)
 	}
 }
 
-
-//*******************Help_export_err**************************//
-
 int	check_export(char *str)
 {
-	int i;
+	int	i;
 
-	i = 0;
+	if (!str)
+		return (0);
+	if (ft_isdigit(str[0]) || (!ft_isalpha(str[0]) && str[0] != '_'))
+		return (0);
+	i = 1;
 	while (str[i])
 	{
-		if ((str[i] == '+' && str[i + 1] != '\0') || str[i] == '-' ||
-			((str[i] > 91 && str[i] < 96) && str[i] != '_'))
+		if (str[i] == '+' && !str[i + 1])
+			return (1);
+		if ((!ft_isalpha(str[i]) && !ft_isdigit(str[i]) && str[i] != '_'))
 			return (0);
 		i++;
 	}

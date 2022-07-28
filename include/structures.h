@@ -51,6 +51,7 @@ typedef struct cmd
 	char		**main_args;
 	char		**env;
 	char		*syntax;
+	char		*error_file;
 	int			cmd_id;
 	int			error;
 	int			outfile_mode;
