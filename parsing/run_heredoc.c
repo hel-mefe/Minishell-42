@@ -55,7 +55,7 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 
 	trigger = 0;
 	res = NULL;
-	handle_signals(1);
+	handle_signals(2);
 	g_global.new = dup(0);
 	while (limiters)
 	{
@@ -85,6 +85,7 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 		if (res)
 			free(res);
 		close(cmd->heredoc_pipe[1]);
+		g_global.get_nb_status = 1;
 	}
 	dup2(g_global.new, 0);
 }

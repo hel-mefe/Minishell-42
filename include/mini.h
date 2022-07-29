@@ -56,8 +56,7 @@ void	handle_signals(int i);
 void	handel_sigint(int sig);
 void	handle_sig(int sig);
 void	handel_sigint1(int sig);
-void	handel_sigint2(int sig);
-void	handle_signals(int i);
+void	handle_sigquit(int sig);
 /***************Check_Error****************/
 void	ft_error1(int code, char *str);
 void	print_err(char **av);

@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 15:15:48 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/29 13:27:04 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/29 15:35:21 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,11 @@ void	handel_sigint1(int sig)
 	rl_redisplay();
 }
 
-void	handel_sigint2(int sig)
-{
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
 void	handle_sigquit(int sig)
 {
 	(void)sig;
+	write(1,"Quit\n", 5);
 	g_global.get_nb_status = 131;
-	write(1, "\n", 1);
 }
 
 void	handle_signals(int i)
@@ -66,5 +58,10 @@ void	handle_signals(int i)
 	{
 		signal(SIGINT, handel_sigint);
 		signal(SIGQUIT, handle_sigquit);
+	}
+	if (i == 2)
+	{
+		signal(SIGINT, handel_sigint);
+		signal(SIGQUIT, SIG_IGN);
 	}
 }

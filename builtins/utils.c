@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:31:44 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/28 15:49:25 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/29 15:02:45 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	print_err(char **av)
 	char	*res;
 
 	res = NULL;
-	res = ft_strjoin(*av, " : not a valid identifier\n");
+	res = ft_strjoin(av[1], " : not a valid identifier\n");
 	ft_putstr_fd(res, 2);
 	free(res);
 	g_global.get_nb_status = 1;

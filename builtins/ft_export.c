@@ -103,6 +103,11 @@ void	help_export(t_env **env_v, char *sig, char **av, int i)
 	{
 		spl[1] = NULL;
 		spl[0] = ft_substr(av[i], 0, (len - ft_strlen(spl[1])));
+		if (!check_export(spl[0]))
+		{
+			print_err(av);
+			return ;
+		}
 		check_evr(env_v, spl, av, 0);
 		free(spl[0]);
 	}
