@@ -59,6 +59,7 @@ void	close_pipe(int **pipes, int a, int b, int n)
 	int	i;
 
 	i = 0;
+
 	while (i < n - 1)
 	{
 		if (pipes[i][0] != a)
@@ -67,8 +68,12 @@ void	close_pipe(int **pipes, int a, int b, int n)
 			close(pipes[i][1]);
 		i++;
 	}
-	dup2(a, 0);
-	dup2(b, 1);
+	printf("Read in : %d\n", a);
+	if (a != -1)
+		dup2(a, 0);
+	if (b != -1)
+		dup2(b, 1);
+
 }
 
 void	print_in_fd(char *s, int fd)

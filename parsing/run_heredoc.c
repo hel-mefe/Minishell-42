@@ -51,17 +51,24 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 	char	*res;
 	char	*keep_res;
 	t_cmd	*cmd;
+	int		trigger;
 
+	trigger = 0;
 	res = NULL;
+	handle_signals(1);
+	g_global.new = dup(0);
 	while (limiters)
 	{
 		g_global.get_nb = 1;
-		handle_signals(1);
 		s = readline("haredoc> ");
 		if (s == NULL)
-			g_global.get_nb_status = -1;
+			g_global.get_nb = -1;
 		if (g_global.get_nb == -1)
-			break ;
+		{
+			g_global.get_nb = 0;
+			trigger = 1;
+			break;
+		}
 		if (!ft_strcmp(s, limiters->s))
 		{
 			limiter_found(data, &limiters, &res);
@@ -70,5 +77,14 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 		else
 			limiter_not_found(&res, &s);
 	}
-	dup(g_global.new);
+	if (trigger)
+	{
+		t_cmd *cmd = get_command_by_id(data->commands, limiters->cmd_id);
+		if (s)
+			free(s);
+		if (res)
+			free(res);
+		close(cmd->heredoc_pipe[1]);
+	}
+	dup2(g_global.new, 0);
 }

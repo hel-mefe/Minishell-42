@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 15:15:48 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/28 23:51:22 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/29 13:27:04 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,11 @@ void	handel_sigint(int sig)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	else if (sig == SIGINT && g_global.get_nb == 1)
+	if (sig == SIGINT && g_global.get_nb == 1)
 	{
-		g_global.new = dup(0);
-		write(1, "\n", 1);
 		g_global.get_nb = -1;
 		g_global.get_nb_status = 1;
+		write(1, "\n", 1);
 		close(0);
 	}
 }
