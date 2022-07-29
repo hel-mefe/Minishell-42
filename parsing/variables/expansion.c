@@ -27,8 +27,9 @@ char	*expand_string(t_dollar *dollars, char **env, int *place, char *s)
 	j = 0;
 	while (s[i])
 	{
-		
-	if (s[i] == '$' && ft_isdigit(s[i + 1]) && !singly)
+		if (s[i] == '\'')
+			singly = !singly;
+		if (s[i] == '$' && ft_isdigit(s[i + 1]) && !singly)
         {
             k_res = res;
             part = slice(s, j, i);
@@ -38,6 +39,7 @@ char	*expand_string(t_dollar *dollars, char **env, int *place, char *s)
         }
         else if (s[i] == '$' && (ft_isalpha(s[i + 1]) || s[i + 1] == '_') && !singly)
         {
+			printf("SINGLY => %d\n", singly);
             if (j != i)
             {
                 k_res = part;

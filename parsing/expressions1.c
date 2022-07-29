@@ -22,7 +22,7 @@ char	*get_expansion(t_data *data, int *place, char *s, char *res)
 	t_dollar	*variables;
 	char		*expanded;
 
-	if (s[0] != '\'' && *place != HERE_DOC)
+	if (*place != HERE_DOC)
 	{
 		variables = get_all_dollars(s, data->env, data->main_env);
 		expanded = expand_string(variables, data->env, place, res);
