@@ -20,15 +20,19 @@ char	*expand_string(t_dollar *dollars, char **env, int *place, char *s)
 	char	*part;
 	char	*k_res;
 	int		singly;
+	int		doubly;
 
+	doubly = 0;
 	singly = 0;
 	res = NULL;
 	i = 0;
 	j = 0;
 	while (s[i])
 	{
-		if (s[i] == '\'')
+		if (s[i] == '\'' && !doubly)
 			singly = !singly;
+		if (s[i] == '\"' && !singly)
+			doubly = !doubly;
 		if (s[i] == '$' && ft_isdigit(s[i + 1]) && !singly)
         {
             k_res = res;
@@ -39,7 +43,6 @@ char	*expand_string(t_dollar *dollars, char **env, int *place, char *s)
         }
         else if (s[i] == '$' && (ft_isalpha(s[i + 1]) || s[i + 1] == '_') && !singly)
         {
-			printf("SINGLY => %d\n", singly);
             if (j != i)
             {
                 k_res = part;
