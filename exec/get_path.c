@@ -28,10 +28,10 @@ void	ft_putstr_fd(char *s, int fd)
 
 int	check_path(char *cmd)
 {
-	char	*command;
+	// char	*command;
 
-	command = cmd;
-	if (access(command, R_OK) == 0)
+	// command = cmd;
+	if (access(cmd, F_OK) == 0)
 		return (1);
 	else
 		return (0);
@@ -74,6 +74,7 @@ char	*get_command(t_env **path, char *cmd)
 	int		i;
 	t_env	*new;
 
+	tmp = NULL;
 	i = 0;
 	tab = NULL;
 	if (!cmd)
@@ -81,17 +82,19 @@ char	*get_command(t_env **path, char *cmd)
 	if (cmd[0] == '/' && !check_path(cmd))
 		ft_error1(-1, "no such file or directory\n");
 	new = search_element(path, "PATH");
-	if (new == NULL)
+	if (new == NULL && !check_path(cmd))
 		ft_error1(-1, "no such file or directory\n");
-	tmp = ft_split(new->data, ':');
+	if (new != NULL)
+		tmp = ft_split(new->data, ':');
 	while (tmp[i])
 	{
-		if (check_access(tmp, tab, cmd, i))
+		if (check_access(tmp, tab, cmd, i) && !check_path(cmd))
 			return (check_access(tmp, tab, cmd, i));
 		i++;
 	}
 	if (check_path(cmd))
 		return (cmd);
-	free(tmp);
+	// if (tmp)
+	// 	free(tmp);
 	return (NULL);
 }

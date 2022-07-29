@@ -10,10 +10,6 @@
 # include "structures.h"
 # include "macros.h"
 
-# define HERE_DOC_NAME "Minishell-42-heredoc"
-
-/*** END DIAL MAIN STRUCTURE ***/
-
 void		ft_putstr(char *s);
 char		*ft_strjoin(char *s1, char *s2);
 char		*ft_strjoin_free(char *s1, char *s2);
@@ -61,7 +57,7 @@ void		mark_builtins(t_cmd *head);
 int			is_builtin(char *cmd);
 
 int			get_commands_size(t_cmd *head);
-t_cmd   	*get_commands(t_data *data, char *s);
+t_cmd		*get_commands(t_data *data, char *s);
 size_t		get_quote_end(char *s, char c);
 void		push_command(t_cmd **head, t_cmd *new);
 t_cmd		*new_command(t_cmd *head);
@@ -70,7 +66,7 @@ t_cmd		*get_last_command(t_cmd *head);
 void		run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds);
 void		init_env(t_env **env_v, char **env);
 
-void        prepare_data(t_data *data);
+void		prepare_data(t_data *data);
 void		destory_data(t_data **data);
 void		free_commands(t_cmd *cmd);
 void		free_dollars(t_dollar *head);
@@ -81,25 +77,33 @@ void		free_queue(t_queue *head);
 char		*ft_itoa(int n);
 char		*get_next_line(int fd);
 void		get_err(char *err, int is_exit);
-void    	is_there_any_alpha(t_data *data, char *s, int is_heredoc);
-int     	is_there_char(char *s);
+void		is_there_any_alpha(t_data *data, char *s, int is_heredoc);
+int			is_there_char(char *s);
 void		catch_syntax_err(t_data *data, char *s);
-int 		search_for_char(char *s, char c, char end);
-void        get_pipe_err(t_data *data, char *s, int i);
+int			search_for_char(char *s, char c, char end);
+void		get_pipe_err(t_data *data, char *s, int i);
 
-void	put_infile(t_cmd *cmd, char *infile_name);
-void	put_outfile(t_cmd *cmd, char *outfile_name);
-void	put_heredoc(t_data *data, t_cmd *cmd, int place, char *limiter);
-void	put_argument(t_cmd *cmd, char *argument);
-void	put_command(t_cmd *cmd, char *cmd_name);
-char	*show_prompt(t_env *head);
+void		put_infile(t_cmd *cmd, char *infile_name);
+void		put_outfile(t_cmd *cmd, char *outfile_name);
+void		put_heredoc(t_data *data, t_cmd *cmd, int place, char *limiter);
+void		put_argument(t_cmd *cmd, char *argument);
+void		put_command(t_cmd *cmd, char *cmd_name);
+char		*show_prompt(t_env *head);
 
-void	close_pipes(int **pipes, int size);
-void	free_queue(t_queue *head);
-void	free_double_int_arr(int **arr, int size);
-void	free_double_char_arr(char **arr);
-void	free_dollars(t_dollar *head);
+void		close_pipes(int **pipes, int size);
+void		free_queue(t_queue *head);
+void		free_double_int_arr(int **arr, int size);
+void		free_double_char_arr(char **arr);
+void		free_dollars(t_dollar *head);
+
+void		set_quotes(char c, int *singly, int *doubly);
+char		*digit_after_dollar(char *s, char *old_res, size_t *i, size_t *j);
+char		*j_different_than_i(char *s, char *old_res, size_t i, size_t j);
+char		*add_variable(size_t *i, size_t *j, \
+char *old_res, t_dollar **dollars);
+char		*get_status(char *old_res, size_t *i, size_t *j);
+char		*expand_result(t_data *data, char *res);
 /***************handle_signals****************/
-void	    handle_signals(int i);
+void		handle_signals(int i);
 void		handel_sigint(int sig);
 #endif

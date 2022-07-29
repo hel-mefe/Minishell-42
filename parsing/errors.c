@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   errors.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hel-mefe <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/29 22:50:51 by hel-mefe          #+#    #+#             */
+/*   Updated: 2022/07/29 22:50:52 by hel-mefe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/parsing.h"
 
 void	set_syntax_error(t_data *data, char c, char next_c)
@@ -76,8 +88,12 @@ void	get_err(char *err, int is_exit)
 	size_t	i;
 
 	i = -1;
+	while (ERROR_COLOR[++i])
+		write(2, &ERROR_COLOR[i], 1);
+	i = -1;
 	while (err[++i])
 		write(2, &err[i], 1);
+	write(2, "\n", 1);
 	if (is_exit)
 		exit(EXIT_FAILURE);
 }

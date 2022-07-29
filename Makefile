@@ -19,9 +19,20 @@ parsing/functions/builtins.c parsing/functions/compare.c parsing/functions/condi
 parsing/functions/quotes.c parsing/functions/search.c parsing/functions/strings.c parsing/variables/expansion.c parsing/variables/get_dollars.c parsing/buckets.c parsing/help_destroy.c\
 get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
 parsing/cmd.c parsing/destroy.c parsing/errors.c parsing/expressions1.c parsing/expressions2.c parsing/here_doc.c parsing/parsing.c parsing/redirect.c parsing/run_heredoc.c \
-exec/main.c parsing/prompt.c
+exec/main.c parsing/prompt.c parsing/variables/expansion1.c
 
 CC = cc
+
+LOGO = "\
+\033[1;36m    __  ___ ____ _   __ ____ _____  __  __ ______ __     __       ___ _____ _____ _____\n\
+\033[2;36m   /  |/  //  _// | / //  _// ___/ / / / // ____// /    / /      <  /|__  /|__  //__  /\n\
+\033[2;36m  / /|_/ / / / /  |/ / / /  \__ \ / /_/ // __/  / /    / /       / /  /_ <  /_ <   / / \n\
+\033[0;36m / /  / /_/ / / /|  /_/ /  ___/ // __  // /___ / /___ / /___    / / ___/ /___/ /  / /  \n\
+\033[0;36m/_/  /_//___//_/ |_//___/ /____//_/ /_//_____//_____//_____/   /_/ /____//____/  /_/   \n\
+                                                                                       \n\
+\t\t\t\t\t\t\t \033[1;36mmade by hel-mefe and ytijani\n"
+
+SUCCESS = "\033[1;32m \n\t\t\t 👽 MINISHELL HAVE BEEN CREATED SUCCESSFULLY! 👽  \n\n"
 
 # CFLAGS = -Wall -Wextra -Werror
 
@@ -30,7 +41,8 @@ OBJCT = ${SRC:.c=.o}
 all : $(NAME)
 $(NAME) : $(OBJCT)
 	@$(CC) -lreadline -L /Users/ytijani/.brew/opt/readline/lib -I /Users/ytijani/.brew/opt/readline/include $(SRC) -o $(NAME)
-
+	@printf $(SUCCESS)
+	@printf $(LOGO)
 clean :
 	@rm -f $(OBJCT)
 

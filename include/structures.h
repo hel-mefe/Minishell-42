@@ -10,8 +10,7 @@ typedef struct s_global
 	int			get_nb;
 	int			new;
 }	t_global;
-
-t_global g_global;
+t_global	g_global;
 
 typedef struct s_env
 {

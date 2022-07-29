@@ -12,70 +12,57 @@
 
 #include "../../include/parsing.h"
 
+void	init_expansion_vars(size_t *ij, char **res, int *singly_doubly)
+{
+	ij[0] = 0;
+	ij[1] = 0;
+	*res = NULL;
+	singly_doubly[0] = 0;
+	singly_doubly[1] = 0;
+}
+
+char	*status_dollar(char *s, char *old_res, size_t *ij)
+{
+	char	*res;
+
+	res = old_res;
+	if (ij[0] != ij[1])
+		res = j_different_than_i(s, res, ij[1], ij[0]);
+	res = get_status(res, &ij[1], &ij[0]);
+	return (res);
+}
+
+char	*valid_dollar(char *s, char *old_res, size_t *ij, t_dollar **dollars)
+{
+	char	*res;
+
+	res = old_res;
+	if (ij[0] != ij[1])
+		res = j_different_than_i(s, res, ij[1], ij[0]);
+	res = add_variable(&ij[1], &ij[0], res, dollars);
+	return (res);
+}
+
 char	*expand_string(t_dollar *dollars, char **env, int *place, char *s)
 {
-	size_t	i;
-	size_t	j;
+	size_t	ij[2];
 	char	*res;
-	char	*part;
-	char	*k_res;
-	int		singly;
-	int		doubly;
+	int		singly_doubly[2];
 
-	doubly = 0;
-	singly = 0;
-	res = NULL;
-	i = 0;
-	j = 0;
-	while (s[i])
+	init_expansion_vars(ij, &res, singly_doubly);
+	while (s[ij[1]])
 	{
-		if (s[i] == '\'' && !doubly)
-			singly = !singly;
-		if (s[i] == '\"' && !singly)
-			doubly = !doubly;
-		if (s[i] == '$' && ft_isdigit(s[i + 1]) && !singly)
-        {
-            k_res = res;
-            part = slice(s, j, i);
-            res = ft_strjoin_free(res, part);
-            i += 1;
-            j = i + 1;
-        }
-        else if (s[i] == '$' && (ft_isalpha(s[i + 1]) || s[i + 1] == '_') && !singly)
-        {
-            if (j != i)
-            {
-                k_res = part;
-                part = slice(s, j, i);
-                res = ft_strjoin_free(res, part);
-            }
-            k_res = res;
-            res = ft_strjoin(res, dollars->val);
-            i += ft_strlen(dollars->var);
-            j = i + 1;
-            dollars = dollars->next;
-            if (k_res)
-                free(k_res);
-        }
-		else if (s[i] == '$' && s[i + 1] == '?' && !singly)
-		{
-			if (j != i)
-			{
-				k_res = res;
-				part = slice(s, j, i);
-				res = ft_strjoin_free(res, part);
-            }
-			part = ft_itoa(g_global.get_nb_status);
-			res = ft_strjoin_free(res, part);
-			i += 1;
-			j = i + 1;
-		}
-		i++;
+		set_quotes(s[ij[1]], &singly_doubly[0], &singly_doubly[1]);
+		if (s[ij[1]] == '$' && ft_isdigit(s[ij[1] + 1]) && !singly_doubly[0])
+			res = digit_after_dollar(s, res, &ij[1], &ij[0]);
+		else if (s[ij[1]] == '$' && (ft_isalpha(s[ij[1] + 1]) \
+		|| s[ij[1] + 1] == '_') && !singly_doubly[0])
+			res = valid_dollar(s, res, ij, &dollars);
+		else if (s[ij[1]] == '$' && s[ij[1] + 1] == '?' && !singly_doubly[0])
+			res = status_dollar(s, res, ij);
+		ij[1]++;
 	}
-	if (i != j)
-	{
-		part = slice(s, j, i);
-		res = ft_strjoin_free(res, part);
-	}
+	if (ij[1] != ij[0])
+		res = j_different_than_i(s, res, ij[1], ij[0]);
 	return (res);
 }

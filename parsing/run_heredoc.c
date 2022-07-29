@@ -1,21 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run_heredoc.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hel-mefe <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/29 22:51:52 by hel-mefe          #+#    #+#             */
+/*   Updated: 2022/07/29 22:51:53 by hel-mefe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/parsing.h"
 
-char	*expand_result(t_data *data, char *res)
-{
-	t_dollar	*vars;
-	char		*expanded;
-	int			place;
-
-	if (!res)
-		return (NULL);
-	vars = get_all_dollars(res, data->env, data->main_env);
-	expanded = expand_string(vars, data->env, &place, res);
-	free_dollars(vars);
-	return (expanded);
-}
-
-void	limiter_found(t_data *data, t_queue **limiters, char **res)
+void	limiter_found(t_data *data, t_queue **limiters, char **res, char *s)
 {
 	t_cmd	*cmd;
 	char	*keep_res;
@@ -37,6 +34,8 @@ void	limiter_found(t_data *data, t_queue **limiters, char **res)
 		free(*res);
 	(*limiters) = (*limiters)->next;
 	*res = NULL;
+	if (s)
+		free(s);
 }
 
 void	limiter_not_found(char **res, char **s)
@@ -45,11 +44,29 @@ void	limiter_not_found(char **res, char **s)
 	*res = ft_strjoin_free(*res, ft_strdup("\n"));
 }
 
+int	set_trigger(int *trigger)
+{
+	*trigger = 1;
+	return (1);
+}
+
+void	set_status(t_data *data, t_queue *limiter, char *s, char *res)
+{
+	t_cmd	*cmd;
+
+	cmd = get_command_by_id(data->commands, limiter->cmd_id);
+	if (s)
+		free(s);
+	if (res)
+		free(res);
+	close(cmd->heredoc_pipe[1]);
+	g_global.get_nb_status = 1;
+}
+
 void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 {
 	char	*s;
 	char	*res;
-	char	*keep_res;
 	t_cmd	*cmd;
 	int		trigger;
 
@@ -63,29 +80,14 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 		s = readline("haredoc> ");
 		if (s == NULL)
 			g_global.get_nb = -1;
-		if (g_global.get_nb == -1)
-		{
-			g_global.get_nb = 0;
-			trigger = 1;
-			break;
-		}
+		if (g_global.get_nb == -1 && set_trigger(&trigger))
+			break ;
 		if (!ft_strcmp(s, limiters->s))
-		{
-			limiter_found(data, &limiters, &res);
-			free(s);
-		}
+			limiter_found(data, &limiters, &res, s);
 		else
 			limiter_not_found(&res, &s);
 	}
 	if (trigger)
-	{
-		t_cmd *cmd = get_command_by_id(data->commands, limiters->cmd_id);
-		if (s)
-			free(s);
-		if (res)
-			free(res);
-		close(cmd->heredoc_pipe[1]);
-		g_global.get_nb_status = 1;
-	}
+		set_status(data, limiters, s, res);
 	dup2(g_global.new, 0);
 }

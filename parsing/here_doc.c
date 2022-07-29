@@ -1,4 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   here_doc.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hel-mefe <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/29 22:51:33 by hel-mefe          #+#    #+#             */
+/*   Updated: 2022/07/29 22:51:34 by hel-mefe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/parsing.h"
+
+char	*expand_result(t_data *data, char *res)
+{
+	t_dollar	*vars;
+	char		*expanded;
+	int			place;
+
+	if (!res)
+		return (NULL);
+	vars = get_all_dollars(res, data->env, data->main_env);
+	expanded = expand_string(vars, data->env, &place, res);
+	free_dollars(vars);
+	return (expanded);
+}
 
 int	is_dollar_valid(char *s)
 {
