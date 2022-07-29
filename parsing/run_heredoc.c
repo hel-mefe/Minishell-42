@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_heredoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-mefe <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 22:51:52 by hel-mefe          #+#    #+#             */
-/*   Updated: 2022/07/29 22:51:53 by hel-mefe         ###   ########.fr       */
+/*   Updated: 2022/07/29 23:58:27 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	set_status(t_data *data, t_queue *limiter, char *s, char *res)
 	if (res)
 		free(res);
 	close(cmd->heredoc_pipe[1]);
-	g_global.get_nb_status = 1;
 }
 
 void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)

@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:31:44 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/29 15:02:45 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 00:19:38 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,12 @@ char	*ft_strtrim(char *s1, char *set)
 void	join_strcheckevr(t_env **env_v, char **spl, int i, char **av)
 {
 	t_env	*new;
+	int		len;
 
 	new = *env_v;
+	len = ft_strlen(spl[0]);
 	free(spl[0]);
-	spl[0] = ft_substr(av[i], 0, ft_strlen(spl[0]) - 1);
+	spl[0] = ft_substr(av[i], 0, len - 1);
 	new = search_element(env_v, spl[0]);
 	if (new)
 	{

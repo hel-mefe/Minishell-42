@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 10:59:25 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/28 23:50:43 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 00:24:42 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ void	ft_putstr_fd(char *s, int fd)
 
 int	check_path(char *cmd)
 {
-	// char	*command;
+	char	*command;
 
-	// command = cmd;
-	if (access(cmd, F_OK) == 0)
+	command = cmd;
+	if (access(command, X_OK) == 0)
 		return (1);
 	else
 		return (0);
@@ -74,27 +74,24 @@ char	*get_command(t_env **path, char *cmd)
 	int		i;
 	t_env	*new;
 
-	tmp = NULL;
 	i = 0;
 	tab = NULL;
 	if (!cmd)
 		exit(0);
 	if (cmd[0] == '/' && !check_path(cmd))
-		ft_error1(-1, "no such file or directory\n");
+		ft_error1(-1, "no such file or directory");
 	new = search_element(path, "PATH");
 	if (new == NULL && !check_path(cmd))
-		ft_error1(-1, "no such file or directory\n");
+		ft_error1(-1, "no such file or directory");
 	if (new != NULL)
 		tmp = ft_split(new->data, ':');
+	if (check_path(cmd) && cmd[0] == '/')
+		return (cmd);
 	while (tmp[i])
 	{
-		if (check_access(tmp, tab, cmd, i) && !check_path(cmd))
+		if (check_access(tmp, tab, cmd, i) != NULL)
 			return (check_access(tmp, tab, cmd, i));
 		i++;
 	}
-	if (check_path(cmd))
-		return (cmd);
-	// if (tmp)
-	// 	free(tmp);
 	return (NULL);
 }

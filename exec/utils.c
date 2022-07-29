@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 10:01:36 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/29 13:35:24 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 00:28:22 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	get_line(int history, char *s)
 	s = get_next_line(history);
 	if (s)
 	{
-		// free(s);
+		free(s);
 		s = ft_strtrim(s, "\n");
 		add_history(s);
 	}
@@ -40,7 +40,7 @@ void	get_line(int history, char *s)
 		s = get_next_line(history);
 		if (s)
 		{
-			// free(s);
+			free(s);
 			s = ft_strtrim(s, "\n");
 			add_history(s);
 		}
@@ -60,12 +60,17 @@ void	check_cmd(t_env *env_v, char *s, char	**env, t_data *data)
 		add_history(s);
 		data = parse_line(s, env, env_v);
 		if (get_queue_size(data->heredoc) > HERE_DOC_MAX)
-			get_err(MAX_HERE_DOC_EXCEEDED_ERR, 1); 
+			get_err(MAX_HERE_DOC_EXCEEDED_ERR, 1);
 		run_heredoc(data, data->heredoc, data->commands);
 		if (data->err)
 		{
 			g_global.get_nb_status = 258;
 			get_err(data->err, 0);
+			destory_data(&data);
+			return ;
+		}
+		if (data->n_cmds == 1 && !data->commands->cmd_name)
+		{
 			destory_data(&data);
 			return ;
 		}

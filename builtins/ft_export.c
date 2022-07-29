@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:26:28 by marvin            #+#    #+#             */
-/*   Updated: 2022/07/28 15:42:20 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 00:03:52 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void	help_export(t_env **env_v, char *sig, char **av, int i)
 		if (!check_export(spl[0]))
 		{
 			print_err(av);
+			free(spl[0]);
+			free(spl[1]);
 			return ;
 		}
 		else if (spl[1] != NULL && spl[0] != NULL)
@@ -100,17 +102,7 @@ void	help_export(t_env **env_v, char *sig, char **av, int i)
 		free(spl[0]);
 	}
 	else if (sig == NULL && search_element(env_v, av[i]) == NULL)
-	{
-		spl[1] = NULL;
-		spl[0] = ft_substr(av[i], 0, (len - ft_strlen(spl[1])));
-		if (!check_export(spl[0]))
-		{
-			print_err(av);
-			return ;
-		}
-		check_evr(env_v, spl, av, 0);
-		free(spl[0]);
-	}
+		init_spl(spl, av, i, env_v);
 }
 
 void	ft_export(t_env **env_v, char **av)

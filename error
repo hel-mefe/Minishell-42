@@ -1,4 +1,3 @@
-// ""'$USER'"" : should not expand
+// ""$USER'"" : should not expand
 // '""'$USER'""' : should expand
 // | |
-

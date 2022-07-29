@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:21:55 by marvin            #+#    #+#             */
-/*   Updated: 2022/07/20 20:00:09 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 00:30:34 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_cd(t_env **env_v, char **av);
 void	ft_export(t_env **env_v, char **av);
 void	ft_pwd(t_env **env_v);
 void	ft_env(t_env **env_v, char **av);
-void    ft_exit(char **av);
+void	ft_exit(char **av);
 /**************Help->builtins*******************/
 void	init_env(t_env **env_v, char **env);
 void	ft_sort(t_env **env_v);
@@ -81,11 +81,12 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize);
 void	free_double_char_arr(char **arr);
 void	run_cmd(t_env **env, t_data *data, t_cmd *cmd);
 void	ever(char **cmd, t_env **env_v, char **env);
-void    rl_replace_line(const char *, int);
+void	rl_replace_line(const char *str, int i );
 char	*ft_strjoins(char *save, char *buffer);
 char	*ft_strtrim(char *s1, char *set);
 void	check_cmd(t_env *env_v, char *s, char	**env, t_data *data);
 void	get_line(int history, char *s);
 void	join_strcheckevr(t_env **env_v, char **spl, int i, char **av);
-int	    check_export(char *str);
+int		check_export(char *str);
+void	init_spl(char **spl, char **av, int i, t_env **env_v);
 #endif
