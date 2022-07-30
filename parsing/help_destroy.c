@@ -2,7 +2,7 @@
 
 void	close_pipes(int **pipes, int size)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (i < size && pipes[i])
@@ -16,8 +16,6 @@ void	close_pipes(int **pipes, int size)
 
 void	free_queue(t_queue *head)
 {
-	t_queue	*prev;
-
 	if (!head)
 		return ;
 	free_queue(head->next);
@@ -27,7 +25,7 @@ void	free_queue(t_queue *head)
 
 void	free_double_int_arr(int **arr, int size)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	if (!arr)

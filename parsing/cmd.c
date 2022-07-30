@@ -67,7 +67,6 @@ t_cmd	*get_commands(t_data *data, char *s)
 {
 	size_t	s_end[2];
 	t_cmd	*head;
-	t_cmd	*new;
 
 	s_end[0] = 0;
 	s_end[1] = -1;

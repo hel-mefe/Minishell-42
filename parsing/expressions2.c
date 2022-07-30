@@ -12,7 +12,7 @@
 
 #include "../include/parsing.h"
 
-char	*get_normal_string(char *s, t_cmd *cmd)
+char	*get_normal_string(char *s)
 {
 	size_t	i;
 	char	*res;
@@ -22,12 +22,14 @@ char	*get_normal_string(char *s, t_cmd *cmd)
 	singly = 0;
 	doubly = 0;
 	i = 0;
-	while (s[i] && !is_token(s[i]))
+	while (s[i])
 	{
 		if (s[i] == '\'' && !doubly)
 			singly = !singly;
 		if (s[i] == '\"' && !singly)
 			doubly = !doubly;
+		if (is_token(s[i]) && !doubly && !singly)
+			break ;
 		if (is_space(s[i]) && !doubly && !singly)
 			break ;
 		i++;
@@ -36,7 +38,7 @@ char	*get_normal_string(char *s, t_cmd *cmd)
 	return (res);
 }
 
-char	*get_singly_string(char *s, t_cmd *cmd)
+char	*get_singly_string(char *s)
 {
 	size_t	i;
 	char	*res;
@@ -61,7 +63,7 @@ char	*get_singly_string(char *s, t_cmd *cmd)
 	return (res);
 }
 
-char	*get_doubly_string(char *s, t_cmd *cmd)
+char	*get_doubly_string(char *s)
 {
 	size_t	i;
 	char	*res;

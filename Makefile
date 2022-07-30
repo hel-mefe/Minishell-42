@@ -21,7 +21,7 @@ get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
 parsing/cmd.c parsing/destroy.c parsing/errors.c parsing/expressions1.c parsing/expressions2.c parsing/here_doc.c parsing/parsing.c parsing/redirect.c parsing/run_heredoc.c \
 exec/main.c parsing/prompt.c parsing/variables/expansion1.c
 
-CC = cc
+CC = gcc
 
 LOGO = "\
 \033[1;36m    __  ___ ____ _   __ ____ _____  __  __ ______ __     __       ___ _____ _____ _____\n\
@@ -37,6 +37,11 @@ SUCCESS = "\033[1;32m \n\t\t\t ðŸ‘½ MINISHELL HAVE BEEN CREATED SUCCESSFULLY! ðŸ
 CFLAGS = -Wall -Wextra -Werror
 
 OBJCT = ${SRC:.c=.o}
+
+$(NAME): $(OBJCT)
+
+%.o: %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 all : $(NAME)
 $(NAME) : $(OBJCT)

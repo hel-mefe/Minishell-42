@@ -14,8 +14,6 @@
 
 void	assign_string(char *s, int place, t_data *data, t_cmd *cmd)
 {
-	t_queue	*new;
-
 	if (place == INFILE)
 		put_infile(cmd, s);
 	else if (place == COMMAND)
@@ -36,8 +34,8 @@ char	*get_expansion(t_data *data, int *place, char *s, char *res)
 
 	if (*place != HERE_DOC)
 	{
-		variables = get_all_dollars(s, data->env, data->main_env);
-		expanded = expand_string(variables, data->env, place, res);
+		variables = get_all_dollars(s, data->main_env);
+		expanded = expand_string(variables, res);
 		free_dollars(variables);
 	}
 	else
@@ -75,11 +73,11 @@ size_t	get_string(char *s, int place, t_data *data, t_cmd *cmd)
 	while (s[i] && is_space(s[i]))
 		i++;
 	if (s[i] == '\"')
-		res = get_doubly_string(s + i, cmd);
+		res = get_doubly_string(s + i);
 	else if (s[i] == '\'')
-		res = get_singly_string(s + i, cmd);
+		res = get_singly_string(s + i);
 	else
-		res = get_normal_string(s + i, cmd);
+		res = get_normal_string(s + i);
 	expanded_res = get_expansion(data, &place, s + i, res);
 	i += ft_strlen(res);
 	expanded_res = clean_string(res, expanded_res, &place);

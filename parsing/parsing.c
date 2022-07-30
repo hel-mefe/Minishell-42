@@ -60,9 +60,7 @@ size_t	get_expression(t_data *data, t_cmd *cmd, char *s, size_t i)
 void	parse_expression(char *s, t_data *data, t_cmd *cmd)
 {
 	size_t	i;
-	size_t	j;
 	size_t	len;
-	int		place;
 
 	len = ft_strlen(s);
 	i = 0;

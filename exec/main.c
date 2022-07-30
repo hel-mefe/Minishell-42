@@ -90,25 +90,26 @@ int	main(int ac, char **av, char **env)
 {
 	char	*s;
 	t_env	*env_v;
-	t_data	*data;
 	int		history;
 	char	*res;
 
+	res = NULL;
 	(void)av;
 	(void)ac;
 	env_v = NULL;
 	init_env(&env_v, env);
-	history = open(".minishell_History", O_CREAT | O_RDWR | O_APPEND, 0644);
+	history = open("/tmp/.minishell_History", O_CREAT | O_RDWR | O_APPEND, 0644);
+	s = NULL;
 	get_line(history, s);
 	while (1)
 	{
 		handle_signals(0);
-		s = show_prompt(env_v);
+		s = show_prompt();
 		if (!s)
 			exit_main();
 		if (s)
 			print_in_fd(s, history);
-		check_cmd(&env_v, s, env, data);
+		check_cmd(&env_v, s, env);
 		free(s);
 	}
 	close(history);

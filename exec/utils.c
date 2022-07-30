@@ -43,15 +43,17 @@ void	get_line(int history, char *s)
 	free(s);
 }
 
-void	check_cmd(t_env **env_v, char *s, char	**env, t_data *data)
+void	check_cmd(t_env **env_v, char *s, char	**env)
 {
+	t_data	*data;
+
 	if (s != NULL && s[0])
 	{
 		add_history(s);
 		data = parse_line(s, env, *env_v);
 		if (get_queue_size(data->heredoc) > HERE_DOC_MAX)
 			get_err(MAX_HERE_DOC_EXCEEDED_ERR, 1);
-		run_heredoc(data, data->heredoc, data->commands);
+		run_heredoc(data, data->heredoc);
 		if (data->err)
 		{
 			g_global.get_nb_status = 258;

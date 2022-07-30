@@ -15,10 +15,10 @@ char		*ft_strjoin(char *s1, char *s2);
 char		*ft_strjoin_free(char *s1, char *s2);
 char		*ft_strdup(const char *s);
 char		*slice(char *s, size_t a, size_t b);
-char		*get_normal_string(char *s, t_cmd *cmd);
+char		*get_normal_string(char *s);
 void		assign_string(char *s, int place, t_data *data, t_cmd *cmd);
-char		*get_singly_string(char *s, t_cmd *cmd);
-char		*get_doubly_string(char *s, t_cmd *cmd);
+char		*get_singly_string(char *s);
+char		*get_doubly_string(char *s);
 size_t		get_string(char *s, int place, t_data *data, t_cmd *cmd);
 size_t		ft_strlen(const char *s);
 
@@ -46,13 +46,13 @@ t_cmd		*get_command_by_id(t_cmd *head, int id);
 t_dollar	*new_dollar(char *var, char *val);
 t_dollar	*get_last_dollar(t_dollar *head);
 void		push_back_dollar(t_dollar **head, t_dollar *new);
-char		*get_dollar_val(char *var, char **env, t_env *main_env);
+char		*get_dollar_val(char *var, t_env *main_env);
 
 int			is_dollar_char_valid(char c);
 char		*get_dollar(char *s);
-t_dollar	*get_all_dollars(char *s, char **env, t_env *main_env);
+t_dollar	*get_all_dollars(char *s, t_env *main_env);
 int			is_dollar_valid(char *s);
-char		*expand_string(t_dollar *dollars, char **env, int *place, char *s);
+char		*expand_string(t_dollar *dollars, char *s);
 void		mark_builtins(t_cmd *head);
 int			is_builtin(char *cmd);
 
@@ -63,7 +63,7 @@ void		push_command(t_cmd **head, t_cmd *new);
 t_cmd		*new_command(t_cmd *head);
 t_cmd		*get_last_command(t_cmd *head);
 
-void		run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds);
+void		run_heredoc(t_data *data, t_queue *limiters);
 void		init_env(t_env **env_v, char **env);
 
 void		prepare_data(t_data *data);
@@ -88,7 +88,7 @@ void		put_outfile(t_cmd *cmd, char *outfile_name);
 void		put_heredoc(t_data *data, t_cmd *cmd, int place, char *limiter);
 void		put_argument(t_cmd *cmd, char *argument);
 void		put_command(t_cmd *cmd, char *cmd_name);
-char		*show_prompt(t_env *head);
+char		*show_prompt();
 
 void		close_pipes(int **pipes, int size);
 void		free_queue(t_queue *head);

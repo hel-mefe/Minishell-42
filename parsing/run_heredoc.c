@@ -62,11 +62,10 @@ void	set_status(t_data *data, t_queue *limiter, char *s, char *res)
 	close(cmd->heredoc_pipe[1]);
 }
 
-void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
+void	run_heredoc(t_data *data, t_queue *limiters)
 {
 	char	*s;
 	char	*res;
-	t_cmd	*cmd;
 	int		trigger;
 
 	trigger = 0;

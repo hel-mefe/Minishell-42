@@ -16,12 +16,11 @@ char	*expand_result(t_data *data, char *res)
 {
 	t_dollar	*vars;
 	char		*expanded;
-	int			place;
 
 	if (!res)
 		return (NULL);
-	vars = get_all_dollars(res, data->env, data->main_env);
-	expanded = expand_string(vars, data->env, &place, res);
+	vars = get_all_dollars(res, data->main_env);
+	expanded = expand_string(vars, res);
 	free_dollars(vars);
 	return (expanded);
 }
@@ -65,9 +64,9 @@ void	alpha_except_token(t_data *data, char *s)
 {
 	int	i;
 
+	i = 0;
 	if (!s || !s[i])
 		data->err = SYNTAX_ERR_NEAR_NEWLINE;
-	i = 0;
 	while (s[i])
 	{
 		if (is_token(s[i]))

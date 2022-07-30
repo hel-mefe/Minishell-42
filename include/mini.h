@@ -85,7 +85,7 @@ void	ever(char **cmd, t_env **env_v, char **env);
 void	rl_replace_line(const char *str, int i );
 char	*ft_strjoins(char *save, char *buffer);
 char	*ft_strtrim(char *s1, char *set);
-void	check_cmd(t_env **env_v, char *s, char	**env, t_data *data);
+void	check_cmd(t_env **env_v, char *s, char	**env);
 void	get_line(int history, char *s);
 void	join_strcheckevr(t_env **env_v, char **spl, int i, char **av);
 int		check_export(char *str);

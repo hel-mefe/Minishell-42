@@ -27,7 +27,7 @@ char	*get_dollar(char *s)
 	return (slice(s, 0, i));
 }
 
-t_dollar	*get_all_dollars(char *s, char **env, t_env *main_env)
+t_dollar	*get_all_dollars(char *s, t_env *main_env)
 {
 	size_t		i;
 	t_dollar	*new;
@@ -42,7 +42,7 @@ t_dollar	*get_all_dollars(char *s, char **env, t_env *main_env)
 		{
 			dollar = get_dollar(s + i + 1);
 			i += ft_strlen(dollar);
-			new = new_dollar(dollar, get_dollar_val(dollar, env, main_env));
+			new = new_dollar(dollar, get_dollar_val(dollar, main_env));
 			push_back_dollar(&head, new);
 		}
 		else
@@ -51,7 +51,7 @@ t_dollar	*get_all_dollars(char *s, char **env, t_env *main_env)
 	return (head);
 }
 
-char	*get_dollar_val(char *var, char **env, t_env *main_env)
+char	*get_dollar_val(char *var, t_env *main_env)
 {
 	size_t	i;
 	size_t	len;

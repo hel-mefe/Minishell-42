@@ -43,7 +43,7 @@ char	*valid_dollar(char *s, char *old_res, size_t *ij, t_dollar **dollars)
 	return (res);
 }
 
-char	*expand_string(t_dollar *dollars, char **env, int *place, char *s)
+char	*expand_string(t_dollar *dollars, char *s)
 {
 	size_t	ij[2];
 	char	*res;
