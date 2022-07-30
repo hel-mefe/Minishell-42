@@ -44,6 +44,30 @@ void	printexit(char **av, int i)
 	exit(255);
 }
 
+int	is_number_valid(char *av)
+{
+	unsigned long long	nbr;
+	int					i;
+	int					n;
+
+	if (!av)
+		return (1);
+	n = 1;
+	if (av[0] == '-')
+		n = -1;
+	i = 0;
+	nbr = 0;
+	while (av[i])
+	{
+		nbr = nbr * 10 + (av[i] - '0');
+		if ((nbr > (unsigned long long) LLONG_MAX && n == 1) \
+		|| (nbr > (unsigned long long) LLONG_MAX + 1 && n == -1))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	ft_exit(char **av)
 {
 	int	i;
@@ -53,8 +77,8 @@ void	ft_exit(char **av)
 		exit(g_global.get_nb_status);
 	while (av[i] && av)
 	{
-		if (!check_exit(av[i]) || (!ft_isalpha(av[i][0])
-			&& (ft_atoi(av[i]) > LLMAX || ft_atoi(av[i]) < LLMIN)))
+		if (!check_exit(av[i]) || \
+		(!ft_isalpha(av[i][0]) && !is_number_valid(av[i])))
 			printexit(av, i);
 		else if (av[i + 1] == 0)
 		{

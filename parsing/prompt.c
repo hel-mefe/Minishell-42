@@ -6,7 +6,7 @@
 /*   By: hel-mefe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 22:51:41 by hel-mefe          #+#    #+#             */
-/*   Updated: 2022/07/29 22:51:42 by hel-mefe         ###   ########.fr       */
+/*   Updated: 2022/07/30 18:10:26 by hel-mefe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,21 @@ char	*show_prompt(void)
 {
 	char	*path;
 	char	*input;
-	size_t	i;
+	char	*k_path;
 
 	path = getcwd(NULL, 0);
-	i = -1;
-	while (PATH_COLOR[++i])
-		write(1, &PATH_COLOR[i], 1);
-	ft_putstr("(");
-	ft_putstr(path);
-	ft_putstr(")$");
-	free(path);
-	ft_putstr(INPUT_COLOR);
-	ft_putstr("\n🧬 ➡️ ");
-	input = readline("");
+	if (!path)
+		path = ft_strdup("$");
+	k_path = path;
+	path = ft_strjoin(PATH_COLOR, path);
+	if (k_path)
+		free(k_path);
+	k_path = path;
+	path = ft_strjoin(path, INPUT_COLOR);
+	if (k_path)
+		free(k_path);
+	input = readline(path);
+	if (path)
+		free(path);
 	return (input);
 }

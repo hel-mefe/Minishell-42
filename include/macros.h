@@ -1,24 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   macros.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hel-mefe <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/30 18:12:34 by hel-mefe          #+#    #+#             */
+/*   Updated: 2022/07/30 18:12:35 by hel-mefe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MACROS_H
 # define MACROS_H
 
-# define PATH_COLOR "\033[1;36m"
-# define INPUT_COLOR "\033[1;37m"
+# define PATH_COLOR "\033[1;36m("
+# define INPUT_COLOR ")$ \033[1;37m"
 # define ERROR_COLOR "\033[1;33m"
 # define WHITE "\033[1m"
 
 # define NONE_AMBIGUOUS -1
 # define NONE 0
 # define INFILE 1
-# define OUTFILE 2
+# define OUTFILE 24
 # define COMMAND 3
 # define HERE_DOC 4
 # define ARGUMENT 5
 # define EXPANDED_HERE_DOC 6
 # define HERE_DOC_MAX 16
 # define BREAKING_POINT -1
-
-# define LLMAX 9223372036854775
-# define LLMIN -922337203685477
 
 # define SYNTAX_ERR_NEAR_INFILE "\033[1;33mminishell_1337: \
 syntax error near unexpected token '<'"

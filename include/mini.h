@@ -21,6 +21,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+# include <limits.h>
 
 # include "../include/parsing.h"
 # include "../include/macros.h"
@@ -96,5 +97,6 @@ int			norm_cmd(t_cmd *cmd, t_data *data, t_env **env, char **str);
 int			help_runcmd(t_data *data, t_cmd *cmd, t_env **env, char **str);
 void		exit_main(void);
 long long	ft_atoi(const char *str);
+void		printexit(char **av, int i);
 void		check_heredoc_max(t_data *data);
 #endif

@@ -6,7 +6,7 @@
 /*   By: hel-mefe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 22:50:51 by hel-mefe          #+#    #+#             */
-/*   Updated: 2022/07/29 22:50:52 by hel-mefe         ###   ########.fr       */
+/*   Updated: 2022/07/30 18:09:40 by hel-mefe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	get_pipe_err(t_data *data, char *s, int i)
 {
 	int	j;
 
-	j = i - 1;
-	while (j >= 0)
+	j = i;
+	while (--j >= 0)
 	{
 		if (s[j] == '|')
 			break ;
@@ -70,7 +70,6 @@ void	get_pipe_err(t_data *data, char *s, int i)
 		}
 		if (!is_space(s[j]))
 			return ;
-		j--;
 	}
 	if (data->is_syntax_valid)
 	{

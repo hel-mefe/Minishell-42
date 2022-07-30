@@ -21,9 +21,9 @@ void	ft_set(long *i, unsigned long long *nbr, long *n)
 
 long long	ft_atoi(const char *str)
 {
-	long					i;
-	unsigned long long		nbr;
-	long					n;
+	long						i;
+	long						n;
+	unsigned long long			nbr;
 
 	ft_set(&i, &nbr, &n);
 	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
@@ -40,5 +40,5 @@ long long	ft_atoi(const char *str)
 		nbr = nbr * 10 + (str[i] - '0');
 		i++;
 	}
-	return (nbr * n);
+	return ((long long) nbr * n);
 }
