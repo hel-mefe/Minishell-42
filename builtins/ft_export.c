@@ -39,22 +39,24 @@ void	ft_sort(t_env **env_v)
 	}
 }
 
-void	print_export(t_env **env_v)
+void	print_export(t_env **env_v, int fd)
 {
 	t_env	*new;
+	
 
 	ft_sort(env_v);
 	new = *env_v;
 	while (new)
 	{
-		printf("declare -x %s", new->name);
+		ft_putstr_fd("declare -x", fd);
+		ft_putstr_fd(new->name, fd);
 		if (new->data != NULL)
 		{
-			printf("=\"");
-			printf("%s", new->data);
-			printf("\"");
+			ft_putstr_fd("=\"", fd);
+			ft_putstr_fd(new->data, fd);
+			ft_putstr_fd("\"", fd);
 		}
-		printf("\n");
+		ft_putstr_fd("\n", fd);
 		new = new->next;
 	}
 }
@@ -105,7 +107,7 @@ void	help_export(t_env **env_v, char *sig, char **av, int i)
 		init_spl(spl, av, i, env_v);
 }
 
-void	ft_export(t_env **env_v, char **av)
+void	ft_export(t_env **env_v, char **av, int fd)
 {
 	int		i;
 	char	*sig;
@@ -113,7 +115,7 @@ void	ft_export(t_env **env_v, char **av)
 
 	i = 1;
 	if (av[i] == '\0')
-		print_export(env_v);
+		print_export(env_v, fd);
 	while (av[i])
 	{
 		g_global.get_nb_status = 0;

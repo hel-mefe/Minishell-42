@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expressions1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-mefe <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 22:50:57 by hel-mefe          #+#    #+#             */
-/*   Updated: 2022/07/29 22:50:58 by hel-mefe         ###   ########.fr       */
+/*   Updated: 2022/07/30 13:11:47 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void	assign_string(char *s, int place, t_data *data, t_cmd *cmd)
 {
 	t_queue	*new;
 
-	if (place == INFILE && cmd->error < 0)
+	if (place == INFILE)
 		put_infile(cmd, s);
 	else if (place == COMMAND)
 		put_command(cmd, s);
-	else if (place == OUTFILE && cmd->error < 0)
+	else if (place == OUTFILE)
 		put_outfile(cmd, s);
 	else if (place == HERE_DOC || place == EXPANDED_HERE_DOC)
 		put_heredoc(data, cmd, place, s);

@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 22:51:52 by hel-mefe          #+#    #+#             */
-/*   Updated: 2022/07/30 01:50:33 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 12:37:50 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,9 @@ void	run_heredoc(t_data *data, t_queue *limiters, t_cmd *cmds)
 	{
 		g_global.get_nb = 1;
 		s = readline("haredoc> ");
-		if (s == NULL)
-			g_global.get_nb = -1;
 		if (g_global.get_nb == -1 && set_trigger(&trigger))
 			break ;
-		if (!ft_strcmp(s, limiters->s))
+		if (!s || !ft_strcmp(s, limiters->s))
 			limiter_found(data, &limiters, &res, s);
 		else
 			limiter_not_found(&res, &s);

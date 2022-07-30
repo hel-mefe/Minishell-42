@@ -21,9 +21,9 @@ void	run_builtin(t_env **env_v, char **av, t_cmd *cmd)
 	else if ((ft_strcmp(av[0], "cd")) == 0)
 		ft_cd(env_v, av);
 	else if ((ft_strcmp(av[0], "env")) == 0)
-		ft_env(env_v, av);
+		ft_env(env_v, av, cmd->write_end);
 	else if ((ft_strcmp(av[0], "export")) == 0)
-		ft_export(env_v, av);
+		ft_export(env_v, av, cmd->write_end);
 	else if ((ft_strcmp(av[0], "unset")) == 0)
 		ft_unset(env_v, av);
 	else if ((ft_strcmp(av[0], "exit")) == 0)
@@ -49,7 +49,8 @@ void	help_runbuilt(t_cmd *cmd, t_env **env, int res, char **str)
 		return ;
 	}
 	run_builtin(env, cmd->main_args, cmd);
-	free_double_char_arr(str);
+	if (str)
+		free_double_char_arr(str);
 	dup(res);
 	close(res);
 }
@@ -94,15 +95,16 @@ int	main(int ac, char **av, char **env)
 	env_v = NULL;
 	init_env(&env_v, env);
 	history = open(".minishell_History", O_CREAT | O_RDWR | O_APPEND, 0644);
-	// get_line(history, s);
+	get_line(history, s);
 	while (1)
 	{
 		handle_signals(0);
 		s = show_prompt(env_v);
 		if (s)
 			print_in_fd(s, history);
-		check_cmd(env_v, s, env, data);
+		check_cmd(&env_v, s, env, data);
 		free(s);
+
 	}
 	close(history);
 }

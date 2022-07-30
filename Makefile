@@ -6,7 +6,7 @@
 #    By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 17:49:00 by ytijani           #+#    #+#              #
-#    Updated: 2022/07/30 01:16:48 by ytijani          ###   ########.fr        #
+#    Updated: 2022/07/30 11:50:01 by ytijani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ OBJCT = ${SRC:.c=.o}
 
 all : $(NAME)
 $(NAME) : $(OBJCT)
-	@$(CC) -lreadline -fsanitize=address -L /Users/ytijani/.brew/opt/readline/lib -I /Users/ytijani/.brew/opt/readline/include $(SRC) -o $(NAME)
+	@$(CC) -lreadline -L /Users/ytijani/.brew/opt/readline/lib -I /Users/ytijani/.brew/opt/readline/include $(SRC) -o $(NAME)
 	@printf $(SUCCESS)
 	@printf $(LOGO)
 clean :

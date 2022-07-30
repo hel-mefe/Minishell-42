@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buckets.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-mefe <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 22:50:39 by hel-mefe          #+#    #+#             */
-/*   Updated: 2022/07/29 22:50:40 by hel-mefe         ###   ########.fr       */
+/*   Updated: 2022/07/30 13:08:18 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ void	put_infile(t_cmd *cmd, char *infile_name)
 	if (cmd->error < 0)
 	{
 		if (cmd->infile)
+		{
 			free(cmd->infile);
+			cmd->infile = NULL;
+		}
 		close(cmd->read_end);
 		cmd->infile = infile_name;
 		cmd->read_end = open(cmd->infile, O_RDONLY);
@@ -28,6 +31,8 @@ void	put_infile(t_cmd *cmd, char *infile_name)
 		}
 		cmd->has_heredoc = 0;
 	}
+	else
+		free(infile_name);
 }
 
 void	put_outfile(t_cmd *cmd, char *outfile_name)
@@ -35,7 +40,10 @@ void	put_outfile(t_cmd *cmd, char *outfile_name)
 	if (cmd->error < 0)
 	{
 		if (cmd->outfile)
+		{
 			free(cmd->outfile);
+			cmd->outfile = NULL;
+		}
 		close(cmd->write_end);
 		cmd->outfile = outfile_name;
 		if (cmd->outfile_mode == O_APPEND)
@@ -50,6 +58,8 @@ void	put_outfile(t_cmd *cmd, char *outfile_name)
 			cmd->error_file = outfile_name;
 		}
 	}
+	else
+		free(outfile_name);
 }
 
 void	put_heredoc(t_data *data, t_cmd *cmd, int place, char *limiter)

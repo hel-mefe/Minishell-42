@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:21:23 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/27 19:37:31 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 11:45:17 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	help_unset(t_env **env_v, char **name, int i)
 	t_env	*prev;
 
 	prev = *env_v;
+	current_node = NULL;
 	current_node = (*env_v)->next;
 	while (current_node != NULL && ft_strcmp(current_node->name, name[i]))
 	{
@@ -47,9 +48,12 @@ void	help_unset(t_env **env_v, char **name, int i)
 	if (current_node)
 	{
 		prev->next = current_node->next;
-		free(current_node->data);
-		free(current_node->name);
-		free(current_node);
+		if (current_node->data)
+			free(current_node->data);
+		if (current_node->name)
+			free(current_node->name);
+		if (current_node)
+			free(current_node);
 	}
 	else
 		prev->next = NULL;
@@ -61,6 +65,7 @@ void	ft_unset(t_env **env_v, char **name)
 	t_env	*new;
 	int		len;
 
+	new = NULL;
 	i = 1;
 	len = ft_strlen(name[i]);
 	while (name[i])
@@ -75,10 +80,11 @@ void	ft_unset(t_env **env_v, char **name)
 		{
 			new = *env_v;
 			*env_v = (*env_v)->next;
-			free(new);
+			if (new)
+				free(new);
 		}
 		else if (search_element(env_v, name[i]))
-			help_unset(env_v, name, i);
+			help_unset(env_v, name,i);
 		g_global.get_nb_status = 0;
 		i++;
 	}	

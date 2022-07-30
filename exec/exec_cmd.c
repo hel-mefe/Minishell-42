@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:01:19 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/29 23:53:33 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 12:47:59 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,19 @@ void	ever(char **cmd, t_env **env_v, char **env)
 	}
 }
 
+void	printerror(t_cmd *cmd)
+{
+	if (cmd->error_file)
+	{
+		ft_putstr_fd(cmd->error_file, 2);
+		ft_putstr_fd(": ", 2);
+	}
+	if (cmd->error == 0)
+		ft_putstr_fd(AMBIGUOUS_ERR, 2);
+	if (cmd->error > 0)
+		ft_putstr_fd(strerror(cmd->error), 2);
+	write(2,"\n", 1);
+}
 void	run_cmd(t_env **env, t_data *data, t_cmd *cmd)
 {	
 	t_cmd	*tmp;
@@ -113,7 +126,14 @@ void	run_cmd(t_env **env, t_data *data, t_cmd *cmd)
 	tmp = cmd;
 	pid = -1;
 	res = 0;
-	if (cmd->is_builtin && cmd->next == NULL)
+	if (cmd->error >= 0)
+	{
+		printerror(cmd);
+		g_global.get_nb_status = 1;
+		free_double_char_arr(str);
+		return ;
+	}
+	if (cmd->is_builtin && cmd->next == NULL && cmd->error < 0)
 	{
 		help_runbuilt(cmd, env, res, str);
 		return ;

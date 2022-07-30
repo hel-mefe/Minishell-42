@@ -36,7 +36,7 @@ void	init_env(t_env **env_v, char **env)
 	}
 }
 
-void	ft_env(t_env **env_v, char **av)
+void	ft_env(t_env **env_v, char **av, int fd)
 {
 	t_env	*env;
 	int		i;
@@ -48,7 +48,11 @@ void	ft_env(t_env **env_v, char **av)
 		while (env)
 		{
 			if (env->data != NULL)
-				printf("%s=%s\n", env->name, env->data);
+			{
+				ft_putstr_fd(env->name, fd);
+				ft_putstr_fd(env->data, fd);
+				ft_putstr_fd("\n", fd);
+			}
 			env = env->next;
 		}
 	}

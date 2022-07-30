@@ -27,15 +27,15 @@
 /*************builtins*******************/
 void	ft_echo(t_env **env_v, char **av, int fd);
 void	ft_cd(t_env **env_v, char **av);
-void	ft_export(t_env **env_v, char **av);
+void	ft_export(t_env **env_v, char **av, int fd);
 void	ft_pwd(t_env **env_v);
-void	ft_env(t_env **env_v, char **av);
+void	ft_env(t_env **env_v, char **av, int fd);
 void	ft_exit(char **av);
 /**************Help->builtins*******************/
 void	init_env(t_env **env_v, char **env);
 void	ft_sort(t_env **env_v);
 void	run_builtin(t_env **env_v, char **av, t_cmd *cmd);
-void	print_export(t_env **env_v);
+void	print_export(t_env **env_v, int fd);
 void	ft_unset(t_env **env_v, char **name);
 void	remove_name(t_env **env_v, char *name);
 void	help_cd(t_env **env_v, t_env *current_node, t_env *prev, char *name);
@@ -85,7 +85,7 @@ void	ever(char **cmd, t_env **env_v, char **env);
 void	rl_replace_line(const char *str, int i );
 char	*ft_strjoins(char *save, char *buffer);
 char	*ft_strtrim(char *s1, char *set);
-void	check_cmd(t_env *env_v, char *s, char	**env, t_data *data);
+void	check_cmd(t_env **env_v, char *s, char	**env, t_data *data);
 void	get_line(int history, char *s);
 void	join_strcheckevr(t_env **env_v, char **spl, int i, char **av);
 int		check_export(char *str);
