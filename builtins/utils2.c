@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 00:19:56 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/30 15:26:10 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 17:56:03 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,10 @@ int	norm_cmd(t_cmd *cmd, t_data *data, t_env **env, char **str)
 		cmd = cmd->next;
 	}
 	return (pid);
+}
+
+void	check_heredoc_max(t_data *data)
+{
+	if (get_queue_size(data->heredoc) > HERE_DOC_MAX)
+		get_err(MAX_HERE_DOC_EXCEEDED_ERR, 1);
 }

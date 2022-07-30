@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 10:01:36 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/30 15:22:44 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 17:51:58 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ void	check_cmd(t_env **env_v, char *s, char	**env)
 	{
 		add_history(s);
 		data = parse_line(s, env, *env_v);
-		if (get_queue_size(data->heredoc) > HERE_DOC_MAX)
-			get_err(MAX_HERE_DOC_EXCEEDED_ERR, 1);
+		check_heredoc_max(data);
 		run_heredoc(data, data->heredoc);
 		if (data->err)
 		{

@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 14:54:02 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/30 15:25:42 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 17:59:32 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	ft_exit(char **av)
 		exit(g_global.get_nb_status);
 	while (av[i] && av)
 	{
-		if (!check_exit(av[i]))
+		if (!check_exit(av[i]) || (!ft_isalpha(av[i][0])
+			&& (ft_atoi(av[i]) > LLMAX || ft_atoi(av[i]) < LLMIN)))
 			printexit(av, i);
 		else if (av[i + 1] == 0)
 		{

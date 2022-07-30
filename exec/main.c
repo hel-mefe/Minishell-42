@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:22:53 by marvin            #+#    #+#             */
-/*   Updated: 2022/07/30 15:17:59 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 17:55:08 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,6 @@ void	close_pipe(int **pipes, int a, int b, int n)
 	}
 	dup2(a, 0);
 	dup2(b, 1);
-	if (b != 1)
-		close(b);
-	if (a)
-		close(a);
 }
 
 void	print_in_fd(char *s, int fd)
@@ -98,7 +94,7 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	env_v = NULL;
 	init_env(&env_v, env);
-	history = open("/tmp/.minishell_History", O_CREAT | O_RDWR | O_APPEND, 0644);
+	history = open("/tmp/.mini_History", O_CREAT | O_RDWR | O_APPEND, 0644);
 	s = NULL;
 	get_line(history, s);
 	while (1)

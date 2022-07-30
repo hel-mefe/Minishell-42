@@ -17,6 +17,9 @@
 # define HERE_DOC_MAX 16
 # define BREAKING_POINT -1
 
+# define LLMAX 9223372036854775
+# define LLMIN -922337203685477
+
 # define SYNTAX_ERR_NEAR_INFILE "\033[1;33mminishell_1337: \
 syntax error near unexpected token '<'"
 # define SYNTAX_ERR_NEAR_OUTFILE "\033[1;33mminishell_1337: \

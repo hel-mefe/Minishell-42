@@ -47,7 +47,7 @@ void	print_export(t_env **env_v, int fd)
 	new = *env_v;
 	while (new)
 	{
-		ft_putstr_fd("declare -x", fd);
+		ft_putstr_fd("declare -x ", fd);
 		ft_putstr_fd(new->name, fd);
 		if (new->data != NULL)
 		{
