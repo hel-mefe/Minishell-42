@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 15:15:48 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/30 00:25:02 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 15:28:17 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	handel_sigint(int sig)
 
 void	handel_sigint1(int sig)
 {
+	(void)sig;
 	g_global.get_nb_status = 1;
 	write(1, "\n", 1);
 	rl_on_new_line();

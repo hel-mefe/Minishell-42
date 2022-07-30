@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:21:55 by marvin            #+#    #+#             */
-/*   Updated: 2022/07/30 00:30:34 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 15:27:16 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,8 @@ void	get_line(int history, char *s);
 void	join_strcheckevr(t_env **env_v, char **spl, int i, char **av);
 int		check_export(char *str);
 void	init_spl(char **spl, char **av, int i, t_env **env_v);
+void	printerror(t_cmd *cmd);
+int		norm_cmd(t_cmd *cmd, t_data *data, t_env **env, char **str);
+int		help_runcmd(t_data *data, t_cmd *cmd, t_env **env, char **str);
+void	exit_main(void);
 #endif

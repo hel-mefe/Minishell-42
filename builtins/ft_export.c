@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:26:28 by marvin            #+#    #+#             */
-/*   Updated: 2022/07/30 00:03:52 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 14:56:19 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	ft_sort(t_env **env_v)
 void	print_export(t_env **env_v, int fd)
 {
 	t_env	*new;
-	
 
 	ft_sort(env_v);
 	new = *env_v;

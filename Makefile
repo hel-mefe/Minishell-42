@@ -6,7 +6,7 @@
 #    By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 17:49:00 by ytijani           #+#    #+#              #
-#    Updated: 2022/07/30 11:50:01 by ytijani          ###   ########.fr        #
+#    Updated: 2022/07/30 15:27:36 by ytijani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,13 +34,13 @@ LOGO = "\
 
 SUCCESS = "\033[1;32m \n\t\t\t 👽 MINISHELL HAVE BEEN CREATED SUCCESSFULLY! 👽  \n\n"
 
-# CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 OBJCT = ${SRC:.c=.o}
 
 all : $(NAME)
 $(NAME) : $(OBJCT)
-	@$(CC) -lreadline -L /Users/ytijani/.brew/opt/readline/lib -I /Users/ytijani/.brew/opt/readline/include $(SRC) -o $(NAME)
+	@$(CC)  $(CFALGS) -lreadline -L /Users/ytijani/.brew/opt/readline/lib -I /Users/ytijani/.brew/opt/readline/include $(SRC) -o $(NAME)
 	@printf $(SUCCESS)
 	@printf $(LOGO)
 clean :

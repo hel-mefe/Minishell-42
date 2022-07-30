@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:01:19 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/30 12:47:59 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 15:27:51 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	wait_close(t_data *data, t_cmd *tmp, int pid)
 {
 	int	i;
-	int	status;
 
 	i = 0;
 	while (i < data->n_cmds - 1)
@@ -101,26 +100,12 @@ void	ever(char **cmd, t_env **env_v, char **env)
 	}
 }
 
-void	printerror(t_cmd *cmd)
-{
-	if (cmd->error_file)
-	{
-		ft_putstr_fd(cmd->error_file, 2);
-		ft_putstr_fd(": ", 2);
-	}
-	if (cmd->error == 0)
-		ft_putstr_fd(AMBIGUOUS_ERR, 2);
-	if (cmd->error > 0)
-		ft_putstr_fd(strerror(cmd->error), 2);
-	write(2,"\n", 1);
-}
 void	run_cmd(t_env **env, t_data *data, t_cmd *cmd)
 {	
 	t_cmd	*tmp;
 	char	**str;
 	int		res;
 	int		pid;
-	int		v;
 
 	str = change_env(env);
 	tmp = cmd;
@@ -138,14 +123,7 @@ void	run_cmd(t_env **env, t_data *data, t_cmd *cmd)
 		help_runbuilt(cmd, env, res, str);
 		return ;
 	}
-	while (cmd)
-	{
-		if (cmd->next == NULL)
-			pid = help_runcmd(data, cmd, env, str);
-		else
-			v = help_runcmd(data, cmd, env, str);
-		cmd = cmd->next;
-	}
+	pid = norm_cmd(cmd, data, env, str);
 	wait_close(data, tmp, pid);
 	free_double_char_arr(str);
 }

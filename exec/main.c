@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:22:53 by marvin            #+#    #+#             */
-/*   Updated: 2022/07/30 00:25:25 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 15:17:59 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,10 @@ void	close_pipe(int **pipes, int a, int b, int n)
 	}
 	dup2(a, 0);
 	dup2(b, 1);
+	if (b != 1)
+		close(b);
+	if (a)
+		close(a);
 }
 
 void	print_in_fd(char *s, int fd)
@@ -100,11 +104,12 @@ int	main(int ac, char **av, char **env)
 	{
 		handle_signals(0);
 		s = show_prompt(env_v);
+		if (!s)
+			exit_main();
 		if (s)
 			print_in_fd(s, history);
 		check_cmd(&env_v, s, env, data);
 		free(s);
-
 	}
 	close(history);
 }

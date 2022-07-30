@@ -6,11 +6,17 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 14:54:02 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/30 02:21:14 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 15:25:42 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/mini.h"
+
+void	exit_main(void)
+{
+	ft_putstr_fd("exit\n", 1);
+	exit(0);
+}
 
 int	check_exit(char *str)
 {
@@ -26,6 +32,18 @@ int	check_exit(char *str)
 	return (1);
 }
 
+void	printexit(char **av, int i)
+{
+	char	*res;
+
+	res = NULL;
+	res = ft_strjoin(av[i], " :numeric argument required\n");
+	ft_putstr_fd("exit\n", 2);
+	ft_putstr_fd(res, 2);
+	free(res);
+	exit(255);
+}
+
 void	ft_exit(char **av)
 {
 	int	i;
@@ -33,29 +51,21 @@ void	ft_exit(char **av)
 	i = 1;
 	if (av[i] == '\0')
 		exit(g_global.get_nb_status);
-	else
+	while (av[i] && av)
 	{
-		while (av[i])
+		if (!check_exit(av[i]))
+			printexit(av, i);
+		else if (av[i + 1] == 0)
 		{
-			if (!check_exit(av[i]))
-			{
-				printf("exit\n");
-				printf("Minishell : exit :%s :numeric argument required\n ", av[i]);
-				exit(255);
-			}
-			else if (av[i + 1] == 0)
-			{
-				g_global.get_nb_status = atoi(av[i]);
-				exit(g_global.get_nb_status);
-			}
-			else
-			{
-				printf("exit \nMinishell : exit : too many arguments\n");
-				g_global.get_nb_status = 1;
-				return ;
-			}	
-			i++;
+			g_global.get_nb_status = atoi(av[i]);
+			exit(g_global.get_nb_status);
 		}
-	}
-	
+		else
+		{
+			printf("exit \nMinishell : exit : too many arguments\n");
+			g_global.get_nb_status = 1;
+			return ;
+		}
+		i++;
+	}	
 }

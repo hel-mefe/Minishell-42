@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:54:41 by marvin            #+#    #+#             */
-/*   Updated: 2022/07/19 21:33:53 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 14:46:20 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,31 @@ void	init_env(t_env **env_v, char **env)
 	}
 }
 
+void	print_errr(t_env **env_v, char **av)
+{
+	char	*res;
+
+	g_global.get_nb_status = 127;
+	if (search_element(env_v, "PATH"))
+	{
+		res = ft_strjoin(av[1], " : No such file or directory\n");
+		ft_putstr_fd(res, 2);
+		free(res);
+	}
+	else
+	{
+		res = ft_strjoin("env", " : No such file or directory\n");
+		ft_putstr_fd(res, 2);
+		free(res);
+	}
+}
+
 void	ft_env(t_env **env_v, char **av, int fd)
 {
 	t_env	*env;
-	int		i;
 
-	i = 0;
 	env = *env_v;
-	if (av[i + 1] == '\0' && search_element(env_v, "PATH"))
+	if (av[1] == '\0' && search_element(env_v, "PATH"))
 	{
 		while (env)
 		{
@@ -57,11 +74,5 @@ void	ft_env(t_env **env_v, char **av, int fd)
 		}
 	}
 	else
-	{
-		g_global.get_nb_status = 127;
-		if (search_element(env_v, "PATH"))
-			printf("env : %s :  No such file or directory\n", av[i + 1]);
-		else
-			printf("env : No such file or directory\n");
-	}
+		print_errr(env_v, av);
 }

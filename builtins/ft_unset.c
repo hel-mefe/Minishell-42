@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:21:23 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/30 11:45:17 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 15:06:43 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,19 @@ void	help_unset(t_env **env_v, char **name, int i)
 	}
 	else
 		prev->next = NULL;
+	g_global.get_nb_status = 0;
+}
+
+void	print_unset(char **name, int i)
+{
+	char	*res;
+
+	res = NULL;
+	g_global.get_nb_status = 1;
+	ft_putstr_fd("unset", 2);
+	res = ft_strjoin(name[i], ": not a valid identifier\n");
+	ft_putstr_fd(res, 2);
+	free(res);
 }
 
 void	ft_unset(t_env **env_v, char **name)
@@ -71,10 +84,7 @@ void	ft_unset(t_env **env_v, char **name)
 	while (name[i])
 	{
 		if (!check_export(name[i]))
-		{
-			printf("unset : %s : not a valid identifier\n", name[1]);
-			g_global.get_nb_status = 1;
-		}
+			print_unset(name, i);
 		else if (!ft_strcmp((*env_v)->name, name[i])
 			&& search_element(env_v, name[i]))
 		{
@@ -84,8 +94,7 @@ void	ft_unset(t_env **env_v, char **name)
 				free(new);
 		}
 		else if (search_element(env_v, name[i]))
-			help_unset(env_v, name,i);
-		g_global.get_nb_status = 0;
+			help_unset(env_v, name, i);
 		i++;
 	}	
 }

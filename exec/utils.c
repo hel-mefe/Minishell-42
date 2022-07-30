@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 10:01:36 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/30 11:48:18 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 15:22:44 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	check_err(t_cmd *cmd)
 
 void	get_line(int history, char *s)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = NULL;
 	s = get_next_line(history);
@@ -45,11 +45,6 @@ void	get_line(int history, char *s)
 
 void	check_cmd(t_env **env_v, char *s, char	**env, t_data *data)
 {
-	if (s == NULL)
-	{
-		printf("exit\n");
-		exit(0);
-	}
 	if (s != NULL && s[0])
 	{
 		add_history(s);
@@ -94,4 +89,18 @@ int	check_export(char *str)
 		i++;
 	}
 	return (1);
+}
+
+void	printerror(t_cmd *cmd)
+{
+	if (cmd->error_file)
+	{
+		ft_putstr_fd(cmd->error_file, 2);
+		ft_putstr_fd(": ", 2);
+	}
+	if (cmd->error == 0)
+		ft_putstr_fd(AMBIGUOUS_ERR, 2);
+	if (cmd->error > 0)
+		ft_putstr_fd(strerror(cmd->error), 2);
+	write(2, "\n", 1);
 }
