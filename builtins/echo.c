@@ -69,6 +69,11 @@ void	ft_echo(t_env **env_v, char **av, int fd)
 	i = 1;
 	new_line = 0;
 	new = NULL;
+	if (av[1] == NULL)
+	{
+		printf("\n");
+		return ;
+	}
 	if (!ft_strcmp(av[i], "~") && av[i + 1] == 0)
 	{
 		handle_sign(env_v, new);

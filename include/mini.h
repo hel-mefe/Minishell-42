@@ -62,6 +62,7 @@ void	ft_error1(int code, char *str);
 void	print_err(char **av);
 void	check_err(t_cmd *cmd);
 /****************OTHERS********************/
+void	check_evr(t_env **env_v, char **spl, char **av, int i);
 char	*get_command(t_env	**path, char *cmd);
 t_data	*get_data(t_env	**env);
 t_data	*parse_line(char *s, char **env, t_env *main_env);

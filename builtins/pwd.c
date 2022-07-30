@@ -28,6 +28,6 @@ void	ft_pwd(t_env **env_v)
 		if (!new)
 			return ;
 		printf("%s\n", new->data);
-		g_global.get_nb_status = 1;
+		g_global.get_nb_status = 0;
 	}
 }

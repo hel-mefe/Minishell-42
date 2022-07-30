@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 10:59:25 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/30 00:24:42 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/30 00:40:19 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*get_command(t_env **path, char *cmd)
 		ft_error1(-1, "no such file or directory");
 	if (new != NULL)
 		tmp = ft_split(new->data, ':');
-	if (check_path(cmd) && cmd[0] == '/')
+	if (check_path(cmd) && (cmd[0] == '/' || cmd[0] == '.'))
 		return (cmd);
 	while (tmp[i])
 	{
