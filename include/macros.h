@@ -14,7 +14,7 @@
 # define MACROS_H
 
 # define PATH_COLOR "\033[1;36m("
-# define INPUT_COLOR ")$ \033[1;37m"
+# define INPUT_COLOR ")$\n \033[1;37m🐙 -> ​"
 # define ERROR_COLOR "\033[1;33m"
 # define WHITE "\033[1m"
 

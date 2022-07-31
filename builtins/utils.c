@@ -41,6 +41,7 @@ void	remove_name(t_env **env_v, char *name)
 
 	current_node = NULL;
 	prev = NULL;
+	new = NULL;
 	if (!ft_strcmp((*env_v)->name, name))
 	{
 		new = *env_v;

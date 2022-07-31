@@ -6,7 +6,7 @@
 #    By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 17:49:00 by ytijani           #+#    #+#              #
-#    Updated: 2022/07/30 17:09:45 by ytijani          ###   ########.fr        #
+#    Updated: 2022/07/31 11:23:49 by hel-mefe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,16 +23,16 @@ exec/main.c parsing/prompt.c parsing/variables/expansion1.c
 
 CC = gcc
 
-LOGO = "\
+LOGO = "\n\n\
 \033[1;36m    __  ___ ____ _   __ ____ _____  __  __ ______ __     __       ___ _____ _____ _____\n\
 \033[2;36m   /  |/  //  _// | / //  _// ___/ / / / // ____// /    / /      <  /|__  /|__  //__  /\n\
 \033[2;36m  / /|_/ / / / /  |/ / / /  \__ \ / /_/ // __/  / /    / /       / /  /_ <  /_ <   / / \n\
 \033[0;36m / /  / /_/ / / /|  /_/ /  ___/ // __  // /___ / /___ / /___    / / ___/ /___/ /  / /  \n\
 \033[0;36m/_/  /_//___//_/ |_//___/ /____//_/ /_//_____//_____//_____/   /_/ /____//____/  /_/   \n\
                                                                                        \n\
-\t\t\t\t\t\t\t \033[1;36mmade by hel-mefe and ytijani\n"
+\t\t\t\t\t\t\t \033[1;31mmade by (hel-mefe && ytijani)\n\n\n"
 
-SUCCESS = "\033[1;32m \n\t\t\t 👽 MINISHELL HAVE BEEN CREATED SUCCESSFULLY! 👽  \n\n"
+SUCCESS = "\033[1;32m \n\t\t\t 🐙 MINISHELL HAVE BEEN CREATED SUCCESSFULLY! 🐙  \n\n"
 
 CFLAGS = -Wall -Wextra -Werror
 
@@ -45,13 +45,12 @@ $(NAME): $(OBJCT)
 
 all : $(NAME)
 $(NAME) : $(OBJCT)
-	@$(CC)  $(CFALGS) -lreadline -L /Users/ytijani/.brew/opt/readline/lib -I /Users/ytijani/.brew/opt/readline/include $(SRC) -o $(NAME)
-	@printf $(SUCCESS)
+	@$(CC)  $(CFALGS) -lreadline -L /Users/hel-mefe/.brew/opt/readline/lib -I /Users/hel-mefe/.brew/opt/readline/include $(SRC) -o $(NAME)
 	@printf $(LOGO)
 clean :
 	@rm -f $(OBJCT)
-
 fclean : clean
 	@rm -f $(NAME)
-
 re : fclean all
+
+.PHONY: clean all fclean re
