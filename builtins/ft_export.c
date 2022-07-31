@@ -118,7 +118,7 @@ void	ft_export(t_env **env_v, char **av, int fd)
 	while (av[i])
 	{
 		g_global.get_nb_status = 0;
-		sig = strstr(av[i], "=");
+		sig = ft_strstr(av[i], "=");
 		if ((!av[i][ft_strlen(sig)]
 			|| (!ft_isalpha(av[i][0]) && av[i][0] != '_')))
 		{

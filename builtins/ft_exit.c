@@ -6,7 +6,7 @@
 /*   By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 14:54:02 by ytijani           #+#    #+#             */
-/*   Updated: 2022/07/30 17:59:32 by ytijani          ###   ########.fr       */
+/*   Updated: 2022/07/31 13:18:07 by ytijani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	ft_exit(char **av)
 			printexit(av, i);
 		else if (av[i + 1] == 0)
 		{
-			g_global.get_nb_status = atoi(av[i]);
+			g_global.get_nb_status = ft_atoi(av[i]);
 			exit(g_global.get_nb_status);
 		}
 		else

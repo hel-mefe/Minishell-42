@@ -53,6 +53,7 @@ char		**ft_split(char const *s, char c);
 int			ft_strchr(char *s, int c);
 char		*ft_strjoin(char *s1, char *s2);
 void		ft_putstr_fd(char *s, int fd);
+char		*ft_strstr(char *str, char *to_find);
 /******	********handle_signals****************/
 void		handle_signals(int i);
 void		handel_sigint(int sig);

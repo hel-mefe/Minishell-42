@@ -6,15 +6,15 @@
 #    By: ytijani <ytijani@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/19 17:49:00 by ytijani           #+#    #+#              #
-#    Updated: 2022/07/31 11:23:49 by hel-mefe         ###   ########.fr        #
+#    Updated: 2022/07/31 13:15:23 by ytijani          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 SRC = builtins/cd.c builtins/echo.c builtins/ft_env.c builtins/ft_export.c builtins/ft_unset.c builtins/pwd.c builtins/ft_exit.c builtins/utils.c builtins/utils2.c \
-exec/ft_memcpy.c exec/ft_split.c exec/ft_strchr.c exec/ft_strlcpy.c exec/get_path.c exec/help_linkedlist.c exec/exec_cmd.c exec/utils.c  exec/handle_signals.c exec/ft_atoi.c \
-parsing/data_structures/commands.c parsing/data_structures/dollars.c parsing/data_structures/heredocs.c parsing/data_structures/queue.c \
+exec/ft_memcpy.c exec/ft_split.c exec/ft_strchr.c exec/ft_strlcpy.c exec/get_path.c exec/help_linkedlist.c exec/exec_cmd.c exec/utils.c exec/handle_signals.c exec/ft_atoi.c \
+parsing/data_structures/commands.c parsing/data_structures/dollars.c parsing/data_structures/heredocs.c parsing/data_structures/queue.c exec/ft_strstr.c \
 parsing/functions/builtins.c parsing/functions/compare.c parsing/functions/conditions.c parsing/functions/conditions2.c parsing/functions/itoa.c parsing/functions/join_strings.c \
 parsing/functions/quotes.c parsing/functions/search.c parsing/functions/strings.c parsing/variables/expansion.c parsing/variables/get_dollars.c parsing/buckets.c parsing/help_destroy.c\
 get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
@@ -45,7 +45,7 @@ $(NAME): $(OBJCT)
 
 all : $(NAME)
 $(NAME) : $(OBJCT)
-	@$(CC)  $(CFALGS) -lreadline -L /Users/hel-mefe/.brew/opt/readline/lib -I /Users/hel-mefe/.brew/opt/readline/include $(SRC) -o $(NAME)
+	@$(CC)  $(CFALGS) -lreadline -L /Users/ytijani/.brew/opt/readline/lib -I /Users/ytijani/.brew/opt/readline/include $(SRC) -o $(NAME)
 	@printf $(LOGO)
 clean :
 	@rm -f $(OBJCT)

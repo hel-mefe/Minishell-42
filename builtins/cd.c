@@ -21,7 +21,7 @@ void	help_changelink(t_env **env_v, char *buffer, char *s, t_env *new)
 	if (!new)
 		return ;
 	remove_name(env_v, new->name);
-	new = ft_lstnew(ft_strdup("PWD"), strdup(buffer));
+	new = ft_lstnew(ft_strdup("PWD"), ft_strdup(buffer));
 	ft_lstadd_back(env_v, new);
 }
 
