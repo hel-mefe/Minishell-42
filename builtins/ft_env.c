@@ -60,7 +60,7 @@ void	ft_env(t_env **env_v, char **av, int fd)
 	t_env	*env;
 
 	env = *env_v;
-	if (av[1] == '\0' && search_element(env_v, "PATH"))
+	if (!av[1] && search_element(env_v, "PATH"))
 	{
 		while (env)
 		{

@@ -73,7 +73,7 @@ void	ft_exit(char **av)
 	int	i;
 
 	i = 1;
-	if (av[i] == '\0')
+	if (!av[i])
 		exit(g_global.get_nb_status);
 	while (av[i] && av)
 	{

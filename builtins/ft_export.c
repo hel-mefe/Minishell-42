@@ -113,7 +113,7 @@ void	ft_export(t_env **env_v, char **av, int fd)
 	char	*res;
 
 	i = 1;
-	if (av[i] == '\0')
+	if (!av[i])
 		print_export(env_v, fd);
 	while (av[i])
 	{
